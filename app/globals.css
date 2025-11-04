@@ -1,0 +1,581 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Marquee animations */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee var(--duration) linear infinite;
+  }
+  
+  .animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
+  }
+}
+
+@layer base {
+  /* Note: Futura Std fonts would need to be purchased/licensed. Using fallback system fonts with similar characteristics */
+  body {
+    @apply text-text;
+    font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+}
+
+/* From Uiverse.io by Shakil-Babu */ 
+.btn {
+ background-color: #8bccc2;
+ padding: 14px 40px;
+ color: #fff;
+ text-transform: uppercase;
+ letter-spacing: 2px;
+ cursor: pointer;
+ border-radius: 10px;
+ border: 2px dashed #8bccc2;
+ box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+ transition: .4s;
+}
+
+.btn span:last-child {
+ display: none;
+}
+
+.btn:hover {
+ transition: .4s;
+ border: 2px dashed #8bccc2;
+ background-color: #fff;
+ color: #8bccc2;
+}
+
+.btn:active {
+ background-color: #87dbd0;
+}
+
+/* Animated icon button styles - From Uiverse.io by fthisilak */ 
+.pay-btn {
+  position: relative;
+  padding: 12px 20px;
+  font-size: 14px;
+  background: #00BFA6;
+  color: white;
+  border: 2px dashed #00BFA6;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  text-decoration: none;
+}
+
+.pay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 191, 166, 0.4);
+  background-color: #fff;
+  color: #00BFA6;
+}
+
+.icon-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  color: white;
+  opacity: 0;
+  visibility: hidden;
+  transition: color 0.3s ease;
+}
+
+.default-icon {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Change icon color on hover */
+.pay-btn:hover .icon {
+  color: #00BFA6;
+}
+
+/* Hover animations */
+.pay-btn:hover .icon {
+  animation: none;
+}
+
+.pay-btn:hover .wallet-icon {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pay-btn:hover .card-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 0s;
+}
+
+.pay-btn:hover .payment-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 0.5s;
+}
+
+.pay-btn:hover .dollar-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 1s;
+}
+
+.pay-btn:hover .check-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 1.5s;
+}
+
+/* Active state - show only checkmark */
+.pay-btn:active .icon {
+  animation: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.pay-btn:active .check-icon {
+  animation: checkmarkAppear 0.6s ease forwards;
+  visibility: visible;
+}
+
+.btn-text {
+  font-weight: 600;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+@keyframes iconRotate {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.5);
+  }
+  5% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  15% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.5);
+  }
+}
+
+@keyframes checkmarkAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-45deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Secondary button - removed duplicate, using the one below with illness buttons */
+
+.btn-secondary {
+ background-color: #8bccc2;
+ padding: 14px 40px;
+ color: #fff;
+ text-transform: uppercase;
+ letter-spacing: 2px;
+ cursor: pointer;
+ border-radius: 10px;
+ border: 2px dashed #8bccc2;
+ box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+ transition: .4s;
+}
+
+.btn-secondary span:last-child {
+ display: none;
+}
+
+.btn-secondary:hover {
+ transition: .4s;
+ border: 2px dashed #8bccc2;
+ background-color: #fff;
+ color: #8bccc2;
+}
+
+.btn-secondary:active {
+ background-color: #87dbd0;
+}
+
+/* Unique button styles for illness selection */
+.btn-diabetes,
+.btn-ibs,
+.btn-anxiety,
+.btn-depression,
+.btn-autoimmune,
+.btn-digestive,
+.btn-skin {
+ padding: 1em 2em;
+ border: none;
+ border-radius: 5px;
+ font-weight: bold;
+ letter-spacing: 5px;
+ text-transform: uppercase;
+ cursor: pointer;
+ color: #8bccc2;
+ transition: all 1000ms;
+ font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+ font-size: 15px;
+ position: relative;
+ overflow: hidden;
+ outline: 2px solid #8bccc2;
+ background: white;
+} 
+
+/* Browsing button - separate styling with green background */
+.btn-browsing {
+ padding: 1em 2em;
+ border: none;
+ border-radius: 5px;
+ font-weight: bold;
+ letter-spacing: 5px;
+ text-transform: uppercase;
+ cursor: pointer;
+ color: #ffffff;
+ transition: all 1000ms;
+ font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+ font-size: 15px;
+ position: relative;
+ overflow: hidden;
+ outline: 2px solid #8bccc2;
+ background: linear-gradient(135deg, #8bccc2, #4AAE9B);
+}
+
+.btn-diabetes::before,
+.btn-ibs::before,
+.btn-anxiety::before,
+.btn-depression::before,
+.btn-autoimmune::before,
+.btn-digestive::before,
+.btn-skin::before {
+ content: "";
+ position: absolute;
+ left: -50px;
+ top: 0;
+ width: 0;
+ height: 100%;
+ background-color: #8bccc2;
+ transform: skewX(45deg);
+ z-index: -1;
+ transition: width 1000ms;
+}
+
+.btn-browsing::before {
+ content: "";
+ position: absolute;
+ left: -50px;
+ top: 0;
+ width: 0;
+ height: 100%;
+ background-color: #ffffff;
+ transform: skewX(45deg);
+ z-index: -1;
+ transition: width 1000ms;
+}
+
+.btn-diabetes:hover::before,
+.btn-ibs:hover::before,
+.btn-anxiety:hover::before,
+.btn-depression:hover::before,
+.btn-autoimmune:hover::before,
+.btn-digestive:hover::before,
+.btn-skin:hover::before,
+.btn-browsing:hover::before {
+ width: 250%;
+}
+
+.btn-diabetes:hover,
+.btn-ibs:hover,
+.btn-anxiety:hover,
+.btn-depression:hover,
+.btn-autoimmune:hover,
+.btn-digestive:hover,
+.btn-skin:hover {
+ color: #ffffff;
+ transform: scale(1.1);
+ outline: 2px solid #78b4aa;
+ box-shadow: 4px 5px 17px -4px #268391;
+}
+
+.btn-browsing:hover {
+ color: #8bccc2;
+ transform: scale(1.1);
+ outline: 2px solid #78b4aa;
+ box-shadow: 4px 5px 17px -4px #268391;
+}
+
+
+/* Gooey Button Styles - Exact CodePen */
+@property --a {
+    syntax: "<percentage>";
+    initial-value: 0%;
+    inherits: true;
+}
+
+.gooey-btn {
+    --a: 0%;
+    --hue: 168deg;
+    --x: 50;
+    --y: 50;
+    --button: hsl(0, 0%, 100%);
+    --edge: 20px;
+    --size: 1.5em;
+    
+    background: transparent;
+    color: #4AAE9B;
+    font-size: 1.4em;
+    position: relative;
+    padding: calc(var(--size)) calc(var(--size)*1.5);
+    border-radius: 9px;
+    animation: color 20s linear infinite both;
+    transition: 
+        --a .5s ease-in-out, 
+        scale var(--spring-duration) var(--spring-easing);
+    scale: 0.92;
+    isolation: isolate;
+}
+
+.gooey-btn:hover {
+    --a: 100%;
+    transition-duration: .5s, 1s;
+    box-shadow: none;
+    opacity: 1;
+    scale: 1;
+}
+
+.gooey-btn:before {
+    content: "";
+    position: absolute;
+    inset: 0em;
+    /** here's the magic. A blur and a svg filter */
+    filter: blur(12px) url(#goo); 
+    /** followed by a radial-gradient which causes the
+    gooey effect to follow mouse-position */
+    background-image:
+        linear-gradient(0deg,var(--button),var(--button)),
+        radial-gradient(
+            40% 70% at calc(var(--x) * 1%) calc(var(--y) * 1%),
+            hsla(var(--hue), 77%, 77%, var(--a)) 0%,
+            transparent 90%
+        );
+    /** and finally a background-clip so the radial-gradient
+    is larger than the linear-gradient */
+    background-clip: content-box, border-box;
+    padding: 24px;
+    z-index: -1;
+    border: inherit;
+    animation: color 20s linear infinite both;
+}
+
+@property --hue {
+    syntax: "<angle>";
+    initial-value: 170deg;
+    inherits: false;
+}
+
+@keyframes color {
+    from {
+        --hue: 160deg;
+    }
+    to {
+        --hue: 180deg;
+    }
+}
+
+/* Popup Gooey Button */
+.popup-gooey-btn {
+    --a: 0%;
+    --hue: 168deg;
+    --x: 50;
+    --y: 50;
+    --button: hsl(0, 0%, 100%);
+    --edge: 20px;
+    --size: 1.2em;
+    
+    background: transparent;
+    color: #4AAE9B;
+    font-size: 1.2em;
+    position: relative;
+    padding: calc(var(--size)) calc(var(--size)*1.5);
+    border-radius: 9px;
+    animation: color 20s linear infinite both;
+    transition: 
+        --a .5s ease-in-out, 
+        scale var(--spring-duration) var(--spring-easing);
+    scale: 0.92;
+    isolation: isolate;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-gooey-btn:hover {
+    --a: 100%;
+    transition-duration: .5s, 1s;
+    box-shadow: none;
+    opacity: 1;
+    scale: 1;
+}
+
+.popup-gooey-btn:before {
+    content: "";
+    position: absolute;
+    inset: 0em;
+    filter: blur(12px) url(#popup-goo); 
+    background-image:
+        linear-gradient(0deg,var(--button),var(--button)),
+        radial-gradient(
+            40% 70% at calc(var(--x) * 1%) calc(var(--y) * 1%),
+            hsla(var(--hue), 77%, 77%, var(--a)) 0%,
+            transparent 90%
+        );
+    background-clip: content-box, border-box;
+    padding: 24px;
+    z-index: -1;
+    border: inherit;
+    animation: color 20s linear infinite both;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 border border-text rounded-eubiosis bg-white text-text font-medium transition-colors;
+    font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    @apply text-accent border-accent;
+  }
+
+  .btn-accent {
+    @apply px-6 py-3 border border-text rounded-eubiosis bg-accent text-white font-medium transition-colors;
+    font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+    font-weight: 500;
+  }
+
+  .btn-accent:hover {
+    @apply bg-[#3d9585];
+  }
+
+  .card {
+    @apply border border-border rounded-eubiosis p-6 bg-white;
+  }
+}
+
+/* Hide bottom navigation when modal is open */
+.hide-bottom-nav nav {
+  display: none !important;
+}
+
+/* Floating animations for benefit cards */
+@keyframes float-0 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-0.3deg); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.2deg); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(-0.5deg); }
+}
+
+.animate-float-0 {
+  animation: float-0 6s ease-in-out infinite;
+}
+
+.animate-float-1 {
+  animation: float-1 7s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-float-2 {
+  animation: float-2 5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-float-3 {
+  animation: float-3 8s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+/* Pause floating animation on hover */
+.animate-paused {
+  animation-play-state: paused !important;
+}
