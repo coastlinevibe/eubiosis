@@ -397,14 +397,23 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-                  <button
-                    key="Anxiety"
-                    onClick={() => onIllnessClick?.('Anxiety')}
-                    className="btn-anxiety"
-                    style={{ fontSize: '14px' }}
-                  >
-                    Anxiety
-                  </button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          key="Anxiety"
+                          onClick={() => onIllnessClick?.('Anxiety')}
+                          className="btn-anxiety"
+                          style={{ fontSize: '14px' }}
+                        >
+                          Anxiety
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Skin and allergies</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
