@@ -363,22 +363,40 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
               <div className="mt-8 w-full">
                 {/* Desktop: Show all buttons in grid */}
                 <div className="hidden lg:flex lg:flex-wrap gap-4 mb-4">
-                  <button
-                    key="IBS"
-                    onClick={() => onIllnessClick?.('IBS')}
-                    className="btn-diabetes"
-                    style={{ fontSize: '14px' }}
-                  >
-                    IBS
-                  </button>
-                  <button
-                    key="Diabetes"
-                    onClick={() => onIllnessClick?.('Diabetes')}
-                    className="btn-ibs"
-                    style={{ fontSize: '14px' }}
-                  >
-                    Diabetes
-                  </button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          key="IBS"
+                          onClick={() => onIllnessClick?.('IBS')}
+                          className="btn-diabetes"
+                          style={{ fontSize: '14px' }}
+                        >
+                          IBS
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Irritable Bowel Syndrome</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          key="Diabetes"
+                          onClick={() => onIllnessClick?.('Diabetes')}
+                          className="btn-ibs"
+                          style={{ fontSize: '14px' }}
+                        >
+                          Diabetes
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Obesity and Diabetes</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <button
                     key="Anxiety"
                     onClick={() => onIllnessClick?.('Anxiety')}
@@ -387,30 +405,57 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                   >
                     Anxiety
                   </button>
-                  <button
-                    key="Depression"
-                    onClick={() => onIllnessClick?.('Depression')}
-                    className="btn-depression"
-                    style={{ fontSize: '14px' }}
-                  >
-                    Depression
-                  </button>
-                  <button
-                    key="Autoimmune"
-                    onClick={() => onIllnessClick?.('Autoimmune')}
-                    className="btn-autoimmune"
-                    style={{ fontSize: '14px' }}
-                  >
-                    Autoimmune
-                  </button>
-                  <button
-                    key="Digestive Issues"
-                    onClick={() => onIllnessClick?.('Digestive Issues')}
-                    className="btn-digestive"
-                    style={{ fontSize: '14px' }}
-                  >
-                    Digestive
-                  </button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          key="Depression"
+                          onClick={() => onIllnessClick?.('Depression')}
+                          className="btn-depression"
+                          style={{ fontSize: '14px' }}
+                        >
+                          Depression
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Western Lifestyle</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          key="Autoimmune"
+                          onClick={() => onIllnessClick?.('Autoimmune')}
+                          className="btn-autoimmune"
+                          style={{ fontSize: '14px' }}
+                        >
+                          Autoimmune
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Joint Health and Immunity</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          key="Digestive Issues"
+                          onClick={() => onIllnessClick?.('Digestive Issues')}
+                          className="btn-digestive"
+                          style={{ fontSize: '14px' }}
+                        >
+                          Digestive
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>General health</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <button
                     key="Just Browsing"
                     onClick={() => onBrowsingClick?.()}

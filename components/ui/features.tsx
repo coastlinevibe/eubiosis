@@ -10,128 +10,128 @@ import Link from 'next/link';
 const quizQuestions = {
   Diabetes: [
     {
-      question: "How long have you been managing blood sugar concerns?",
-      options: ["Less than 1 year", "1-3 years", "3-5 years", "More than 5 years"]
+      question: "Do you want steadier energy instead of afternoon sugar crashes?",
+      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
     },
     {
-      question: "Do you experience energy crashes after meals?",
-      options: ["Never", "Rarely", "Sometimes", "Often"]
+      question: "Do you want your meals to keep you powered and calm?",
+      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
     },
     {
-      question: "Are you currently taking medication for blood sugar?",
-      options: ["No medication", "Metformin only", "Multiple medications", "Insulin"]
+      question: "Would you like your day to stop feeling like a sugar rollercoaster?",
+      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
     },
     {
-      question: "How would you rate your current gut health?",
-      options: ["Excellent", "Good", "Fair", "Poor"]
+      question: "Do you want your gut cheering for balanced cravings all day?",
+      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
     }
   ],
   IBS: [
     {
-      question: "How often do you experience digestive discomfort?",
-      options: ["Rarely", "Weekly", "Several times a week", "Daily"]
+      question: "Do you want your gut to chill out after every meal?",
+      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
     },
     {
-      question: "Which symptoms affect you most?",
-      options: ["Bloating", "Cramping", "Irregular bowel movements", "All of the above"]
+      question: "Would you like mornings without guessing how your belly will behave?",
+      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
     },
     {
-      question: "Have you tried probiotics before?",
-      options: ["Never", "Yes, with no results", "Yes, with some improvement", "Yes, with great results"]
+      question: "Do you want jeans that fit like it's still morning?",
+      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
     },
     {
-      question: "How does stress affect your symptoms?",
-      options: ["No effect", "Slight increase", "Moderate increase", "Severe worsening"]
+      question: "Would you like your routine to feel smooth from coffee to bedtime?",
+      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
     }
   ],
   Anxiety: [
     {
-      question: "How often do you experience anxiety symptoms?",
-      options: ["Rarely", "Weekly", "Several times a week", "Daily"]
+      question: "Do you want your thoughts moving at the pace of a calm breeze?",
+      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
     },
     {
-      question: "Do you notice a connection between your gut and mood?",
-      options: ["Never noticed", "Rarely", "Sometimes", "Very often"]
+      question: "Would you like your gut to send more zen than jitters?",
+      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
     },
     {
-      question: "Have you tried natural anxiety remedies?",
-      options: ["Never", "A few things", "Many options", "Everything I can find"]
+      question: "Do you want your mind to stop doom-scrolling before breakfast?",
+      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
     },
     {
-      question: "How would you describe your digestive health?",
-      options: ["Excellent", "Good", "Fair", "Poor"]
+      question: "Would you like evenings that feel cozy instead of wired?",
+      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
     }
   ],
   Depression: [
     {
-      question: "How long have you been dealing with mood concerns?",
-      options: ["Less than 6 months", "6 months - 1 year", "1-3 years", "More than 3 years"]
+      question: "Do you want mornings that greet you with sparkle instead of snooze?",
+      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
     },
     {
-      question: "Do you experience digestive issues alongside mood changes?",
-      options: ["Never", "Rarely", "Sometimes", "Often"]
+      question: "Would you like your gut hyping your mood like a bestie?",
+      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
     },
     {
-      question: "Have you explored the gut-brain connection?",
-      options: ["Never heard of it", "Heard about it", "Researched it", "Actively working on it"]
+      question: "Do you want your playlist to match your mood in the best way?",
+      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
     },
     {
-      question: "How is your energy level throughout the day?",
-      options: ["Consistently high", "Good most days", "Up and down", "Consistently low"]
+      question: "Would you like afternoons that feel lifted instead of low-battery?",
+      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
     }
   ],
   Autoimmune: [
     {
-      question: "Which autoimmune condition are you managing?",
-      options: ["Rheumatoid Arthritis", "Hashimoto's", "Crohn's/Colitis", "Multiple/Other"]
+      question: "Do you want your body to feel like it's on your team?",
+      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
     },
     {
-      question: "How often do you experience flare-ups?",
-      options: ["Rarely", "Monthly", "Weekly", "Constantly"]
+      question: "Would you like to wake up ready instead of negotiating with creaks?",
+      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
     },
     {
-      question: "Have you focused on gut health for immune support?",
-      options: ["Never considered it", "Heard about it", "Tried some things", "It's my main focus"]
+      question: "Do you want your calendar to have more adventures and fewer rain checks?",
+      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
     },
     {
-      question: "How would you rate your current inflammation levels?",
-      options: ["Very low", "Manageable", "Moderate", "High"]
+      question: "Would you like your routine to feel balanced from brunch to bedtime?",
+      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
     }
   ],
   "Digestive Issues": [
     {
-      question: "What digestive issues do you experience most?",
-      options: ["Bloating/Gas", "Irregular bowel movements", "Stomach pain", "All of the above"]
+      question: "Do you want a happy belly that stays quiet during date night?",
+      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
     },
     {
-      question: "How long have you had these symptoms?",
-      options: ["Less than 3 months", "3-6 months", "6 months - 1 year", "More than 1 year"]
+      question: "Would you like meals that feel like hugs instead of question marks?",
+      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
     },
     {
-      question: "Have you tried probiotics or digestive supplements?",
-      options: ["Never", "Yes, no improvement", "Yes, some improvement", "Yes, significant improvement"]
+      question: "Do you want to say yes to dessert without a pep talk?",
+      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
     },
     {
-      question: "How do your symptoms affect your daily life?",
-      options: ["Minimal impact", "Some disruption", "Moderate impact", "Significant impact"]
+      question: "Would you like mornings that start smooth from coffee to commute?",
+      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
     }
   ],
   "Skin Conditions": [
     {
-      question: "What skin concerns are you dealing with?",
-      options: ["Acne", "Eczema/Dermatitis", "Rosacea", "Multiple conditions"]
+      question: "Do you want your glow to show up before the ring light?",
+      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
     },
     {
-      question: "Have you noticed a connection between your diet and skin?",
-      options: ["Never noticed", "Slight connection", "Clear connection", "Very strong connection"]
+      question: "Would you like your skin to feel calm when your schedule isn't?",
+      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
     },
     {
-      question: "How long have you had these skin issues?",
-      options: ["Less than 6 months", "6 months - 1 year", "1-3 years", "More than 3 years"]
+      question: "Do you want to selfie without checking for surprise filters?",
+      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
     },
     {
-      question: "Have you explored gut health for skin improvement?",
-      options: ["Never considered it", "Heard about it", "Tried some things", "It's my main approach"]
+      question: "Would you like your routine to feel simple, inside and out?",
+      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
     }
   ]
 };
@@ -182,13 +182,13 @@ const illnessContent = {
   IBS: {
     tagline: "Digestive Relief. Lasting Comfort.",
     heading: "IBS Relief with Eubiosis",
-    description: "Find natural relief from IBS symptoms with our comprehensive gut-healing probiotic formula",
+    description: "Find natural relief from IBS symptoms when the microbiome of the gut is balanced",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "IBS Symptom Relief",
-        description: "Our probiotic strains help reduce bloating, cramping, and irregular bowel movements associated with IBS.",
+        description: "Our probiotic strains assist to reduce bloating, cramping, and irregular bowel movements associated with IBS.",
         image: "/images/hands.png",
       },
       {
@@ -197,13 +197,6 @@ const illnessContent = {
         title: "Gut Motility Strains",
         description: "Specially selected strains support healthy gut motility and reduce digestive discomfort.",
         image: "/images/bottles/bottle.png",
-      },
-      {
-        id: 3,
-        icon: "/images/Natural_Delivery_System.png?v=2",
-        title: "Soothing Delivery",
-        description: "Gentle honey-based delivery system calms irritated gut lining while delivering healing bacteria.",
-        image: "/images/bottles/bottle-combo.png",
       },
     ]
   },
@@ -639,10 +632,16 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
               >
-                <h4 className="text-base font-semibold text-gray-900 mb-3">Why Choose Eubiosis?</h4>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Clinically proven bacterial strains. Natural honey delivery system. No artificial preservatives. Third-party tested for purity.
+                <h4 className="text-base font-semibold text-gray-900 mb-3">Why Choose Eubiosis Supplement?</h4>
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                  Eubiosis Supplement combines the power of fulvic and humic acids — natural compounds that help the body restore internal balance. It supports your system by:
                 </p>
+                <ul className="list-disc list-inside text-gray-600 text-sm leading-relaxed space-y-1">
+                  <li><span className="font-medium">Detoxifying:</span> helping eliminate accumulated toxins and heavy metals</li>
+                  <li><span className="font-medium">Antioxidant action:</span> counteracting the effects of free radicals</li>
+                  <li><span className="font-medium">Immune support:</span> promoting antibody activity and strengthening natural defenses</li>
+                  <li><span className="font-medium">Microbial balance:</span> discouraging the growth of harmful bacteria</li>
+                </ul>
               </motion.div>
 
               {/* Scientific Research - Plain Text */}
@@ -657,19 +656,6 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   Our formula is backed by extensive research on the gut microbiome and its impact on overall health. 
                   Studies show that diverse probiotic strains can significantly improve digestive health and immune function.
                   Based on 50+ peer-reviewed studies.
-                </p>
-              </motion.div>
-
-              {/* Customer Success - Plain Text */}
-              <motion.div 
-                className="pt-6 mt-6"
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
-              >
-                <h4 className="text-base font-semibold text-gray-900 mb-3">Customer Success</h4>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  94% report improvement. 2 weeks average results.
                 </p>
               </motion.div>
 
