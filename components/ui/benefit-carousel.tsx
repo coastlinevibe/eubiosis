@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Play } from "lucide-react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
@@ -16,7 +15,6 @@ interface BenefitGridProps {
 
 export function BenefitGrid({ benefits }: BenefitGridProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
@@ -117,48 +115,6 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
                 />
               </div>
               <div className="text-center h-full flex flex-col justify-center">
-                {/* Video Placeholder Button - Centered by default, moves up on hover */}
-                <div className={`
-                  relative mb-4 transition-all duration-500 ease-out
-                  ${effectiveHoveredIndex === index ? '-translate-y-8' : ''}
-                `}>
-                  {/* Tooltip - appears on hover */}
-                  {effectiveHoveredIndex === index && (
-                    <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-[#8bccc2] text-white text-sm px-3 py-1 rounded-lg shadow-lg z-20 whitespace-nowrap animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
-                      Click here
-                      {/* Tooltip arrow */}
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[#8bccc2]"></div>
-                    </div>
-                  )}
-                  
-                  <button
-                    onClick={() => setSelectedVideoIndex(index)}
-                    className={`
-                      w-16 h-16 bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] 
-                      flex items-center justify-center mx-auto transition-all duration-300
-                      hover:scale-110 hover:rotate-12 relative overflow-hidden
-                      ${effectiveHoveredIndex === index ? 'scale-110 rotate-12' : ''}
-                    `}
-                    style={{ borderRadius: '9px' }}
-                  >
-                    {/* Video placeholder background pattern */}
-                    <div className="absolute inset-0 bg-black/20 opacity-50">
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-6 h-4 bg-white/30 rounded-sm relative">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-1 h-1 bg-white rounded-full"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <Play className={`
-                      w-6 h-6 text-white transition-all duration-300 relative z-10
-                      ${effectiveHoveredIndex === index ? 'rotate-12' : ''}
-                    `} fill="white" />
-                  </button>
-                </div>
-                
                 {/* Title - Hidden by default, appears on hover */}
                 <h3 className={`
                   text-xl font-bold text-[#8bccc2] mb-3 transition-all duration-500 ease-out
@@ -186,56 +142,6 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
           ))}
         </motion.div>
       </div>
-
-      {/* Video Modal */}
-      {selectedVideoIndex !== null && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="relative max-w-4xl w-full bg-white rounded-2xl p-8 shadow-2xl">
-            <button
-              onClick={() => setSelectedVideoIndex(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors z-20"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <div className="text-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                {benefits[selectedVideoIndex].title}
-              </h3>
-              
-              {/* Large Video Placeholder */}
-              <div className="relative bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl overflow-hidden shadow-2xl">
-                <div className="aspect-video flex items-center justify-center relative">
-                  {/* Video placeholder background pattern */}
-                  <div className="absolute inset-0 bg-black/30">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-24 h-16 bg-white/20 rounded-lg relative">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Large Play Button */}
-                  <div className="relative z-10 flex flex-col items-center space-y-4">
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors cursor-pointer">
-                      <Play className="w-10 h-10 text-white ml-1" fill="white" />
-                    </div>
-                    <p className="text-white text-lg font-medium">Video Coming Soon</p>
-                  </div>
-                </div>
-              </div>
-              
-              <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
-                {benefits[selectedVideoIndex].description}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

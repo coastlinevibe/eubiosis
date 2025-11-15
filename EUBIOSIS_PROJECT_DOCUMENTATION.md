@@ -133,23 +133,23 @@ eubiosis/
   - Gut Motility Strains: Supports healthy gut motility
   - Soothing Delivery: Honey-based system calms irritated gut lining
 
-#### 3. **Anxiety**
-- **Tagline**: "Mental Clarity. Gut-Brain Balance."
-- **Heading**: "Anxiety Support Through Gut Health"
-- **Description**: "Discover the connection between gut health and mental well-being with our anxiety-supporting formula"
+#### 3. **Skin Health**
+- **Tagline**: "Clear Skin. Gut-Based Beauty."
+- **Heading**: "Skin Health Through Gut Balance"
+- **Description**: "Support clearer, healthier skin by nurturing the gut-skin connection with balanced microbiome support"
 - **Features**:
-  - Gut-Brain Axis Support: Optimized microbiome balance
-  - Mood-Stabilizing Strains: Calming neurotransmitter production
-  - Stress-Resistant Delivery: Survives stomach acid
+  - Skin-Gut Connection: Gut-skin axis support from within
+  - Skin-Supporting Strains: Healthy inflammatory response support
+  - Beauty from Within: Gentle support for comprehensive skin wellness
 
-#### 4. **Depression**
-- **Tagline**: "Mood Enhancement. Natural Balance."
-- **Heading**: "Depression Support with Probiotics"
-- **Description**: "Support mental health naturally with our depression-fighting probiotic strains"
+#### 4. **Western Lifestyle**
+- **Tagline**: "Balanced Living. Natural Vitality."
+- **Heading**: "Western Lifestyle Support"
+- **Description**: "Support your body's natural balance in our fast-paced world with comprehensive gut health support"
 - **Features**:
-  - Mood Enhancement: Neurotransmitter production support
-  - Neurotransmitter Strains: Serotonin & dopamine support
-  - Brain-Gut Connection: Maximum absorption for optimal support
+  - Lifestyle Balance Support: Natural resilience against modern stresses
+  - Energy & Vitality Strains: Support for natural energy levels
+  - Gentle Daily Support: Consistent wellness support for demanding schedules
 
 #### 5. **Autoimmune**
 - **Tagline**: "Immune Balance. Natural Regulation."

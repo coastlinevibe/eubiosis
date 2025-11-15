@@ -6,132 +6,166 @@ import { Play, X, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, RotateCcw,
 import Image from 'next/image';
 import Link from 'next/link';
 
+// Video mapping for each illness
+const videoMapping = {
+  "Understanding IBS": {
+    videoId: "U_3nn1O7GMw",
+    title: "Understanding IBS",
+    credit: "The Disease Encyclopedia"
+  },
+  "Metabolic Harmony Support": {
+    videoId: "zBk4Xx4SQXg", 
+    title: "Diabetes Support",
+    credit: "The Disease Encyclopedia"
+  },
+  "Skin-Gut Connection": {
+    videoId: "N9gekEsR6i0",
+    title: "Skin Health",
+    credit: "The Disease Encyclopedia"
+  },
+  "Lifestyle Balance Support": {
+    videoId: "wikBB2BZCds",
+    title: "Western Lifestyle",
+    credit: "The Disease Encyclopedia"
+  },
+  "Immune System Support": {
+    videoId: "iWTfGebVMQg",
+    title: "Auto-Immune Support", 
+    credit: "The Disease Encyclopedia"
+  },
+  "Digestive Comfort Support": {
+    videoId: "pe9UlZHtp1U",
+    title: "Digestive Health",
+    credit: "The Disease Encyclopedia"
+  }
+};
+
 // Quiz questions for each illness
 const quizQuestions = {
   Diabetes: [
     {
       question: "Do you want steadier energy instead of afternoon sugar crashes?",
-      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
+      options: ["Steady energy all day would be amazing", "Energy is improving slowly", "Still up and down most days", "Afternoons still crash me"]
     },
     {
       question: "Do you want your meals to keep you powered and calm?",
-      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
+      options: ["Meals already keep me grounded", "Most meals feel balanced", "Only some meals keep me calm", "Meals still leave me jittery"]
     },
     {
       question: "Would you like your day to stop feeling like a sugar rollercoaster?",
-      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
+      options: ["The rollercoaster finally slowed down", "Fewer drops lately", "Still some wild swings", "Feels like a rollercoaster every day"]
     },
     {
       question: "Do you want your gut cheering for balanced cravings all day?",
-      options: ["Absolutely!", "Getting there", "Sometimes", "Not really"]
+      options: ["Balanced cravings would feel liberating", "I'm starting to feel more in control", "Cravings win half the time", "I'm still fighting every craving"]
     }
   ],
   IBS: [
     {
-      question: "Do you want your gut to chill out after every meal?",
-      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
+      question: "How amazing would it feel to have meals that don't end in knots?",
+      options: ["A chilled gut would be a blessing", "Even one calm meal would feel hopeful", "Some meals still end in knots", "Every meal still feels rough"]
     },
     {
-      question: "Would you like mornings without guessing how your belly will behave?",
-      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
+      question: "What would predictable mornings mean for you?",
+      options: ["Easy, pain-free starts again", "Even 1-2 steady mornings would help", "Most mornings are still a guess", "Mornings are the toughest part of my day"]
     },
     {
-      question: "Do you want jeans that fit like it's still morning?",
-      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
+      question: "How ready are you to feel comfortable in your clothes again?",
+      options: ["Yes please—comfort that lasts all day", "Most days feel okay but evenings are tricky", "Waistbands still change throughout the day", "Bloating keeps me changing outfits"]
     },
     {
-      question: "Would you like your routine to feel smooth from coffee to bedtime?",
-      options: ["Sign me up!", "Mostly there", "Some days", "Not yet"]
+      question: "How much would you value smoother days without meds?",
+      options: ["It would be a blessing", "It means I can feel healthier", "More freedom to move around", "No meds means no discomfort"]
     }
   ],
-  Anxiety: [
+  "Skin Health": [
     {
-      question: "Do you want your thoughts moving at the pace of a calm breeze?",
-      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
+      question: "Do you want your glow to show up before the ring light?",
+      options: ["My glow shows up on its own", "Glow is coming back", "Depends on the lighting", "Still waiting on that glow"]
     },
     {
-      question: "Would you like your gut to send more zen than jitters?",
-      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
+      question: "Would you like your skin to feel calm when your schedule isn't?",
+      options: ["Skin stays calm even during chaos", "Mostly calm with occasional flares", "Half calm, half reactive", "Still flares with stress"]
     },
     {
-      question: "Do you want your mind to stop doom-scrolling before breakfast?",
-      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
+      question: "Do you want to selfie without checking for surprise filters?",
+      options: ["Selfies feel fearless", "Usually comfortable snapping pics", "Depends on the day", "Still reach for filters first"]
     },
     {
-      question: "Would you like evenings that feel cozy instead of wired?",
-      options: ["Absolutely zen me!", "I'm close", "Some days", "Not quite"]
+      question: "Would you like your routine to feel simple, inside and out?",
+      options: ["My routine feels simple inside and out", "Mostly simple with minor tweaks", "Some steps still feel complicated", "Still feels overwhelming"]
     }
   ],
-  Depression: [
+  "Western Lifestyle": [
     {
-      question: "Do you want mornings that greet you with sparkle instead of snooze?",
-      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
+      question: "Do you want energy that matches your ambitions?",
+      options: ["Energy levels match my goals", "Most days I feel energized", "Energy comes and goes", "Still struggling with fatigue"]
     },
     {
-      question: "Would you like your gut hyping your mood like a bestie?",
-      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
+      question: "Would you like your body to bounce back from busy days?",
+      options: ["I recover quickly from stress", "Usually bounce back well", "Recovery takes some time", "Still feeling worn down"]
     },
     {
-      question: "Do you want your playlist to match your mood in the best way?",
-      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
+      question: "Do you want meals to fuel you instead of weighing you down?",
+      options: ["Meals give me sustained energy", "Most meals feel nourishing", "Some meals still drag me down", "Food often makes me sluggish"]
     },
     {
-      question: "Would you like afternoons that feel lifted instead of low-battery?",
-      options: ["Yes, please!", "Getting closer", "Some days shine", "Not really yet"]
+      question: "Would you like your wellness routine to feel effortless?",
+      options: ["Wellness feels natural now", "Most habits stick easily", "Some routines are challenging", "Still struggling with consistency"]
     }
   ],
   Autoimmune: [
     {
       question: "Do you want your body to feel like it's on your team?",
-      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
+      options: ["My body feels like it's on my team", "Most days we're aligned", "Some flare days still pop up", "Still feels like a battle"]
     },
     {
       question: "Would you like to wake up ready instead of negotiating with creaks?",
-      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
+      options: ["I wake up ready to roll", "Usually ready but cautious", "Depends on sleep and flares", "Still negotiating every morning"]
     },
     {
       question: "Do you want your calendar to have more adventures and fewer rain checks?",
-      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
+      options: ["Adventures fit back in my calendar", "Most plans stick now", "Still cancel a few", "Still cancel more than I keep"]
     },
     {
       question: "Would you like your routine to feel balanced from brunch to bedtime?",
-      options: ["All in!", "Working on it", "Depends on the day", "Not yet"]
+      options: ["Balanced from brunch to bedtime", "Mostly balanced with tiny wobbles", "Some wobble every day", "Days still feel uneven"]
     }
   ],
   "Digestive Issues": [
     {
       question: "Do you want a happy belly that stays quiet during date night?",
-      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
+      options: ["Happy belly stays quiet", "Mostly calm with rare rumbles", "Some rumbling moments", "Still loud every night"]
     },
     {
       question: "Would you like meals that feel like hugs instead of question marks?",
-      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
+      options: ["Every meal feels like a hug", "Most meals comfort me", "Some meals still question marks", "Meals still feel uncertain"]
     },
     {
       question: "Do you want to say yes to dessert without a pep talk?",
-      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
+      options: ["I say yes to dessert without worry", "Usually yes with confidence", "Depends on the day", "Still need a pep talk"]
     },
     {
       question: "Would you like mornings that start smooth from coffee to commute?",
-      options: ["Absolutely!", "Most days", "Sometimes", "Not really"]
+      options: ["Mornings start smooth from coffee on", "Mostly smooth with rare bumps", "Some rough starts linger", "Still rough most mornings"]
     }
   ],
   "Skin Conditions": [
     {
       question: "Do you want your glow to show up before the ring light?",
-      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
+      options: ["My glow shows up on its own", "Glow is coming back", "Depends on the lighting", "Still waiting on that glow"]
     },
     {
       question: "Would you like your skin to feel calm when your schedule isn't?",
-      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
+      options: ["Skin stays calm even during chaos", "Mostly calm with occasional flares", "Half calm, half reactive", "Still flares with stress"]
     },
     {
       question: "Do you want to selfie without checking for surprise filters?",
-      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
+      options: ["Selfies feel fearless", "Usually comfortable snapping pics", "Depends on the day", "Still reach for filters first"]
     },
     {
       question: "Would you like your routine to feel simple, inside and out?",
-      options: ["Totally!", "On my way", "Depends on the day", "Not right now"]
+      options: ["My routine feels simple inside and out", "Mostly simple with minor tweaks", "Some steps still feel complicated", "Still feels overwhelming"]
     }
   ]
 };
@@ -153,161 +187,162 @@ interface FeaturesProps {
 const illnessContent = {
   Diabetes: {
     tagline: "Blood Sugar Balance. Natural Support.",
-    heading: "How Eubiosis Helps with Diabetes",
-    description: "Discover how our probiotic formula supports healthy blood sugar levels and metabolic function",
+    heading: "Diabetes Support Through Gut Health",
+    description: "Support your metabolic wellness journey with balanced gut bacteria that may complement healthy lifestyle choices",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
-        title: "Metabolic Harmony",
-        description: "Eubiosis supports healthy insulin sensitivity and glucose metabolism through optimized gut bacteria balance.",
+        title: "Metabolic Harmony Support",
+        description: "Eubiosis may support healthy metabolic function through balanced gut bacteria as part of a healthy lifestyle.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
-        title: "Blood Sugar Support Strains",
-        description: "Our targeted strains help maintain healthy blood glucose levels and support pancreatic function.",
+        title: "Metabolic Support Strains",
+        description: "Our beneficial strains may help support healthy glucose metabolism when combined with proper diet and exercise.",
         image: "/images/bottles/bottle.png",
       },
       {
         id: 3,
         icon: "/images/Natural_Delivery_System.png?v=2",
-        title: "Gentle Metabolic Support",
-        description: "Organic honey delivery ensures our beneficial strains reach your gut intact for maximum metabolic benefits.",
+        title: "Gentle Daily Support",
+        description: "Organic honey delivery ensures our beneficial strains reach your gut to support overall metabolic wellness.",
         image: "/images/bottles/bottle-combo.png",
       },
     ]
   },
   IBS: {
-    tagline: "Digestive Relief. Lasting Comfort.",
-    heading: "IBS Relief with Eubiosis",
-    description: "Find natural relief from IBS symptoms when the microbiome of the gut is balanced",
+    tagline: "Digestive Support. Gentle Comfort.",
+    heading: "IBS Support with Eubiosis",
+    description: "Support digestive comfort and balance with beneficial bacteria that may help promote gut harmony",
     features: [
       {
-        id: 1,
+        id: 0,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
-        title: "IBS Symptom Relief",
-        description: "Our probiotic strains assist to reduce bloating, cramping, and irregular bowel movements associated with IBS.",
+        title: "Understanding IBS",
+        description:
+          "IBS often involves gut bacteria imbalance that may affect digestion. Stress, antibiotics, infections, and dietary changes can influence symptoms. Supporting microbial balance may help promote digestive comfort and overall gut wellness.",
         image: "/images/hands.png",
       },
       {
-        id: 2,
-        icon: "/images/42_Beneficial_Strains.png?v=2",
-        title: "Gut Motility Strains",
-        description: "Specially selected strains support healthy gut motility and reduce digestive discomfort.",
-        image: "/images/bottles/bottle.png",
+        id: 1,
+        icon: "/images/Gut_Harmony_Restored.png?v=2",
+        title: "Digestive Comfort Support",
+        description: "Our beneficial strains may help support digestive comfort and promote balanced gut function as part of a healthy lifestyle.",
+        image: "/images/hands.png",
       },
     ]
   },
-  Anxiety: {
-    tagline: "Mental Clarity. Gut-Brain Balance.",
-    heading: "Anxiety Support Through Gut Health",
-    description: "Discover the connection between gut health and mental well-being with our anxiety-supporting formula",
+  "Skin Health": {
+    tagline: "Clear Skin. Gut-Based Beauty.",
+    heading: "Skin Health Through Gut Balance",
+    description: "Support clearer, healthier skin by nurturing the gut-skin connection with balanced microbiome support",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
-        title: "Gut-Brain Axis Support",
-        description: "Eubiosis supports the gut-brain connection, helping reduce anxiety through optimized microbiome balance.",
+        title: "Skin-Gut Connection",
+        description: "Eubiosis may support the gut-skin axis, helping promote skin health from the inside out through balanced gut bacteria.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
-        title: "Mood-Stabilizing Strains",
-        description: "Our strains produce calming neurotransmitters and support healthy serotonin production.",
+        title: "Skin-Supporting Strains",
+        description: "Our beneficial strains may help support healthy inflammatory response and skin barrier function.",
         image: "/images/bottles/bottle.png",
       },
       {
         id: 3,
         icon: "/images/Natural_Delivery_System.png?v=2",
-        title: "Stress-Resistant Delivery",
-        description: "Honey-based formula survives stomach acid to deliver calming bacteria directly to your gut.",
+        title: "Beauty from Within",
+        description: "Honey delivery provides gentle support for comprehensive skin wellness through gut health.",
         image: "/images/bottles/bottle-combo.png",
       },
     ]
   },
-  Depression: {
-    tagline: "Mood Enhancement. Natural Balance.",
-    heading: "Depression Support with Probiotics",
-    description: "Support mental health naturally with our depression-fighting probiotic strains",
+  "Western Lifestyle": {
+    tagline: "Balanced Living. Natural Vitality.",
+    heading: "Western Lifestyle Support",
+    description: "Support your body's natural balance in our fast-paced world with comprehensive gut health support",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
-        title: "Mood Enhancement",
-        description: "Our probiotic formula supports healthy neurotransmitter production and mood regulation.",
+        title: "Lifestyle Balance Support",
+        description: "Eubiosis may help support your body's natural resilience against the stresses of modern living through gut balance.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
-        title: "Neurotransmitter Strains",
-        description: "Strains that support serotonin and dopamine production for improved mental well-being.",
+        title: "Energy & Vitality Strains",
+        description: "Our beneficial bacteria may support natural energy levels and overall vitality for busy lifestyles.",
         image: "/images/bottles/bottle.png",
       },
       {
         id: 3,
         icon: "/images/Natural_Delivery_System.png?v=2",
-        title: "Brain-Gut Connection",
-        description: "Honey delivery ensures maximum absorption for optimal brain-gut axis support.",
+        title: "Gentle Daily Support",
+        description: "Honey-based delivery provides gentle, consistent support for maintaining wellness in demanding schedules.",
         image: "/images/bottles/bottle-combo.png",
       },
     ]
   },
   Autoimmune: {
-    tagline: "Immune Balance. Natural Regulation.",
+    tagline: "Immune Balance. Natural Support.",
     heading: "Autoimmune Support with Eubiosis",
-    description: "Help regulate your immune system naturally with our autoimmune-supporting probiotic formula",
+    description: "Support your immune system naturally with beneficial bacteria that may help promote immune balance",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
-        title: "Immune System Balance",
-        description: "Eubiosis supports healthy immune regulation and reduces autoimmune flare-ups through gut health.",
+        title: "Immune System Support",
+        description: "Eubiosis may support healthy immune function through balanced gut bacteria as part of overall wellness.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
-        title: "Anti-Inflammatory Strains",
-        description: "Our strains help reduce systemic inflammation and support immune system homeostasis.",
+        title: "Balance-Supporting Strains",
+        description: "Our beneficial strains may help support healthy inflammatory response and immune system balance.",
         image: "/images/bottles/bottle.png",
       },
       {
         id: 3,
         icon: "/images/Natural_Delivery_System.png?v=2",
-        title: "Gentle Immune Support",
-        description: "Organic honey delivery provides soothing anti-inflammatory benefits alongside immune support.",
+        title: "Gentle Daily Support",
+        description: "Organic honey delivery provides gentle support for immune wellness alongside a healthy lifestyle.",
         image: "/images/bottles/bottle-combo.png",
       },
     ]
   },
   "Digestive Issues": {
-    tagline: "Complete Digestive Health. Natural Relief.",
+    tagline: "Complete Digestive Support. Natural Wellness.",
     heading: "Comprehensive Digestive Support",
-    description: "Resolve all types of digestive issues with our complete gut-healing probiotic solution",
+    description: "Support digestive wellness with beneficial bacteria that may help promote overall gut comfort and balance",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
-        title: "Complete Digestive Relief",
-        description: "Eubiosis addresses bloating, gas, indigestion, and other digestive discomforts comprehensively.",
+        title: "Digestive Comfort Support",
+        description: "Eubiosis may help support digestive comfort and promote balanced gut function as part of healthy living.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
-        title: "Full-Spectrum Strains",
-        description: "Complete coverage of beneficial bacteria for all aspects of digestive health and function.",
+        title: "Full-Spectrum Support",
+        description: "Comprehensive blend of beneficial bacteria that may support various aspects of digestive wellness.",
         image: "/images/bottles/bottle.png",
       },
       {
         id: 3,
         icon: "/images/Natural_Delivery_System.png?v=2",
-        title: "Maximum Absorption",
-        description: "Honey-based delivery ensures all 42 strains reach your gut intact for complete digestive support.",
+        title: "Optimal Delivery",
+        description: "Honey-based delivery helps ensure beneficial strains reach your gut to support digestive balance.",
         image: "/images/bottles/bottle-combo.png",
       },
     ]
@@ -357,7 +392,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  const illnesses = ['IBS', 'Diabetes', 'Anxiety', 'Depression', 'Autoimmune', 'Digestive Issues'];
+  const illnesses = ['IBS', 'Diabetes', 'Skin Health', 'Western Lifestyle', 'Autoimmune', 'Digestive Issues'];
 
   // Get content based on selected illness, fallback to default if no illness selected
   const currentContent = illness ? illnessContent[illness as keyof typeof illnessContent] : {
@@ -394,22 +429,26 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
 
   const features = currentContent.features;
 
+  // Disable auto-cycling globally
+  const autoCycle = false;
+
   useEffect(() => {
+    if (!autoCycle) return;
     const interval = setInterval(() => {
       setProgress((prev) => (prev >= 100 ? 100 : prev + 0.1));
     }, 10);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [autoCycle]);
 
   useEffect(() => {
+    if (!autoCycle) return;
     if (progress >= 100) {
       setTimeout(() => {
         setCurrentFeature((prev) => (prev + 1) % features.length);
         setProgress(0);
       }, 200);
     }
-  }, [progress]);
+  }, [progress, autoCycle, features.length]);
 
   useEffect(() => {
     const activeFeatureElement = featureRefs.current[currentFeature];
@@ -602,6 +641,12 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
               {/* Feature Text List */}
               {features.map((feature, index) => {
                 const isActive = currentFeature === index;
+                const tealTitles = [
+                  "What Causes IBS?",
+                  "IBS Symptom Relief",
+                  "Gut Motility Strains"
+                ];
+                const isTealTitle = tealTitles.includes(feature.title);
 
                 return (
                   <motion.div
@@ -614,7 +659,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                       className="cursor-pointer py-4"
                       onClick={() => handleFeatureClick(index)}
                     >
-                      <h3 className={`text-lg font-semibold mb-2 ${isActive ? 'text-[#8bccc2]' : 'text-gray-900'}`}>
+                      <h3 className={`text-lg font-semibold mb-2 ${isTealTitle ? 'text-[#4AAE9B]' : isActive ? 'text-[#8bccc2]' : 'text-gray-900'}`}>
                         {feature.title}
                       </h3>
                       <p className={`text-sm leading-relaxed ${isActive ? 'text-gray-700' : 'text-gray-600'}`}>
@@ -632,7 +677,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
               >
-                <h4 className="text-base font-semibold text-gray-900 mb-3">Why Choose Eubiosis Supplement?</h4>
+                <h4 className="text-base font-semibold text-[#4AAE9B] mb-3">Why Choose Eubiosis Supplement?</h4>
                 <p className="text-gray-600 text-sm leading-relaxed mb-3">
                   Eubiosis Supplement combines the power of fulvic and humic acids — natural compounds that help the body restore internal balance. It supports your system by:
                 </p>
@@ -651,11 +696,10 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
               >
-                <h4 className="text-base font-semibold text-gray-900 mb-3">Scientific Research</h4>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <h4 className="text-base font-semibold text-[#4AAE9B] mb-3">Scientific Research</h4>
+                <p className="text-gray-600 text-sm leading-relaxed mb-6">
                   Our formula is backed by extensive research on the gut microbiome and its impact on overall health. 
                   Studies show that diverse probiotic strains can significantly improve digestive health and immune function.
-                  Based on 50+ peer-reviewed studies.
                 </p>
               </motion.div>
 
@@ -663,7 +707,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
           </motion.div>
 
           {/* Right Side - Quiz + Video Side by Side */}
-          {illness ? (
+          {illness && videoMapping[features[currentFeature].title as keyof typeof videoMapping] ? (
             <div className="relative order-1 w-full max-w-full mx-auto lg:order-2">
               <div className="flex flex-col lg:flex-row gap-6">
                 {/* Quiz Section - Left Side */}
@@ -688,7 +732,8 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 1.1, ease: "easeOut" }}
                       >
-                        Take our quick assessment to understand how Eubiosis can help with {illness.toLowerCase()}.
+                        Discover how gut balance may support your {illness} wellness journey.
+
                       </motion.p>
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -906,6 +951,9 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                                 {getQuizResult().message}
                               </p>
                             </div>
+                            <p className="text-white text-sm font-medium mb-4">
+                              We support your "balanced gut" days!
+                            </p>
                             <div className="flex gap-2 justify-center">
                               <button 
                                 onClick={() => window.location.href = '/eubiosis-bottle/size-s/quantity-1'}
@@ -949,16 +997,17 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                     <div className="w-full h-[280px] bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-center relative overflow-hidden cursor-pointer group"
                          onClick={() => setSelectedVideoIndex(currentFeature)}>
                       
-                      {/* Video placeholder background pattern */}
-                      <div className="absolute inset-0 bg-black/20">
-                        <div className="w-full h-full flex items-center justify-center">
-                          <div className="w-32 h-20 bg-white/20 rounded-lg relative">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="w-4 h-4 bg-white rounded-full"></div>
-                            </div>
-                          </div>
+                      {/* Video background - YouTube thumbnail only */}
+                      {videoMapping[features[currentFeature].title as keyof typeof videoMapping] && (
+                        <div className="absolute inset-0">
+                          <img 
+                            src={`https://img.youtube.com/vi/${videoMapping[features[currentFeature].title as keyof typeof videoMapping].videoId}/maxresdefault.jpg`}
+                            alt={`${videoMapping[features[currentFeature].title as keyof typeof videoMapping].title} Video Thumbnail`}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/30"></div>
                         </div>
-                      </div>
+                      )}
 
                       {/* Play Button Overlay */}
                       <div className="relative z-10 flex flex-col items-center space-y-2 group-hover:scale-110 transition-transform duration-300">
@@ -967,7 +1016,9 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                         </div>
                         <div className="text-center">
                           <h3 className="text-white text-lg font-semibold mb-1">{features[currentFeature].title}</h3>
-                          <p className="text-white/80 text-xs">Click to watch video</p>
+                          {videoMapping[features[currentFeature].title as keyof typeof videoMapping] && (
+                            <p className="text-white/80 text-xs">Click to watch video</p>
+                          )}
                         </div>
                       </div>
 
@@ -1042,7 +1093,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                       
                       {/* Read More Button for Cycling Mode */}
                       <motion.button 
-                        className="btn-secondary"
+                        className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300"
                         onClick={onLearnMoreClick}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1058,7 +1109,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   {/* Show Learn More button only when NOT cycling (single illness selected) */}
                   {!cycling && (
                     <motion.button 
-                      className="btn-secondary"
+                      className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300"
                       onClick={onLearnMoreClick}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1085,53 +1136,12 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 </div>
               </motion.div>
             </div>
-          ) : (
-            <div className="relative order-1 w-full max-w-full mx-auto lg:order-2">
-              <motion.div
-                key={currentFeature}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="relative w-full"
-              >
-                {/* Video Placeholder Container */}
-                <div className="w-full max-w-[500px] h-[250px] md:h-[300px] lg:h-[400px] mx-auto bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-center relative overflow-hidden cursor-pointer group"
-                     onClick={() => setSelectedVideoIndex(currentFeature)}>
-                  
-                  {/* Video placeholder background pattern */}
-                  <div className="absolute inset-0 bg-black/20">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-32 h-20 bg-white/20 rounded-lg relative">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-4 h-4 bg-white rounded-full"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Play Button Overlay */}
-                  <div className="relative z-10 flex flex-col items-center space-y-2 md:space-y-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
-                      <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="white" />
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-white text-lg md:text-xl font-semibold mb-1 md:mb-2">{features[currentFeature].title}</h3>
-                      <p className="text-white/80 text-xs md:text-sm">Click to watch video</p>
-                    </div>
-                  </div>
-
-                  {/* Gradient Overlay for better text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                </div>
-              </motion.div>
-            </div>
-          )}
+          ) : null}
         </div>
       </div>
 
       {/* Video Modal */}
-      {selectedVideoIndex !== null && (
+      {selectedVideoIndex !== null && videoMapping[features[selectedVideoIndex].title as keyof typeof videoMapping] && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <div className="relative max-w-4xl w-full bg-white rounded-2xl p-8 shadow-2xl">
             <button
@@ -1142,33 +1152,56 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
             </button>
 
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
                 {features[selectedVideoIndex].title}
               </h3>
               
-              {/* Large Video Placeholder */}
-              <div className="relative bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl overflow-hidden shadow-2xl">
-                <div className="aspect-video flex items-center justify-center relative">
-                  {/* Video placeholder background pattern */}
-                  <div className="absolute inset-0 bg-black/30">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-32 h-20 bg-white/20 rounded-lg relative">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-4 h-4 bg-white rounded-full"></div>
+              {/* Credit Notice */}
+              {videoMapping[features[selectedVideoIndex].title as keyof typeof videoMapping] && (
+                <p className="text-sm text-gray-600 mb-4">
+                  Video courtesy of <span className="font-medium">{videoMapping[features[selectedVideoIndex].title as keyof typeof videoMapping].credit}</span> YouTube channel
+                </p>
+              )}
+              
+              {/* Video Content */}
+              {videoMapping[features[selectedVideoIndex].title as keyof typeof videoMapping] ? (
+                /* YouTube Video Embed */
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${videoMapping[features[selectedVideoIndex].title as keyof typeof videoMapping].videoId}`}
+                      title={videoMapping[features[selectedVideoIndex].title as keyof typeof videoMapping].title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="w-full h-full"
+                    ></iframe>
+                  </div>
+                </div>
+              ) : (
+                /* Video Placeholder for other videos */
+                <div className="relative bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="aspect-video flex items-center justify-center relative">
+                    {/* Video placeholder background pattern */}
+                    <div className="absolute inset-0 bg-black/30">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-32 h-20 bg-white/20 rounded-lg relative">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-4 h-4 bg-white rounded-full"></div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* Large Play Button */}
-                  <div className="relative z-10 flex flex-col items-center space-y-4">
-                    <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors cursor-pointer">
-                      <Play className="w-12 h-12 text-white ml-1" fill="white" />
+                    
+                    {/* Large Play Button */}
+                    <div className="relative z-10 flex flex-col items-center space-y-4">
+                      <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors cursor-pointer">
+                        <Play className="w-12 h-12 text-white ml-1" fill="white" />
+                      </div>
                     </div>
-                    <p className="text-white text-lg font-medium">Video Coming Soon</p>
                   </div>
                 </div>
-              </div>
+              )}
               
               <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
                 {features[selectedVideoIndex].description}

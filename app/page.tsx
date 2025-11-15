@@ -25,7 +25,7 @@ export default function Home() {
   const [selectedIllness, setSelectedIllness] = useState<string | null>(null);
   const [cycling, setCycling] = useState(false);
   
-  const illnesses = ['IBS', 'Diabetes', 'Anxiety', 'Depression', 'Autoimmune', 'Digestive Issues'];
+  const illnesses = ['IBS', 'Diabetes', 'Skin Health', 'Western Lifestyle', 'Autoimmune', 'Digestive Issues'];
   
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -229,8 +229,8 @@ export default function Home() {
   return (
     <main>
       <AnimatePresence mode="wait">
-        {/* Hero Section - Only show in hero-only and browsing modes */}
-        {(viewMode === 'hero-only' || viewMode === 'browsing') && (
+        {/* Hero Section - Only show in hero-only mode */}
+        {viewMode === 'hero-only' && (
           <motion.section
             key="hero"
             initial={{ opacity: 0, y: 20 }}

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChevronDown, ShoppingBag } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
+
 
 interface Ripple {
   id: number;
@@ -274,13 +274,14 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
         <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-4 sm:px-8 sm:py-6 md:px-16 md:py-20 mt-0 sm:-mt-20">
           
           {/* Mobile Hero Text - Shows above image on mobile */}
-          <div className="lg:hidden w-full text-center mb-6 mt-4">
-            <h2 className="text-[21px] sm:text-[25px] font-mono font-medium text-white uppercase tracking-[0.3em] opacity-90 mb-2">
-              EUBIOSIS
-            </h2>
-            <h2 className="text-[15px] font-mono font-light text-white/80 uppercase tracking-[0.2em] opacity-80">
-              NOURISH, HEAL, THRIVE
-            </h2>
+          <div className="lg:hidden w-full text-center mb-6 -mt-[30px] sm:-mt-[20px]">
+            <div className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+              <span className="text-[13px] font-semibold tracking-[0.4em] text-white uppercase">EUBIOSIS</span>
+              <span className="text-[13px] font-light tracking-[0.3em] text-[#8dcdc6] uppercase">Supplement</span>
+            </div>
+            <p className="mt-3 text-[13px] font-mono font-light text-white/75 uppercase tracking-[0.2em]">
+              Nourish • Heal • Thrive
+            </p>
           </div>
 
           {/* Mobile Product Image - Shows after text on mobile */}
@@ -343,18 +344,22 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
             }}
           >
             
-            <div className="text-left relative pt-10">
+            <div className="text-left relative pt-0 lg:pt-2">
+              <div className="hidden lg:inline-flex items-center gap-3 mb-8 lg:-mt-[30px] px-6 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
+                <span className="text-[13px] sm:text-[14px] font-semibold tracking-[0.45em] text-white uppercase">EUBIOSIS</span>
+                <span className="text-[13px] sm:text-[14px] font-light tracking-[0.35em] text-[#8dcdc6] uppercase">Supplement</span>
+              </div>
               {/* Main Heading */}
               <h1 className="text-[37px] sm:text-[49px] md:text-[61px] lg:text-[73px] font-extralight leading-tight tracking-tight text-white text-decoration-animate mb-8">
                 <div className="mb-4 md:mb-6">
-                  <span className="word-animate" data-delay="1200">Restore</span>{' '}
-                  <span className="word-animate" data-delay="1400">your</span>{' '}
-                  <span className="word-animate" data-delay="1600">gut,</span>
+                  <span className="word-animate" data-delay="1200">Rebalance</span>{' '}
+                  <span className="word-animate" data-delay="1400">Your</span>{' '}
+                  <span className="word-animate" data-delay="1600">Gut.</span>
                 </div>
                 <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin text-white/90 leading-relaxed tracking-wide">
-                  <span className="word-animate" data-delay="1800">reclaim</span>{' '}
-                  <span className="word-animate" data-delay="2000">your</span>{' '}
-                  <span className="word-animate" data-delay="2200">vitality</span>
+                  <span className="word-animate" data-delay="1800">Rediscover</span>{' '}
+                  <span className="word-animate" data-delay="2000">Your</span>{' '}
+                  <span className="word-animate" data-delay="2200">Health.</span>
                 </div>
               </h1>
 
@@ -362,114 +367,65 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
               {/* Illness Buttons - Desktop: Grid, Mobile: Dropdown */}
               <div className="mt-8 w-full">
                 {/* Desktop: Show all buttons in grid */}
-                <div className="hidden lg:flex lg:flex-wrap gap-4 mb-4">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          key="IBS"
-                          onClick={() => onIllnessClick?.('IBS')}
-                          className="btn-diabetes"
-                          style={{ fontSize: '14px' }}
-                        >
-                          IBS
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Irritable Bowel Syndrome</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          key="Diabetes"
-                          onClick={() => onIllnessClick?.('Diabetes')}
-                          className="btn-ibs"
-                          style={{ fontSize: '14px' }}
-                        >
-                          Diabetes
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Obesity and Diabetes</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          key="Anxiety"
-                          onClick={() => onIllnessClick?.('Anxiety')}
-                          className="btn-anxiety"
-                          style={{ fontSize: '14px' }}
-                        >
-                          Anxiety
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Skin and allergies</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          key="Depression"
-                          onClick={() => onIllnessClick?.('Depression')}
-                          className="btn-depression"
-                          style={{ fontSize: '14px' }}
-                        >
-                          Depression
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Western Lifestyle</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          key="Autoimmune"
-                          onClick={() => onIllnessClick?.('Autoimmune')}
-                          className="btn-autoimmune"
-                          style={{ fontSize: '14px' }}
-                        >
-                          Autoimmune
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Joint Health and Immunity</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          key="Digestive Issues"
-                          onClick={() => onIllnessClick?.('Digestive Issues')}
-                          className="btn-digestive"
-                          style={{ fontSize: '14px' }}
-                        >
-                          Digestive
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>General health</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                <div className="hidden lg:grid lg:grid-cols-3 gap-4 mb-4">
+                  {/* First Line: Irritable Bowel Syndrome, Diabetes, Skin Health */}
+                  <button
+                    key="IBS"
+                    onClick={() => onIllnessClick?.('IBS')}
+                    className="btn-diabetes"
+                    style={{ fontSize: '12px' }}
+                  >
+                    Irritable Bowel Syndrome
+                  </button>
+                  <button
+                    key="Diabetes"
+                    onClick={() => onIllnessClick?.('Diabetes')}
+                    className="btn-ibs"
+                    style={{ fontSize: '14px' }}
+                  >
+                    Diabetes
+                  </button>
+                  <button
+                    key="Skin Health"
+                    onClick={() => onIllnessClick?.('Skin Health')}
+                    className="btn-anxiety"
+                    style={{ fontSize: '14px' }}
+                  >
+                    Skin Health
+                  </button>
+                  
+                  {/* Second Line: Auto-Immune, Western Lifestyle */}
+                  <button
+                    key="Autoimmune"
+                    onClick={() => onIllnessClick?.('Autoimmune')}
+                    className="btn-autoimmune"
+                    style={{ fontSize: '14px' }}
+                  >
+                    Auto-Immune
+                  </button>
+                  <button
+                    key="Western Lifestyle"
+                    onClick={() => onIllnessClick?.('Western Lifestyle')}
+                    className="btn-depression"
+                    style={{ fontSize: '14px', gridColumn: 'span 2' }}
+                  >
+                    Western Lifestyle
+                  </button>
+                  
+                  {/* Third Line: Digestive, Just Browsing */}
+                  <button
+                    key="Digestive Issues"
+                    onClick={() => onIllnessClick?.('Digestive Issues')}
+                    className="btn-digestive"
+                    style={{ fontSize: '14px', gridColumn: '1', gridRow: '3' }}
+                  >
+                    Digestive
+                  </button>
                   <button
                     key="Just Browsing"
                     onClick={() => onBrowsingClick?.()}
                     className="btn-browsing"
-                    style={{ gridColumn: 'span 1' }}
+                    style={{ gridColumn: '2', gridRow: '3' }}
                   >
                     Just Browsing
                   </button>
@@ -507,21 +463,21 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                   >
                     <div className="grid grid-cols-2 gap-2 mt-3">
                       {[
-                      { name: 'IBS', className: 'btn-diabetes' },
-                        { name: 'Diabetes', className: 'btn-ibs' },
-                        { name: 'Anxiety', className: 'btn-anxiety' },
-                        { name: 'Depression', className: 'btn-depression' },
-                        { name: 'Autoimmune', className: 'btn-autoimmune' },
-                        { name: 'Digestive Issues', className: 'btn-digestive' },
-                        { name: 'Just Browsing', className: 'btn-browsing' }
+                        { name: 'Irritable Bowel Syndrome', key: 'IBS', className: 'btn-diabetes' },
+                        { name: 'Diabetes', key: 'Diabetes', className: 'btn-ibs' },
+                        { name: 'Skin Health', key: 'Skin Health', className: 'btn-anxiety' },
+                        { name: 'Auto-Immune', key: 'Autoimmune', className: 'btn-autoimmune' },
+                        { name: 'Western Lifestyle', key: 'Western Lifestyle', className: 'btn-depression' },
+                        { name: 'Digestive Issues', key: 'Digestive Issues', className: 'btn-digestive' },
+                        { name: 'Just Browsing', key: 'Just Browsing', className: 'btn-browsing' }
                       ].map((button, index) => (
                         <motion.button
                           key={button.name}
                           onClick={() => {
-                            if (button.name === 'Just Browsing') {
+                            if (button.key === 'Just Browsing') {
                               onBrowsingClick?.();
                             } else {
-                              onIllnessClick?.(button.name);
+                              onIllnessClick?.(button.key);
                             }
                             setIsDropdownOpen(false);
                           }}
@@ -545,23 +501,20 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
 
               {/* Additional Action Buttons */}
               <div className="mt-6 flex justify-start gap-4 items-center">
-                <button className="btn-secondary" onClick={onLearnMoreClick}>
+                <button
+                  onClick={onLearnMoreClick}
+                  className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8dcdc6]/30 transition-all duration-300"
+                >
                   LEARN MORE
                 </button>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link href="/eubiosis-bottle/size-s/quantity-1">
-                        <button className="btn p-4 flex items-center justify-center">
-                          <ShoppingBag className="w-6 h-6" />
-                        </button>
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Shop Now</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <Link href="/eubiosis-bottle/size-s/quantity-1">
+                  <button className="btn p-4 flex items-center justify-center gap-2">
+                    <ShoppingBag className="w-6 h-6" />
+                    <span className="whitespace-nowrap">Shop Now!</span>
+                    {/* Extra trailing span to avoid globals.css rule hiding last span */}
+                    <span aria-hidden="true"></span>
+                  </button>
+                </Link>
               </div>
 
               {/* Detail Lines for Left Column */}
@@ -569,7 +522,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
             </div>
 
             {/* Right Column - Product Image */}
-            <div className="hidden lg:flex justify-center items-center">
+            <div className="hidden lg:flex justify-center items-center mt-[100px]">
               <motion.div 
                 className="w-full max-w-lg h-[500px] flex items-center justify-center relative"
                 initial={{ opacity: 0, x: 100, scale: 0.9, rotateY: 15 }}
