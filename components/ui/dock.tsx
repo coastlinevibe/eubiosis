@@ -19,9 +19,10 @@ interface DockProps {
     onClick?: () => void
   }[]
   activeItem?: string
+  showHomeText?: string
 }
 
-export default function Dock({ items, className, activeItem }: DockProps) {
+export default function Dock({ items, className, activeItem, showHomeText }: DockProps) {
   const [active, setActive] = React.useState<string | null>(activeItem || null)
   const [hovered, setHovered] = React.useState<number | null>(null)
 
@@ -59,7 +60,10 @@ export default function Dock({ items, className, activeItem }: DockProps) {
                       rotate: isHovered ? -5 : 0,
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="relative flex flex-col items-center"
+                    className={cn(
+                      "relative flex items-center",
+                      item.label === 'Home' && showHomeText ? "flex-row gap-2" : "flex-col"
+                    )}
                   >
                     <Button
                       variant="ghost"
@@ -82,6 +86,7 @@ export default function Dock({ items, className, activeItem }: DockProps) {
                           isActive ? "text-accent" : "text-text"
                         )}
                       />
+                      
                       {isHovered && (
                         <motion.span
                           layoutId="glow"
@@ -92,6 +97,10 @@ export default function Dock({ items, className, activeItem }: DockProps) {
                         />
                       )}
                     </Button>
+
+                    {item.label === 'Home' && showHomeText && (
+                      <span className="text-sm text-text whitespace-nowrap">{showHomeText}</span>
+                    )}
 
                     {isActive && (
                       <motion.div

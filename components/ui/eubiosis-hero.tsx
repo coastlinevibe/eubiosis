@@ -274,7 +274,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
         <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-4 sm:px-8 sm:py-6 md:px-16 md:py-20 mt-0 sm:-mt-20">
           
           {/* Mobile Hero Text - Shows above image on mobile */}
-          <div className="lg:hidden w-full text-center mb-6 -mt-[30px] sm:-mt-[20px]">
+          <div className="lg:hidden w-full text-center mb-6 mt-10">
             <div className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
               <span className="text-[13px] font-semibold tracking-[0.4em] text-white uppercase">EUBIOSIS</span>
               <span className="text-[13px] font-light tracking-[0.3em] text-[#8dcdc6] uppercase">Supplement</span>
@@ -345,7 +345,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
           >
             
             <div className="text-left relative pt-0 lg:pt-2">
-              <div className="hidden lg:inline-flex items-center gap-3 mb-8 lg:-mt-[30px] px-6 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
+              <div className="hidden lg:inline-flex items-center gap-3 mb-8 lg:mt-10 px-6 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
                 <span className="text-[13px] sm:text-[14px] font-semibold tracking-[0.45em] text-white uppercase">EUBIOSIS</span>
                 <span className="text-[13px] sm:text-[14px] font-light tracking-[0.35em] text-[#8dcdc6] uppercase">Supplement</span>
               </div>

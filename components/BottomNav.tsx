@@ -128,7 +128,7 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-4">
-      <Dock items={dockItems} activeItem={getActiveItem()} />
+      <Dock items={dockItems} activeItem={getActiveItem()} showHomeText="Home Page" />
     </nav>
   )
 }

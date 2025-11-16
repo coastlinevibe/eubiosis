@@ -119,6 +119,14 @@ export default function Home() {
     }
   ];
 
+  const doodleBackgroundStyle: React.CSSProperties = {
+    backgroundImage:
+      "linear-gradient(rgba(246,242,234,0.90), rgba(246,242,234,0.90)), url(/images/webbg.jpg)",
+    backgroundSize: '300px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'repeat',
+  };
+
   useEffect(() => {
     /** 
         very simply js to capture mouse position 
@@ -351,7 +359,7 @@ export default function Home() {
               stiffness: 80
             }}
             className="w-full py-2"
-            style={{ backgroundColor: '#fefefc' }}
+            style={doodleBackgroundStyle}
           >
             <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-16">
               {/* Header Section */}

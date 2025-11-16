@@ -19,9 +19,16 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   const effectiveHoveredIndex = hoveredIndex;
+  const doodleBackgroundStyle = {
+    backgroundImage:
+      "linear-gradient(rgba(246,242,234,0.90), rgba(246,242,234,0.90)), url(/images/webbg.jpg)",
+    backgroundSize: '300px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'repeat',
+  } as const;
 
   return (
-    <section ref={sectionRef} className="py-2 px-4" style={{ backgroundColor: '#fefefc' }} suppressHydrationWarning>
+    <section ref={sectionRef} className="py-2 px-4" style={doodleBackgroundStyle} suppressHydrationWarning>
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div 

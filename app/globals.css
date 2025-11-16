@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,11 +35,11 @@
 @layer base {
   /* Note: Futura Std fonts would need to be purchased/licensed. Using fallback system fonts with similar characteristics */
   body {
-    @apply text-text;
-    font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
-    font-weight: 300;
-    line-height: 1.4;
-    letter-spacing: 0.01em;
+    @apply text-soft;
+    font-family: 'Quicksand', 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -54,25 +55,26 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
+    font-family: 'Quicksand', 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+    color: #1F2F2F;
   }
 }
 
 /* From Uiverse.io by Shakil-Babu */ 
 .btn {
- background-color: #8bccc2;
- padding: 14px 40px;
- color: #fff;
- text-transform: uppercase;
- letter-spacing: 2px;
- cursor: pointer;
- border-radius: 10px;
- border: 2px dashed #8bccc2;
- box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
- transition: .4s;
+  background-color: #3A9E92;
+  padding: 14px 40px;
+  color: #fff;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  transition: .25s ease;
 }
 
 .btn span:last-child {
@@ -80,14 +82,13 @@
 }
 
 .btn:hover {
- transition: .4s;
- border: 2px dashed #8bccc2;
- background-color: #fff;
- color: #8bccc2;
+  transform: translateY(-1px);
+  background-color: #2f8a7f;
+  color: #ffffff;
 }
 
 .btn:active {
- background-color: #87dbd0;
+  background-color: #2b7b72;
 }
 
 /* Animated icon button styles - From Uiverse.io by fthisilak */ 
@@ -239,16 +240,15 @@
 /* Secondary button - removed duplicate, using the one below with illness buttons */
 
 .btn-secondary {
- background-color: #8bccc2;
- padding: 14px 40px;
- color: #fff;
- text-transform: uppercase;
- letter-spacing: 2px;
- cursor: pointer;
- border-radius: 10px;
- border: 2px dashed #8bccc2;
- box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
- transition: .4s;
+  background-color: #ffffff;
+  padding: 14px 40px;
+  color: #1F2F2F;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #E2E8E8;
+  transition: .25s ease;
 }
 
 .btn-secondary span:last-child {
@@ -256,14 +256,13 @@
 }
 
 .btn-secondary:hover {
- transition: .4s;
- border: 2px dashed #8bccc2;
- background-color: #fff;
- color: #8bccc2;
+  border-color: #3A9E92;
+  color: #3A9E92;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
 }
 
 .btn-secondary:active {
- background-color: #87dbd0;
+  background-color: #F6F2EA;
 }
 
 /* Unique button styles for illness selection */
@@ -281,13 +280,13 @@
  letter-spacing: 5px;
  text-transform: uppercase;
  cursor: pointer;
- color: #8bccc2;
+ color: #3A9E92;
  transition: all 1000ms;
  font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
  font-size: 15px;
  position: relative;
  overflow: hidden;
- outline: 2px solid #8bccc2;
+ outline: 2px solid #3A9E92;
  background: white;
 } 
 
@@ -300,14 +299,14 @@
  letter-spacing: 5px;
  text-transform: uppercase;
  cursor: pointer;
- color: #ffffff;
+ color: #1F2F2F;
  transition: all 1000ms;
  font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
  font-size: 15px;
  position: relative;
  overflow: hidden;
- outline: 2px solid #8bccc2;
- background: linear-gradient(135deg, #8bccc2, #4AAE9B);
+ outline: 2px solid #2f8a7f;
+ background: linear-gradient(135deg, #3A9E92 0%, #A4DAD2 100%);
 }
 
 .btn-diabetes::before,
@@ -323,7 +322,7 @@
  top: 0;
  width: 0;
  height: 100%;
- background-color: #8bccc2;
+ background-color: #3A9E92;
  transform: skewX(45deg);
  z-index: -1;
  transition: width 1000ms;
@@ -361,16 +360,16 @@
 .btn-digestive:hover,
 .btn-skin:hover {
  color: #ffffff;
- transform: scale(1.1);
- outline: 2px solid #78b4aa;
- box-shadow: 4px 5px 17px -4px #268391;
+ transform: scale(1.05);
+ outline: 2px solid #2f8a7f;
+ box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
 }
 
 .btn-browsing:hover {
- color: #8bccc2;
- transform: scale(1.1);
- outline: 2px solid #78b4aa;
- box-shadow: 4px 5px 17px -4px #268391;
+ color: #1F2F2F;
+ transform: scale(1.05);
+ outline: 2px solid #2f8a7f;
+ box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -506,7 +505,7 @@
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 border border-text rounded-eubiosis bg-white text-text font-medium transition-colors;
+    @apply px-6 py-3 border border-border rounded-eubiosis bg-white text-text font-medium transition-colors shadow-premium;
     font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
     font-weight: 500;
   }
@@ -516,7 +515,7 @@
   }
 
   .btn-accent {
-    @apply px-6 py-3 border border-text rounded-eubiosis bg-accent text-white font-medium transition-colors;
+    @apply px-6 py-3 border border-transparent rounded-eubiosis bg-accent text-white font-medium transition-colors shadow-premium;
     font-family: 'Futura', 'Trebuchet MS', 'Arial Narrow', sans-serif;
     font-weight: 500;
   }
@@ -526,8 +525,13 @@
   }
 
   .card {
-    @apply border border-border rounded-eubiosis p-6 bg-white;
+    @apply border border-border rounded-eubiosis p-6 bg-white shadow-premium;
   }
+}
+
+/* Premium teal gradient utility */
+.bg-premium-teal {
+  background: linear-gradient(135deg, #3A9E92 0%, #A4DAD2 100%);
 }
 
 /* Hide bottom navigation when modal is open */

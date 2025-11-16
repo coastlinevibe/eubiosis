@@ -57,6 +57,13 @@ export function AnimatedKeyIngredients() {
   const [isVisible, setIsVisible] = useState(false);
   const [particlePositions, setParticlePositions] = useState<{left: string, top: string}[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const doodleBackgroundStyle = {
+    backgroundImage:
+      "linear-gradient(rgba(246,242,234,0.90), rgba(246,242,234,0.90)), url(/images/webbg.jpg)",
+    backgroundSize: '300px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'repeat',
+  } as const;
 
   useEffect(() => {
     // Generate random positions only on client
@@ -84,7 +91,7 @@ export function AnimatedKeyIngredients() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="pt-6 pb-40 px-4" style={{ backgroundColor: '#fefefc' }}>
+    <section ref={sectionRef} className="pt-6 pb-40 px-4" style={doodleBackgroundStyle}>
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-8 items-center mb-8">

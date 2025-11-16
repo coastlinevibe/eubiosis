@@ -394,6 +394,14 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
 
   const illnesses = ['IBS', 'Diabetes', 'Skin Health', 'Western Lifestyle', 'Autoimmune', 'Digestive Issues'];
 
+  const doodleBackgroundStyle = {
+    backgroundImage:
+      "linear-gradient(rgba(246,242,234,0.90), rgba(246,242,234,0.90)), url(/images/webbg.jpg)",
+    backgroundSize: '300px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'repeat',
+  } as const;
+
   // Get content based on selected illness, fallback to default if no illness selected
   const currentContent = illness ? illnessContent[illness as keyof typeof illnessContent] : {
     tagline: "Natural Gut Health. Real Results.",
@@ -532,7 +540,11 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   };
 
   return (
-    <div ref={sectionRef} className="min-h-screen py-8 px-4" style={{ backgroundColor: '#fefefc' }}>
+    <div
+      ref={sectionRef}
+      className="min-h-screen py-8 px-4"
+      style={doodleBackgroundStyle}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
@@ -1123,7 +1135,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   
                   {/* Back Home Button */}
                   <motion.button 
-                    className="btn-secondary p-3"
+                    className="btn-secondary p-3 flex items-center gap-2"
                     onClick={onResetToHero}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1132,6 +1144,8 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                     whileTap={{ scale: 0.95 }}
                   >
                     <Home className="w-5 h-5" />
+                    <span>Home Page</span>
+                    <span aria-hidden="true"></span>
                   </motion.button>
                 </div>
               </motion.div>
