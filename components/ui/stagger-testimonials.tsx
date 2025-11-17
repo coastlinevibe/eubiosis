@@ -27,7 +27,7 @@ const testimonials = [
   },
   {
     tempId: 3,
-    testimonial: "I've been taking Eubiosis for a month and my gut health has never been better!",
+    testimonial: "I've been taking Eubiosis-S for a month and my gut health has never been better!",
     by: "Sarah, Pretoria",
     imgSrc: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
   },
@@ -39,7 +39,7 @@ const testimonials = [
   },
   {
     tempId: 5,
-    testimonial: "Eubiosis has become an essential part of my wellness routine.",
+    testimonial: "Eubiosis-S has become an essential part of my wellness routine.",
     by: "Nomsa, Cape Town",
     imgSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face"
   },
@@ -51,7 +51,7 @@ const testimonials = [
   },
   {
     tempId: 7,
-    testimonial: "My immune system feels stronger since I started taking Eubiosis.",
+    testimonial: "My immune system feels stronger since I started taking Eubiosis-S.",
     by: "Zara, Pretoria",
     imgSrc: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face"
   }

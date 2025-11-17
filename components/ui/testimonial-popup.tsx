@@ -84,7 +84,7 @@ export function TestimonialPopup({ isOpen, onClose, testimonial }: TestimonialPo
           <div className="absolute -top-16 -right-16 z-10 animate-in slide-in-from-top-8 slide-in-from-right-8 duration-700 delay-200">
             <Image
               src="/images/bottles/bottle-combo.png"
-              alt="Eubiosis Bottles"
+              alt="Eubiosis-S Bottles"
               width={120}
               height={160}
               className="drop-shadow-xl"

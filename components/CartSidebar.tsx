@@ -102,7 +102,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 <ShoppingBag className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                 <p className="text-gray-500 mb-4">Your cart is empty</p>
                 <Link
-                  href="/eubiosis-bottle/size-s/quantity-1"
+                  href="/eubiosis-s-bottle/size-s/quantity-1"
                   onClick={onClose}
                   className="inline-block px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
                 >
@@ -201,7 +201,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                       const firstItem = cartItems[0]
                       if (firstItem) {
                         const sizeCode = firstItem.size === '50ml' ? 's' : 'j'
-                        const newUrl = `/eubiosis-bottle/size-${sizeCode}/quantity-${firstItem.quantity}`
+                        const newUrl = `/eubiosis-s-bottle/size-${sizeCode}/quantity-${firstItem.quantity}`
                         window.location.href = newUrl // Full refresh
                       }
                     }}

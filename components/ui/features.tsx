@@ -194,7 +194,7 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Metabolic Harmony Support",
-        description: "Eubiosis may support healthy metabolic function through balanced gut bacteria as part of a healthy lifestyle.",
+        description: "Eubiosis-S may support healthy metabolic function through balanced gut bacteria as part of a healthy lifestyle.",
         image: "/images/hands.png",
       },
       {
@@ -215,7 +215,7 @@ const illnessContent = {
   },
   IBS: {
     tagline: "Digestive Support. Gentle Comfort.",
-    heading: "IBS Support with Eubiosis",
+    heading: "IBS Support with Eubiosis-S",
     description: "Support digestive comfort and balance with beneficial bacteria that may help promote gut harmony",
     features: [
       {
@@ -244,7 +244,7 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Skin-Gut Connection",
-        description: "Eubiosis may support the gut-skin axis, helping promote skin health from the inside out through balanced gut bacteria.",
+        description: "Eubiosis-S may support the gut-skin axis, helping promote skin health from the inside out through balanced gut bacteria.",
         image: "/images/hands.png",
       },
       {
@@ -272,7 +272,7 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Lifestyle Balance Support",
-        description: "Eubiosis may help support your body's natural resilience against the stresses of modern living through gut balance.",
+        description: "Eubiosis-S may help support your body's natural resilience against the stresses of modern living through gut balance.",
         image: "/images/hands.png",
       },
       {
@@ -293,14 +293,14 @@ const illnessContent = {
   },
   Autoimmune: {
     tagline: "Immune Balance. Natural Support.",
-    heading: "Autoimmune Support with Eubiosis",
+    heading: "Autoimmune Support with Eubiosis-S",
     description: "Support your immune system naturally with beneficial bacteria that may help promote immune balance",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Immune System Support",
-        description: "Eubiosis may support healthy immune function through balanced gut bacteria as part of overall wellness.",
+        description: "Eubiosis-S may support healthy immune function through balanced gut bacteria as part of overall wellness.",
         image: "/images/hands.png",
       },
       {
@@ -328,7 +328,7 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Digestive Comfort Support",
-        description: "Eubiosis may help support digestive comfort and promote balanced gut function as part of healthy living.",
+        description: "Eubiosis-S may help support digestive comfort and promote balanced gut function as part of healthy living.",
         image: "/images/hands.png",
       },
       {
@@ -356,7 +356,7 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Skin-Gut Connection",
-        description: "Eubiosis supports the gut-skin axis, helping clear skin conditions from the inside out.",
+        description: "Eubiosis-S supports the gut-skin axis, helping clear skin conditions from the inside out.",
         image: "/images/hands.png",
       },
       {
@@ -405,7 +405,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   // Get content based on selected illness, fallback to default if no illness selected
   const currentContent = illness ? illnessContent[illness as keyof typeof illnessContent] : {
     tagline: "Natural Gut Health. Real Results.",
-    heading: "What is Eubiosis?",
+    heading: "What is Eubiosis-S?",
     description: "Discover what makes our formula exceptional with these certified benefits",
     features: [
       {
@@ -413,7 +413,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Gut Harmony Restored",
         description:
-          "Eubiosis represents the perfect balance of your body's microbial ecosystem. When beneficial bacteria thrive, you experience optimal health and vitality.",
+          "Eubiosis-S represents the perfect balance of your body's microbial ecosystem. When beneficial bacteria thrive, you experience optimal health and vitality.",
         image: "/images/hands.png",
       },
       {
@@ -525,7 +525,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   const getQuizResult = () => {
     // Simple scoring based on answers
     const score = quizAnswers.reduce((total, answer, index) => {
-      // Higher scores for answers that suggest Eubiosis would be more beneficial
+      // Higher scores for answers that suggest Eubiosis-S would be more beneficial
       if (index === 0) return total + (quizAnswers[0] === "More than 5 years" ? 3 : quizAnswers[0] === "3-5 years" ? 2 : 1);
       if (index === 1) return total + (answer === "Often" ? 3 : answer === "Sometimes" ? 2 : 1);
       if (index === 2) return total + (answer === "Never" || answer === "Yes, with no results" ? 3 : 2);
@@ -533,10 +533,10 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
       return total;
     }, 0);
 
-    if (score >= 10) return { match: "Excellent", message: "Eubiosis appears to be an excellent fit for your needs!" };
-    if (score >= 7) return { match: "Good", message: "Eubiosis could be very beneficial for your situation." };
-    if (score >= 5) return { match: "Moderate", message: "Eubiosis may help, though results may vary." };
-    return { match: "Limited", message: "Eubiosis might provide some benefits, but consider consulting with a healthcare provider." };
+    if (score >= 10) return { match: "Excellent", message: "Eubiosis-S appears to be an excellent fit for your needs!" };
+    if (score >= 7) return { match: "Good", message: "Eubiosis-S could be very beneficial for your situation." };
+    if (score >= 5) return { match: "Moderate", message: "Eubiosis-S may help, though results may vary." };
+    return { match: "Limited", message: "Eubiosis-S might provide some benefits, but consider consulting with a healthcare provider." };
   };
 
   return (
@@ -689,9 +689,9 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
               >
-                <h4 className="text-base font-semibold text-[#4AAE9B] mb-3">Why Choose Eubiosis Supplement?</h4>
+                <h4 className="text-base font-semibold text-[#4AAE9B] mb-3">Why Choose Eubiosis-S Supplement?</h4>
                 <p className="text-gray-600 text-sm leading-relaxed mb-3">
-                  Eubiosis Supplement combines the power of fulvic and humic acids — natural compounds that help the body restore internal balance. It supports your system by:
+                  Eubiosis-S Supplement combines the power of fulvic and humic acids — natural compounds that help the body restore internal balance. It supports your system by:
                 </p>
                 <ul className="list-disc list-inside text-gray-600 text-sm leading-relaxed space-y-1">
                   <li><span className="font-medium">Detoxifying:</span> helping eliminate accumulated toxins and heavy metals</li>
@@ -968,7 +968,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                             </p>
                             <div className="flex gap-2 justify-center">
                               <button 
-                                onClick={() => window.location.href = '/eubiosis-bottle/size-s/quantity-1'}
+                                onClick={() => window.location.href = '/eubiosis-s-bottle/size-s/quantity-1'}
                                 className="btn flex items-center gap-2 text-xs"
                               >
                                 Buy Now

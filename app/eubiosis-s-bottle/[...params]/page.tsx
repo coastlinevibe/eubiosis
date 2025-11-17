@@ -753,24 +753,52 @@ export default function EubiosisBottle({ params }: PageProps) {
             )}
 
             {activeTab === 'usage' && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <h3 className="text-xl font-medium text-text">How to Use Eubiosis-S</h3>
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="text-base font-medium text-accent mb-1">Dosage</h4>
-                    <p className="text-sm text-text/80">Take 1 teaspoon (5ml) daily, preferably in the morning on an empty stomach.</p>
+                
+                <div className="space-y-4">
+                  <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+                    <h4 className="text-base font-semibold text-accent mb-2">⚠️ SHAKE BOTTLE BEFORE USE</h4>
                   </div>
+
                   <div>
-                    <h4 className="text-base font-medium text-accent mb-1">Best Practices</h4>
-                    <p className="text-sm text-text/80">Can be taken directly or mixed with water, tea, or smoothies. Avoid hot liquids above 40°C to preserve probiotic activity.</p>
+                    <h4 className="text-base font-medium text-accent mb-2">Suggested Use - FOR BETTER HEALTH AND WELLBEING</h4>
+                    <p className="text-sm text-text/80 mb-3">Add 2.5ml-5ml of Eubiosis-S to 125ml-200ml water. Use daily until symptoms subside and then continue with maintenance dosages as suggested below.</p>
                   </div>
+
                   <div>
-                    <h4 className="text-base font-medium text-accent mb-1">Duration</h4>
-                    <p className="text-sm text-text/80">For best results, use consistently for at least 30 days. Most users notice improvements within 7-14 days.</p>
+                    <h4 className="text-base font-medium text-accent mb-2">For Aid in Supporting Health</h4>
+                    <ul className="text-sm text-text/80 space-y-2">
+                      <li><strong>Adults:</strong> Use daily to aid in gut inflammatory conditions</li>
+                      <li><strong>Children 3-13 years old:</strong> 2.5ml-5ml twice weekly in preferred amount of water</li>
+                      <li><strong>Young adults 13-18 years old:</strong> 5ml twice weekly</li>
+                      <li><strong>Adults:</strong> 5ml twice weekly</li>
+                    </ul>
+                    <p className="text-sm text-red-600 font-medium mt-2">Not suitable for children under two years of age</p>
                   </div>
+
                   <div>
-                    <h4 className="text-base font-medium text-accent mb-1">Storage</h4>
-                    <p className="text-sm text-text/80">Store in a cool, dry place away from direct sunlight. Refrigeration not required but recommended after opening.</p>
+                    <h4 className="text-base font-medium text-accent mb-2">Times of the Day</h4>
+                    <p className="text-sm text-text/80">Can be used at any time of the day, preferably without food.</p>
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="text-base font-medium text-blue-800 mb-2">FOR OPTIMAL RESULTS - IMPORTANT TO NOTE:</h4>
+                    <p className="text-sm text-blue-700">If you are using antibiotics or antivirals then use the two as far apart as possible. For instance: antibiotics morning and Eubiosis-S in the evening - or vice versa. This will prevent reduction of the effectiveness of Eubiosis-S.</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-medium text-accent mb-2">Storage</h4>
+                    <p className="text-sm text-text/80 mb-2">STORE AT ROOM TEMPERATURE PROTECTED FROM DIRECT SUNLIGHT</p>
+                    <p className="text-sm text-text/80 mb-2"><strong>NOTE:</strong> In certain weather conditions this natural syrup may become sticky. This is not a sign of deterioration. If this happens, submerge the entire tightly closed bottle in warm tap water for one minute and shake well before use.</p>
+                  </div>
+
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 className="text-base font-medium text-yellow-800 mb-2">Safety Information</h4>
+                    <ul className="text-sm text-yellow-700 space-y-1">
+                      <li>• Keep out of reach of children and direct sunlight</li>
+                      <li>• Do not use if safety seal is broken or missing</li>
+                    </ul>
                   </div>
                 </div>
               </div>

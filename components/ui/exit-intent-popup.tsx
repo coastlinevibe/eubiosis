@@ -191,7 +191,7 @@ export function ExitIntentPopup({ isOpen, onClose }: ExitIntentPopupProps) {
                 >
                   <Image
                     src="/images/bottles/bottle-combo.png"
-                    alt="Eubiosis Probiotic Bottles"
+                    alt="Eubiosis-S Probiotic Bottles"
                     width={200}
                     height={240}
                     className="sm:w-[280px] sm:h-[320px] drop-shadow-2xl"

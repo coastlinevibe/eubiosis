@@ -6,7 +6,7 @@ Allow: /shop
 Allow: /funnel
 
 # Sitemap location
-Sitemap: https://eubiosis.vercel.app/sitemap.xml
+Sitemap: https://eubiosis-s.vercel.app/sitemap.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1

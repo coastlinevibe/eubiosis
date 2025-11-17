@@ -6,13 +6,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Marquee } from '@/components/ui/3d-testimonials';
 import { TestimonialPopup } from '@/components/ui/testimonial-popup';
 
-// Eubiosis testimonials data
+// Eubiosis-S testimonials data
 const testimonials = [
   {
     name: 'Sarah Johnson',
     username: '@sarah_j',
-    body: 'Eubiosis transformed my gut health completely!',
-    fullText: 'After struggling with digestive issues for years, Eubiosis has been a game-changer. Within just two weeks of taking it daily, I noticed significant improvements in my digestion, energy levels, and overall well-being. The honey-based formula is gentle yet effective, and I love knowing that I\'m supporting my gut microbiome with 42 beneficial strains. This is now a permanent part of my wellness routine!',
+    body: 'Eubiosis-S transformed my gut health completely!',
+    fullText: 'After struggling with digestive issues for years, Eubiosis-S has been a game-changer. Within just two weeks of taking it daily, I noticed significant improvements in my digestion, energy levels, and overall well-being. The honey-based formula is gentle yet effective, and I love knowing that I\'m supporting my gut microbiome with 42 beneficial strains. This is now a permanent part of my wellness routine!',
     img: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
     country: '🇺🇸 USA',
   },
@@ -20,7 +20,7 @@ const testimonials = [
     name: 'Emma Wilson',
     username: '@emma_w',
     body: 'Amazing results in just 2 weeks!',
-    fullText: 'I was skeptical about probiotics until I tried Eubiosis. The natural honey delivery system makes such a difference - no more stomach upset from harsh capsules. My bloating disappeared, my skin cleared up, and I have more energy than I\'ve had in years. The fact that it contains 42 different strains gives me confidence that I\'m getting comprehensive gut support.',
+    fullText: 'I was skeptical about probiotics until I tried Eubiosis-S. The natural honey delivery system makes such a difference - no more stomach upset from harsh capsules. My bloating disappeared, my skin cleared up, and I have more energy than I\'ve had in years. The fact that it contains 42 different strains gives me confidence that I\'m getting comprehensive gut support.',
     img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
     country: '🇬🇧 UK',
   },

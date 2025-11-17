@@ -8,7 +8,7 @@ export default function Shop() {
   
   useEffect(() => {
     // Redirect to new URL structure
-    router.replace('/eubiosis-bottle/size-s/quantity-1')
+    router.replace('/eubiosis-s-bottle/size-s/quantity-1')
   }, [router])
 
   return (

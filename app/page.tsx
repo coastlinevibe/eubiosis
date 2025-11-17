@@ -10,8 +10,10 @@ import { BenefitGrid } from '@/components/ui/benefit-carousel'
 import { AnimatedKeyIngredients } from '@/components/ui/animated-key-ingredients'
 import EubiosisHero from '@/components/ui/eubiosis-hero'
 import EubiosisTestimonials from '@/components/ui/eubiosis-testimonials'
+import { FramerCarousel } from '@/components/ui/framer-carousel'
 import useExitIntent from '@/components/ui/exit-intent-popup'
 import BottomNav from '@/components/BottomNav'
+import EubiosisSFooter from '@/components/ui/footer'
 import { productSchema } from '@/lib/seo'
 
 export default function Home() {
@@ -47,9 +49,9 @@ export default function Home() {
   const handleLearnMoreClick = () => {
     setViewMode('browsing');
     setSelectedIllness(null);
-    // Scroll to the "What is eubiosis?" section after a short delay to allow the component to render
+    // Scroll to the "What is eubiosis-s?" section after a short delay to allow the component to render
     setTimeout(() => {
-      scrollToSection('what-is-eubiosis');
+      scrollToSection('what-is-eubiosis-s');
     }, 100);
   }
 
@@ -180,8 +182,8 @@ export default function Home() {
     const checkDevTools = () => {
       if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
         console.clear();
-        console.log('%cEUBIOSIS', 'font-size: 72px; font-weight: bold; color: #8bccc2; text-align: center; margin: 20px;');
-        console.log('%cWelcome to Eubiosis! 🌱', 'font-size: 24px; color: #78b4aa; text-align: center; margin: 10px;');
+        console.log('%cEUBIOSIS-S', 'font-size: 72px; font-weight: bold; color: #8bccc2; text-align: center; margin: 20px;');
+        console.log('%cWelcome to Eubiosis-S! 🌱', 'font-size: 24px; color: #78b4aa; text-align: center; margin: 10px;');
         console.log('%cGut Health. Real Results.', 'font-size: 18px; color: #666; text-align: center; margin: 10px;');
       }
     };
@@ -190,8 +192,8 @@ export default function Home() {
       if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.key === 'u')) {
         e.preventDefault();
         console.clear();
-        console.log('%cEUBIOSIS', 'font-size: 72px; font-weight: bold; color: #8bccc2; text-align: center; margin: 20px;');
-        console.log('%cWelcome to Eubiosis! 🌱', 'font-size: 24px; color: #78b4aa; text-align: center; margin: 10px;');
+        console.log('%cEUBIOSIS-S', 'font-size: 72px; font-weight: bold; color: #8bccc2; text-align: center; margin: 20px;');
+        console.log('%cWelcome to Eubiosis-S! 🌱', 'font-size: 24px; color: #78b4aa; text-align: center; margin: 10px;');
         console.log('%cGut Health. Real Results.', 'font-size: 18px; color: #666; text-align: center; margin: 10px;');
         return false;
       }
@@ -262,7 +264,7 @@ export default function Home() {
           </motion.section>
         )}
         
-        {/* What is Eubiosis - Show when illness selected */}
+        {/* What is Eubiosis-S - Show when illness selected */}
         {viewMode === 'illness-selected' && (
           <motion.div
             key="features"
@@ -286,11 +288,11 @@ export default function Home() {
           </motion.div>
         )}
 
-        {/* What is Eubiosis - Show when browsing */}
+        {/* What is Eubiosis-S - Show when browsing */}
         {viewMode === 'browsing' && (
           <motion.div
-            key="what-is-eubiosis"
-            id="what-is-eubiosis"
+            key="what-is-eubiosis-s"
+            id="what-is-eubiosis-s"
             initial={{ opacity: 0, y: 100, scale: 0.9, rotateX: 20 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={{ opacity: 0, y: -50, transition: { duration: 0.5 } }}
@@ -405,7 +407,7 @@ export default function Home() {
                   transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
                 >
                   <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
-                    Real stories from people who have transformed their gut health with Eubiosis
+                    Real stories from people who have transformed their gut health with Eubiosis-S
                   </p>
                 </motion.div>
               </motion.div>
@@ -421,10 +423,10 @@ export default function Home() {
           </motion.section>
         )}
 
-        {/* CTA Section - Only in browsing mode */}
+        {/* Gallery Section - Only in browsing mode */}
         {viewMode === 'browsing' && (
-          <motion.div
-            key="cta"
+          <motion.section
+            key="gallery"
             initial={{ opacity: 0, scale: 0.7, rotateY: 30 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.5 } }}
@@ -435,19 +437,16 @@ export default function Home() {
               type: "spring",
               stiffness: 60
             }}
-            className="w-full"
+            className="w-full py-16"
+            style={doodleBackgroundStyle}
           >
-            <Image
-              src="/images/Website Banner.png"
-              alt="Start your journey to gut balance today"
-              width={1200}
-              height={500}
-              className="w-full h-auto object-cover"
-              priority={false}
-            />
-          </motion.div>
+            <FramerCarousel />
+          </motion.section>
         )}
       </AnimatePresence>
+
+      {/* Footer - Always visible */}
+      <EubiosisSFooter />
 
       {/* SVG Filter for Gooey Buttons - Exact CodePen */}
       <svg width="0" height="0" style={{ position: 'absolute' }}>

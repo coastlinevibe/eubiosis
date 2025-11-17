@@ -1,13 +1,13 @@
 import { Metadata } from 'next'
 
 export const siteConfig = {
-  name: "Eubiosis",
-  title: "Eubiosis — Nature in a Bottle | Premium Honey-Based Probiotic",
-  description: "Discover Eubiosis, the revolutionary honey-based probiotic with 42 bacterial strains. Nature's perfect balance for optimal gut health and wellness. Made in South Africa.",
-  url: "https://eubiosis.vercel.app",
+  name: "Eubiosis-S",
+  title: "Eubiosis-S — Nature in a Bottle | Premium Honey-Based Probiotic",
+  description: "Discover Eubiosis-S, the revolutionary honey-based probiotic with 42 bacterial strains. Nature's perfect balance for optimal gut health and wellness. Made in South Africa.",
+  url: "https://eubiosis-s.vercel.app",
   ogImage: "/images/Website Thumbnail.png",
   keywords: [
-    "Eubiosis",
+    "Eubiosis-S",
     "nature in a bottle",
     "honey-based probiotic",
     "gut health",
@@ -34,12 +34,12 @@ export const defaultMetadata: Metadata = {
   keywords: siteConfig.keywords,
   authors: [
     {
-      name: "Eubiosis",
+      name: "Eubiosis-S",
       url: siteConfig.url,
     }
   ],
-  creator: "Eubiosis",
-  publisher: "Eubiosis",
+  creator: "Eubiosis-S",
+  publisher: "Eubiosis-S",
   formatDetection: {
     email: false,
     address: false,
@@ -61,7 +61,7 @@ export const defaultMetadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Eubiosis - Nature in a Bottle",
+        alt: "Eubiosis-S - Nature in a Bottle",
       }
     ],
   },
@@ -70,7 +70,7 @@ export const defaultMetadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: "@eubiosis",
+    creator: "@eubiosis-s",
   },
   robots: {
     index: true,
@@ -91,27 +91,27 @@ export const defaultMetadata: Metadata = {
 }
 
 export const shopMetadata: Metadata = {
-  title: "Shop Eubiosis | Premium Honey-Based Probiotic Supplement",
-  description: "Purchase Eubiosis, the revolutionary honey-based probiotic with 42 bacterial strains. Available in 50ml and 100ml bottles. Same-day delivery in Mokopane, Limpopo. Free shipping across South Africa on qualifying orders.",
+  title: "Shop Eubiosis-S | Premium Honey-Based Probiotic Supplement",
+  description: "Purchase Eubiosis-S, the revolutionary honey-based probiotic with 42 bacterial strains. Available in 50ml and 100ml bottles. Same-day delivery in Mokopane, Limpopo. Free shipping across South Africa on qualifying orders.",
   keywords: [
     ...siteConfig.keywords,
-    "buy eubiosis",
+    "buy eubiosis-s",
     "purchase probiotic",
     "honey supplement online",
-    "order eubiosis",
+    "order eubiosis-s",
     "probiotic shop",
     "natural health store"
   ],
   openGraph: {
-    title: "Shop Eubiosis | Premium Honey-Based Probiotic",
-    description: "Purchase Eubiosis, the revolutionary honey-based probiotic with 42 bacterial strains. Same-day delivery in Mokopane, Limpopo. Free shipping across South Africa on qualifying orders.",
+    title: "Shop Eubiosis-S | Premium Honey-Based Probiotic",
+    description: "Purchase Eubiosis-S, the revolutionary honey-based probiotic with 42 bacterial strains. Same-day delivery in Mokopane, Limpopo. Free shipping across South Africa on qualifying orders.",
     url: `${siteConfig.url}/shop`,
     images: [
       {
         url: "/images/Website Product Image.png",
         width: 800,
         height: 600,
-        alt: "Eubiosis Product - Nature in a Bottle",
+        alt: "Eubiosis-S Product - Nature in a Bottle",
       }
     ],
   },
@@ -121,7 +121,7 @@ export const shopMetadata: Metadata = {
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Eubiosis",
+  "name": "Eubiosis-S",
   "description": "Premium honey-based probiotic supplements for optimal gut health",
   "url": siteConfig.url,
   "logo": `${siteConfig.url}/images/logo.png`,
@@ -146,15 +146,15 @@ export const organizationSchema = {
 export const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "Eubiosis - Nature in a Bottle",
+  "name": "Eubiosis-S - Nature in a Bottle",
   "description": "Premium honey-based probiotic with 42 bacterial strains for optimal gut health and wellness",
   "brand": {
     "@type": "Brand",
-    "name": "Eubiosis"
+    "name": "Eubiosis-S"
   },
   "manufacturer": {
     "@type": "Organization",
-    "name": "Eubiosis"
+    "name": "Eubiosis-S"
   },
   "image": [
     `${siteConfig.url}/images/Website Product Image.png`,
@@ -170,7 +170,7 @@ export const productSchema = {
       "url": `${siteConfig.url}/shop`,
       "seller": {
         "@type": "Organization",
-        "name": "Eubiosis"
+        "name": "Eubiosis-S"
       }
     },
     {
@@ -182,7 +182,7 @@ export const productSchema = {
       "url": `${siteConfig.url}/shop`,
       "seller": {
         "@type": "Organization",
-        "name": "Eubiosis"
+        "name": "Eubiosis-S"
       }
     }
   ],

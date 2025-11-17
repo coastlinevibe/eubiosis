@@ -1,8 +1,8 @@
-# EUBIOSIS PROJECT - COMPLETE DOCUMENTATION
+# EUBIOSIS-S PROJECT - COMPLETE DOCUMENTATION
 
 ## 🌟 PROJECT OVERVIEW
 
-**Eubiosis** is a premium Next.js website for a natural honey-based probiotic supplement that promotes gut health and overall wellness. The project features a sophisticated multi-page application with dynamic content, interactive elements, and a comprehensive user journey from product discovery to purchase.
+**Eubiosis-S** is a premium Next.js website for a natural honey-based probiotic supplement that promotes gut health and overall wellness. The project features a sophisticated multi-page application with dynamic content, interactive elements, and a comprehensive user journey from product discovery to purchase.
 
 ---
 
@@ -22,7 +22,7 @@
 ## 📁 PROJECT STRUCTURE
 
 ```
-eubiosis/
+eubiosis-s/
 ├── app/
 │   ├── page.tsx                    # Main homepage with hero & illness sections
 │   ├── layout.tsx                  # Root layout with navigation
@@ -117,7 +117,7 @@ eubiosis/
 
 #### 1. **Diabetes**
 - **Tagline**: "Blood Sugar Balance. Natural Support."
-- **Heading**: "How Eubiosis Helps with Diabetes"
+- **Heading**: "How Eubiosis-S Helps with Diabetes"
 - **Description**: "Discover how our probiotic formula supports healthy blood sugar levels and metabolic function"
 - **Features**:
   - Metabolic Harmony: Insulin sensitivity & glucose metabolism support
@@ -126,7 +126,7 @@ eubiosis/
 
 #### 2. **IBS (Irritable Bowel Syndrome)**
 - **Tagline**: "Digestive Relief. Lasting Comfort."
-- **Heading**: "IBS Relief with Eubiosis"
+- **Heading**: "IBS Relief with Eubiosis-S"
 - **Description**: "Find natural relief from IBS symptoms with our comprehensive gut-healing probiotic formula"
 - **Features**:
   - IBS Symptom Relief: Reduces bloating, cramping, irregular bowel movements
@@ -153,7 +153,7 @@ eubiosis/
 
 #### 5. **Autoimmune**
 - **Tagline**: "Immune Balance. Natural Regulation."
-- **Heading**: "Autoimmune Support with Eubiosis"
+- **Heading**: "Autoimmune Support with Eubiosis-S"
 - **Description**: "Help regulate your immune system naturally with our autoimmune-supporting probiotic formula"
 - **Features**:
   - Immune System Balance: Reduces autoimmune flare-ups
@@ -477,4 +477,4 @@ eubiosis/
 
 ---
 
-This comprehensive documentation covers all aspects of the Eubiosis project, from technical implementation to content strategy and user experience design. The project represents a sophisticated, conversion-optimized e-commerce solution tailored specifically for health supplement marketing.
+This comprehensive documentation covers all aspects of the Eubiosis-S project, from technical implementation to content strategy and user experience design. The project represents a sophisticated, conversion-optimized e-commerce solution tailored specifically for health supplement marketing.

@@ -1,7 +1,7 @@
 {
-  "name": "Eubiosis — Nature in a Bottle | Premium Honey-Based Probiotic",
-  "short_name": "Eubiosis",
-  "description": "Discover Eubiosis, the revolutionary honey-based probiotic with 42 bacterial strains. Nature's perfect balance for optimal gut health and wellness. Made in South Africa.",
+  "name": "Eubiosis-S — Nature in a Bottle | Premium Honey-Based Probiotic",
+  "short_name": "Eubiosis-S",
+  "description": "Discover Eubiosis-S, the revolutionary honey-based probiotic with 42 bacterial strains. Nature's perfect balance for optimal gut health and wellness. Made in South Africa.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -22,7 +22,7 @@
     }
   ],
   "categories": ["health", "wellness", "supplements", "probiotic", "natural-health"],
-  "keywords": ["eubiosis", "nature in a bottle", "honey probiotic", "gut health", "42 bacterial strains", "natural wellness"],
+  "keywords": ["eubiosis-s", "nature in a bottle", "honey probiotic", "gut health", "42 bacterial strains", "natural wellness"],
   "lang": "en",
   "dir": "ltr"
 }
