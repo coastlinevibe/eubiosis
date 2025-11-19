@@ -1,3 +1,4 @@
+
 'use client'
 
 import Link from 'next/link'
@@ -266,17 +267,15 @@ export default function EubiosisBottle({ params }: PageProps) {
     '100ml': { basePrice: 650, discountedPrice: 530 }
   }
 
-  // 16% discount applied to get more buyers
+  // Healthy Gut Special: R60 off 50ml, R120 off 100ml
   const getDiscount = (qty: number) => {
-    return 0.16 // 16% discount (325->265, 650->530)
+    const savings = pricing[selectedSize].basePrice - pricing[selectedSize].discountedPrice
+    return savings / pricing[selectedSize].basePrice // Calculate percentage for compatibility
   }
 
-  // Calculate total price with discount
+  // Calculate total price with Healthy Gut Special
   const calculateTotal = () => {
-    const basePrice = pricing[selectedSize].basePrice
-    const subtotal = basePrice * quantity
-    const discount = getDiscount(quantity)
-    return Math.round(subtotal * (1 - discount))
+    return pricing[selectedSize].discountedPrice * quantity
   }
 
   // No discount text
@@ -291,7 +290,7 @@ export default function EubiosisBottle({ params }: PageProps) {
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
         <div className="relative z-10">
           <span className="text-sm md:text-base font-semibold">
-            🚀 GRAND OPENING: Launch Special - Save 18% on All Orders! 
+            🌿 HEALTHY GUT SPECIAL: Save R60 on 50ml, R120 on 100ml! 
           </span>
           <span className="text-xs md:text-sm opacity-90 ml-2">
             Limited time introductory pricing
@@ -534,26 +533,26 @@ export default function EubiosisBottle({ params }: PageProps) {
               {/* Price Display */}
               <div className="bg-white/40 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium text-text">Total:</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg font-medium text-text">Total:</span>
+                    <span className="text-sm text-red-500">normal</span>
+                    <span className="text-sm text-red-500 line-through">
+                      R{pricing[selectedSize].basePrice * quantity}
+                    </span>
+                  </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-accent transition-all duration-500">
                       R<span className="font-mono">
                         {checkoutParams.bundle 
                           ? Math.round(pricing[selectedSize].discountedPrice * quantity * 0.8)
-                          : animatedPrice
+                          : pricing[selectedSize].discountedPrice * quantity
                         }
                       </span>
                     </div>
-                    {checkoutParams.bundle && (
-                      <div className="text-sm text-text/50 line-through">
-                        R{pricing[selectedSize].basePrice * quantity}
-                      </div>
-                    )}
-                    {!checkoutParams.bundle && getDiscount(quantity) > 0 && (
-                      <div className="text-xs text-text/60 line-through">
-                        R{pricing[selectedSize].basePrice * quantity}
-                      </div>
-                    )}
+                    <div className="text-sm text-green-600 flex items-center gap-1">
+                      save R{(pricing[selectedSize].basePrice - pricing[selectedSize].discountedPrice) * quantity}
+                      <span className="text-green-600">✓</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -564,7 +563,7 @@ export default function EubiosisBottle({ params }: PageProps) {
                   // Show Checkout and Delete Bundle buttons when coming from checkout with bundle
                   <>
                     <Link 
-                      href={`/checkout?bundle=${checkoutParams.bundle}&email=${checkoutParams.email}&size=${selectedSize}&quantity=${quantity}${checkoutParams.bundle ? '&upsellDiscount=20' : ''}`}
+                      href={`/checkout?bundle=${checkoutParams.bundle}&email=${checkoutParams.email}&size=${selectedSize}&quantity=${quantity}${checkoutParams.bundle ? '&upsellDiscount=20&tookBigOffer=true' : '&tookBigOffer=false'}`}
                       className="pay-btn"
                       style={{ width: 'auto', padding: '12px 24px' }}
                     >
@@ -606,24 +605,10 @@ export default function EubiosisBottle({ params }: PageProps) {
                 ) : (
                   // Show regular Buy Now and Add to Cart buttons
                   <>
-                    <button 
+                    <Link
+                      href={`/oto?bundle=false&email=false&size=${selectedSize}&quantity=${quantity}&tookBigOffer=false`}
                       className="pay-btn"
                       style={{ width: 'auto', padding: '12px 24px', minWidth: '140px' }}
-                      onClick={() => {
-                        const cartItem = {
-                          id: 'eubiosis-s-single',
-                          name: 'Eubiosis-S — Nature in a Bottle',
-                          size: selectedSize,
-                          quantity: quantity,
-                          basePrice: pricing[selectedSize].basePrice,
-                          discountedPrice: pricing[selectedSize].discountedPrice,
-                          image: '/images/Website Product Image.png'
-                        }
-                        
-                        // Dispatch custom event to add to cart and open sidebar
-                        const event = new CustomEvent('addToCart', { detail: cartItem })
-                        window.dispatchEvent(event)
-                      }}
                     >
                       <span className="btn-text">Buy Now</span>
                       <div className="icon-container">
@@ -640,7 +625,7 @@ export default function EubiosisBottle({ params }: PageProps) {
                           ></path>
                         </svg>
                       </div>
-                    </button>
+                    </Link>
                   </>
                 )}
               </div>

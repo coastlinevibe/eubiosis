@@ -50,8 +50,8 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
   }
 
   useEffect(() => {
-    // Hide nav on checkout and funnel pages
-    if (pathname.startsWith('/checkout') || pathname.startsWith('/funnel')) {
+    // Hide nav on checkout, funnel, and OTO pages
+    if (pathname.startsWith('/checkout') || pathname.startsWith('/funnel') || pathname.startsWith('/oto')) {
       setIsVisible(false)
       return
     }

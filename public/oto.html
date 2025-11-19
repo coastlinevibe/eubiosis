@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special One-Time Offer - Eubiosis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('/images/oto.jpg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Animated price elements */
+        .price-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite;
+            text-align: center;
+            min-width: 250px;
+        }
+        
+        .price-box.offer-1 {
+            position: absolute;
+            top: 40%;
+            left: 20%;
+        }
+        
+        .price-box.offer-2 {
+            position: absolute;
+            top: 40%;
+            right: 20%;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .sale-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .original-price {
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .savings {
+            font-size: 1.1rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .offer-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .offer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+        
+        .decline-btn {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 2px solid #ddd;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .decline-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateX(-50%) translateY(-2px);
+        }
+        
+        /* Offer Components */
+        .offer-component {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 200px;
+        }
+        
+        .left-offer {
+            left: 15%;
+        }
+        
+        .right-offer {
+            right: 15%;
+        }
+        
+        .handwritten-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .handwritten-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .handwritten-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawPath 2.5s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+        
+        .offer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            opacity: 0;
+            animation: fadeInText 0.8s ease-in-out forwards;
+            animation-delay: 1s;
+        }
+        
+        .offer-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .offer-subtitle {
+            font-size: 1.2rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin: 5px 0 0 0;
+        }
+        
+        @keyframes drawPath {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes fadeInText {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .offer-component {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                transform: none;
+                margin: 20px auto;
+                width: 250px;
+                height: 150px;
+            }
+            
+            .left-offer,
+            .right-offer {
+                left: auto;
+                right: auto;
+            }
+            
+            .container {
+                padding: 20px;
+                justify-content: flex-start;
+                padding-top: 100px;
+                flex-direction: column;
+            }
+            
+            .offer-title {
+                font-size: 2rem;
+            }
+            
+            .offer-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <!-- Left Offer Component -->
+        <div class="offer-component left-offer">
+            <div class="handwritten-container">
+                <svg class="handwritten-svg" viewBox="0 0 600 300">
+                    <path class="handwritten-path" 
+                          d="M 475 45 C 625 150, 525 240, 300 260C 125 260, 75 240, 75 150C 75 60, 175 40, 300 40C 425 40, 475 90, 475 90"
+                          fill="none"
+                          stroke="#e74c3c"
+                          stroke-width="6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                <div class="offer-text">
+                    <h2 class="offer-title">R399</h2>
+                    <p class="offer-subtitle">Save R131!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Offer Component -->
+        <div class="offer-component right-offer">
+            <div class="handwritten-container">
+                <svg class="handwritten-svg" viewBox="0 0 600 300">
+                    <path class="handwritten-path" 
+                          d="M 475 45 C 625 150, 525 240, 300 260C 125 260, 75 240, 75 150C 75 60, 175 40, 300 40C 425 40, 475 90, 475 90"
+                          fill="none"
+                          stroke="#27ae60"
+                          stroke-width="6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                <div class="offer-text">
+                    <h2 class="offer-title">R599</h2>
+                    <p class="offer-subtitle">Save R196!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters from the original product selection
+        const urlParams = new URLSearchParams(window.location.search);
+        const originalSize = urlParams.get('size') || '50ml';
+        const originalQuantity = urlParams.get('quantity') || '1';
+        const bundle = urlParams.get('bundle') || 'false';
+        const email = urlParams.get('email') || 'false';
+        
+        function selectOffer(offerNumber, price) {
+            // Redirect to checkout with OTO selection
+            const checkoutUrl = `/checkout?bundle=${bundle}&email=${email}&size=${originalSize}&quantity=${originalQuantity}&tookBigOffer=false&oto=offer${offerNumber}&otoPrice=${price}`;
+            window.location.href = checkoutUrl;
+        }
+        
+        function declineOffers() {
+            // Redirect to checkout without OTO
+            const checkoutUrl = `/checkout?bundle=${bundle}&email=${email}&size=${originalSize}&quantity=${originalQuantity}&tookBigOffer=false`;
+            window.location.href = checkoutUrl;
+        }
+    </script>
+</body>
+</html>

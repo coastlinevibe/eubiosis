@@ -968,7 +968,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                             </p>
                             <div className="flex gap-2 justify-center">
                               <button 
-                                onClick={() => window.location.href = '/eubiosis-s-bottle/size-s/quantity-1'}
+                                onClick={() => window.location.href = '/oto?bundle=false&email=false&size=50ml&quantity=1&tookBigOffer=false'}
                                 className="btn flex items-center gap-2 text-xs"
                               >
                                 Buy Now
