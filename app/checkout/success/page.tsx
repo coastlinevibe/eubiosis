@@ -51,7 +51,7 @@ function CheckoutSuccessContent() {
     <main 
       className="min-h-screen bg-white relative flex items-center justify-center"
       style={{
-        backgroundImage: 'url(/images/hero%20bg.png)',
+        backgroundImage: 'url("/images/hero bg.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

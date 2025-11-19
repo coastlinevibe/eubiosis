@@ -4,9 +4,14 @@ const nextConfig = {
   images: {
     domains: [
       'images.unsplash.com',
-      'randomuser.me'
+      'randomuser.me',
+      'eubiosis.pro'
     ],
+    unoptimized: false,
   },
+  // Ensure static assets work properly with custom domains
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  trailingSlash: false,
 }
 
 module.exports = nextConfig

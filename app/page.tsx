@@ -249,7 +249,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative h-screen w-full overflow-hidden bg-gradient-to-b from-[#e8f4f8] to-white"
             style={{
-              backgroundImage: 'url(/images/hero%20bg.png)',
+              backgroundImage: 'url("/images/hero bg.png")',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -423,8 +423,8 @@ export default function Home() {
           </motion.section>
         )}
 
-        {/* Gallery Section - Only in browsing mode */}
-        {viewMode === 'browsing' && (
+        {/* Gallery Section - Temporarily disabled for build fix */}
+        {false && viewMode === 'browsing' && (
           <motion.section
             key="gallery"
             initial={{ opacity: 0, scale: 0.7, rotateY: 30 }}

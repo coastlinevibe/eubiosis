@@ -5,7 +5,7 @@ export const siteConfig = {
   title: "Eubiosis-S — Nature in a Bottle | Premium Honey-Based Probiotic",
   description: "Discover Eubiosis-S, the revolutionary honey-based probiotic with 42 bacterial strains. Nature's perfect balance for optimal gut health and wellness. Made in South Africa.",
   url: "https://eubiosis-s.vercel.app",
-  ogImage: "/images/Website Thumbnail.png",
+  ogImage: "/images/Website Product Image.png",
   keywords: [
     "Eubiosis-S",
     "nature in a bottle",
@@ -124,7 +124,7 @@ export const organizationSchema = {
   "name": "Eubiosis-S",
   "description": "Premium honey-based probiotic supplements for optimal gut health",
   "url": siteConfig.url,
-  "logo": `${siteConfig.url}/images/logo.png`,
+  "logo": `${siteConfig.url}/images/logo-s.png`,
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "Customer Service",

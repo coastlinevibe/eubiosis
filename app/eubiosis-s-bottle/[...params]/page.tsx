@@ -303,7 +303,7 @@ export default function EubiosisBottle({ params }: PageProps) {
         ref={productSectionRef}
         className="py-12 px-4 bg-white relative"
         style={{
-          backgroundImage: 'url(/images/hero%20bg.png)',
+          backgroundImage: 'url("/images/hero bg.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'

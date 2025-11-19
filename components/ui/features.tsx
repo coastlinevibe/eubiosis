@@ -202,7 +202,7 @@ const illnessContent = {
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Metabolic Support Strains",
         description: "Our beneficial strains may help support healthy glucose metabolism when combined with proper diet and exercise.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
@@ -252,7 +252,7 @@ const illnessContent = {
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Skin-Supporting Strains",
         description: "Our beneficial strains may help support healthy inflammatory response and skin barrier function.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
@@ -280,7 +280,7 @@ const illnessContent = {
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Energy & Vitality Strains",
         description: "Our beneficial bacteria may support natural energy levels and overall vitality for busy lifestyles.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
@@ -308,7 +308,7 @@ const illnessContent = {
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Balance-Supporting Strains",
         description: "Our beneficial strains may help support healthy inflammatory response and immune system balance.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
@@ -336,7 +336,7 @@ const illnessContent = {
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Full-Spectrum Support",
         description: "Comprehensive blend of beneficial bacteria that may support various aspects of digestive wellness.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
@@ -364,7 +364,7 @@ const illnessContent = {
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Skin-Clearing Strains",
         description: "Our strains reduce inflammation and support healthy skin barrier function.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
@@ -422,7 +422,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
         title: "42 Beneficial Strains",
         description:
           "Our advanced formula contains 42 carefully selected beneficial bacterial strains, suspended in pure organic honey for maximum effectiveness.",
-        image: "/images/bottles/bottle.png",
+        image: "/images/bottles/bottle-s.png",
       },
       {
         id: 3,
