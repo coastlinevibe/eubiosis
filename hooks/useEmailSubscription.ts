@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { emailService } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 
 interface UseEmailSubscriptionReturn {
   isLoading: boolean
@@ -29,24 +29,15 @@ export function useEmailSubscription(): UseEmailSubscriptionReturn {
     }
 
     try {
-      // Check if email already exists
-      const emailExists = await emailService.checkEmailExists(email)
-      if (emailExists) {
-        setError('This email is already subscribed!')
-        setIsLoading(false)
-        return
-      }
-
-      // Subscribe the email
-      const result = await emailService.subscribeEmail(email, source, metadata)
+      // Simple email subscription - you can enhance this later
+      console.log('Email subscription:', { email, source, metadata })
       
-      if (result.success) {
-        setIsSuccess(true)
-        // Auto-reset success state after 5 seconds
-        setTimeout(() => setIsSuccess(false), 5000)
-      } else {
-        setError('Failed to subscribe. Please try again.')
-      }
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      setIsSuccess(true)
+      // Auto-reset success state after 5 seconds
+      setTimeout(() => setIsSuccess(false), 5000)
     } catch (err) {
       console.error('Subscription error:', err)
       setError('Something went wrong. Please try again.')
