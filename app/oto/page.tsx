@@ -1,11 +1,12 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { HandWrittenTitle } from "@/components/ui/hand-writing-text"
 import { ParticleButton } from "@/components/ui/particle-button"
 import { useRouter } from 'next/navigation'
 
-export default function OTOPage() {
+function OTOContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   
@@ -131,5 +132,13 @@ export default function OTOPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function OTOPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>}>
+      <OTOContent />
+    </Suspense>
   )
 }
