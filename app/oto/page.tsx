@@ -36,10 +36,10 @@ function OTOContent() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/10" />
       
-      {/* Content Container */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
+      {/* Content Container - Large screens only */}
+      <div className="hidden xl:block relative z-10 min-h-screen">
         
-        {/* Left Offer */}
+        {/* Left Offer Price */}
         <div className="absolute left-[30%] top-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <HandWrittenTitle 
             normalPrice="R325"
@@ -49,7 +49,7 @@ function OTOContent() {
           />
         </div>
 
-        {/* Right Offer */}
+        {/* Right Offer Price */}
         <div className="absolute right-[30%] top-1/2 transform translate-x-1/2 -translate-y-1/2">
           <HandWrittenTitle 
             normalPrice="R1300"
@@ -59,78 +59,79 @@ function OTOContent() {
           />
         </div>
 
-        {/* Size Selection Buttons - Left Side */}
-        <div className="absolute left-[15%] bottom-[13.3%]" style={{ marginLeft: '340px' }}>
-          <ParticleButton 
-            onClick={() => selectOffer(1, 245)}
-            className="bg-white hover:bg-teal-50 text-teal-700 border-2 border-teal-500 hover:border-teal-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
-            successDuration={1500}
-          >
-            50ml
-          </ParticleButton>
+        {/* Left Side Buttons */}
+        <div className="absolute bottom-[13.3%] left-1/2 transform -translate-x-1/2" style={{ marginLeft: '-8vw' }}>
+          <div className="flex gap-2">
+            <ParticleButton 
+              onClick={() => selectOffer(1, 245)}
+              className="bg-white hover:bg-teal-50 text-teal-700 border-2 border-teal-500 hover:border-teal-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
+              successDuration={1500}
+            >
+              50ml
+            </ParticleButton>
+            <ParticleButton 
+              onClick={() => selectOffer(2, 940)}
+              className="bg-white hover:bg-emerald-50 text-emerald-700 border-2 border-emerald-500 hover:border-emerald-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
+              successDuration={1500}
+            >
+              100ml
+            </ParticleButton>
+          </div>
         </div>
 
-        {/* Size Selection Buttons - Right Side */}
-        <div className="absolute left-[15%] bottom-[13.3%]" style={{ marginLeft: '420px' }}>
-          <ParticleButton 
-            onClick={() => selectOffer(2, 940)}
-            className="bg-white hover:bg-emerald-50 text-emerald-700 border-2 border-emerald-500 hover:border-emerald-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
-            successDuration={1500}
-          >
-            100ml
-          </ParticleButton>
-        </div>
-
-        {/* Duplicate Buttons for "Add 4" - Left Button */}
-        <div className="absolute right-[15%] bottom-[13.3%]" style={{ marginRight: '240px' }}>
-          <ParticleButton 
-            onClick={() => selectOffer(1, 245)}
-            className="bg-white hover:bg-teal-50 text-teal-700 border-2 border-teal-500 hover:border-teal-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
-            successDuration={1500}
-          >
-            50ml
-          </ParticleButton>
-        </div>
-
-        {/* Duplicate Buttons for "Add 4" - Right Button */}
-        <div className="absolute right-[15%] bottom-[13.3%]" style={{ marginRight: '155px' }}>
-          <ParticleButton 
-            onClick={() => selectOffer(2, 940)}
-            className="bg-white hover:bg-emerald-50 text-emerald-700 border-2 border-emerald-500 hover:border-emerald-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
-            successDuration={1500}
-          >
-            100ml
-          </ParticleButton>
+        {/* Right Side Buttons */}
+        <div className="absolute bottom-[13.3%] left-1/2 transform -translate-x-1/2" style={{ marginLeft: '8vw' }}>
+          <div className="flex gap-2">
+            <ParticleButton 
+              onClick={() => selectOffer(1, 245)}
+              className="bg-white hover:bg-teal-50 text-teal-700 border-2 border-teal-500 hover:border-teal-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
+              successDuration={1500}
+            >
+              50ml
+            </ParticleButton>
+            <ParticleButton 
+              onClick={() => selectOffer(2, 940)}
+              className="bg-white hover:bg-emerald-50 text-emerald-700 border-2 border-emerald-500 hover:border-emerald-600 px-2 py-2 text-sm font-semibold shadow-md rounded-lg scale-90"
+              successDuration={1500}
+            >
+              100ml
+            </ParticleButton>
+          </div>
         </div>
 
       </div>
 
-      {/* Mobile Layout */}
-      <div className="lg:hidden relative z-10 min-h-screen flex flex-col items-center justify-center px-4 pt-20">
+      {/* Mobile/Tablet Layout */}
+      <div className="xl:hidden relative z-10 min-h-screen flex flex-col items-center justify-center px-4 pt-20">
         <div className="space-y-8">
           <div 
             className="cursor-pointer transition-transform hover:scale-105"
-            onClick={() => selectOffer(1, 399)}
+            onClick={() => selectOffer(1, 245)}
           >
             <HandWrittenTitle 
-              title="R399" 
-              subtitle="Save R131!" 
-              color="#ef4444"
+              normalPrice="R325"
+              otoPrice="R245"
+              savings="Save R80!"
+              color="#14b8a6"
             />
           </div>
           
           <div 
             className="cursor-pointer transition-transform hover:scale-105"
-            onClick={() => selectOffer(2, 599)}
+            onClick={() => selectOffer(2, 940)}
           >
             <HandWrittenTitle 
-              title="R599" 
-              subtitle="Save R196!" 
+              normalPrice="R1300"
+              otoPrice="R940"
+              savings="Save R360!"
               color="#22c55e"
             />
           </div>
         </div>
       </div>
+      
+      {/* Spacer for red "NO thanks" bar */}
+      <div className="h-5" />
     </div>
   )
 }

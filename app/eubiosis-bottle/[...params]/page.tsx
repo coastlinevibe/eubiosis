@@ -604,40 +604,54 @@ export default function EubiosisBottle({ params }: PageProps) {
                ) : (
   // Show regular Buy Now and Add to Cart buttons
   <>
-    <Link
-      href={`/oto?bundle=false&email=false&size=${selectedSize}&quantity=${quantity}&tookBigOffer=false`}
-      className="pay-btn"
-      style={{ width: 'auto', padding: '12px 24px', minWidth: '140px' }}
-    >
-      <span className="btn-text">Buy Now</span>
-      <div className="icon-container">
-        <svg viewBox="0 0 24 24" className="icon card-icon">
-          <path
-            d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18C2,19.11 2.89,20 4,20H20C21.11,20 22,19.11 22,18V6C22,4.89 21.11,4 20,4Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-        <svg viewBox="0 0 24 24" className="icon payment-icon">
-          <path
-            d="M2,17H22L20,7H4L2,17M20,4V6H4V4H20M6,10V12H18V10H6Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-      </div>
-    </Link>
+    <div className="flex gap-3 items-center">
+      <Link
+        href={`/checkout?bundle=false&email=false&size=${selectedSize}&quantity=${quantity}&tookBigOffer=false`}
+        className="pay-btn"
+        style={{ width: 'auto', padding: '12px 24px', minWidth: '140px' }}
+      >
+        <span className="btn-text">Buy Now</span>
+        <div className="icon-container">
+          <svg viewBox="0 0 24 24" className="icon card-icon">
+            <path
+              d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18C2,19.11 2.89,20 4,20H20C21.11,20 22,19.11 22,18V6C22,4.89 21.11,4 20,4Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          <svg viewBox="0 0 24 24" className="icon payment-icon">
+            <path
+              d="M2,17H22L20,7H4L2,17M20,4V6H4V4H20M6,10V12H18V10H6Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </div>
+      </Link>
+      
+      <Link
+        href="/"
+        className="pay-btn"
+        style={{ 
+          width: 'auto', 
+          padding: '12px 24px', 
+          minWidth: '140px',
+          background: 'white',
+          color: '#333',
+          border: '2px solid #e5e7eb'
+        }}
+      >
+        <span className="btn-text">Back to main</span>
+        <div className="icon-container">
+          <svg viewBox="0 0 24 24" className="icon card-icon">
+            <path
+              d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </div>
+      </Link>
+    </div>
   </>
 )}
-</div>
-
-{/* Back Home Button */}
-<div className="pt-4">
-  <Link 
-    href="/"
-    className="btn-secondary flex items-center gap-2 text-sm font-medium w-auto px-4 py-2"
-  >
-    <ArrowLeft className="w-4 h-4" />
-    <span>Back Home</span>
-  </Link>
 </div>
             </motion.div>
           </div>

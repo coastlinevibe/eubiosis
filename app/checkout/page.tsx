@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import ThreeStepCheckout from '@/components/ThreeStepCheckout'
+import { saveOrder } from '@/lib/supabase'
 
 function CheckoutContent() {
   const searchParams = useSearchParams()
@@ -24,10 +25,19 @@ function CheckoutContent() {
     tookBigOffer
   }
 
-  const handleCheckoutComplete = (orderData: any, customerData: any) => {
-    // Process order - redirect to success page
-    console.log('Order completed:', { orderData, customerData })
-    window.location.href = '/checkout/success'
+  const handleCheckoutComplete = async (orderData: any, customerData: any) => {
+    try {
+      // Save order to Supabase database
+      console.log('Saving order to database...')
+      const savedOrder = await saveOrder(orderData, customerData)
+      console.log('Order saved successfully:', savedOrder)
+      
+      // Redirect to success page with order ID
+      window.location.href = `/checkout/success?orderId=${savedOrder.id}`
+    } catch (error) {
+      console.error('Failed to save order:', error)
+      alert('There was an error processing your order. Please try again.')
+    }
   }
 
   return (

@@ -1,13 +1,46 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Check, Truck, Shield, Home } from 'lucide-react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 
 export default function CheckoutSuccess() {
-  const [orderNumber] = useState(() => 
-    'EB' + Math.random().toString(36).substr(2, 9).toUpperCase()
-  )
+  const searchParams = useSearchParams()
+  const [orderNumber, setOrderNumber] = useState('')
+  const [customerEmail, setCustomerEmail] = useState('')
+
+  useEffect(() => {
+    // Scroll to top on page load
+    window.scrollTo(0, 0)
+    
+    // Get order ID from URL and fetch customer email
+    const orderId = searchParams.get('orderId')
+    if (orderId) {
+      fetchCustomerEmail(orderId)
+    }
+  }, [searchParams])
+
+  const fetchCustomerEmail = async (orderId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('email, id')
+        .eq('id', orderId)
+        .single()
+
+      if (data && !error) {
+        setCustomerEmail(data.email)
+        // Create a readable order number from the UUID
+        setOrderNumber('EB' + data.id.substring(0, 8).toUpperCase())
+      }
+    } catch (error) {
+      console.error('Error fetching order details:', error)
+      // Fallback order number if fetch fails
+      setOrderNumber('EB' + Math.random().toString(36).substr(2, 8).toUpperCase())
+    }
+  }
 
   useEffect(() => {
     // Scroll to top on page load
@@ -51,7 +84,7 @@ export default function CheckoutSuccess() {
               <span>Order #{orderNumber}</span>
             </div>
             <p className="text-text/70 text-sm">
-              Order confirmation has been sent to: theodt.bmm@gmail.com
+              Order confirmation has been sent to: {customerEmail || 'your email address'}
             </p>
           </div>
 

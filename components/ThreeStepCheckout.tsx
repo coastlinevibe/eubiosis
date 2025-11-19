@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight, Check, Lock, CreditCard } from 'lucide-react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { ProvinceSelector } from '@/components/ui/province-selector'
 
 interface CheckoutStep {
   id: number
@@ -25,6 +27,7 @@ interface CustomerData {
   firstName: string
   lastName: string
   email: string
+  emailConfirmation?: string
   phone: string
   address: string
   city: string
@@ -53,6 +56,8 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
     country: 'South Africa'
   })
 
+  const [fullName, setFullName] = useState('')
+
   const [paymentData, setPaymentData] = useState({
     email: '',
     cardNumber: '',
@@ -71,36 +76,47 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
   ]
 
   const pricing = {
-    '50ml': { basePrice: 325, discountedPrice: 265 },
-    '100ml': { basePrice: 650, discountedPrice: 530 }
+    '50ml': { normalPrice: 325, specialPrice: 265, savings: 60 },
+    '100ml': { normalPrice: 650, specialPrice: 530, savings: 120 }
   }
 
   const calculateTotal = () => {
-    const basePrice = pricing[orderData.size].basePrice
-    const discountedPrice = pricing[orderData.size].discountedPrice
-    const subtotal = basePrice * orderData.quantity
-    const healthyGutDiscount = (basePrice - discountedPrice) * orderData.quantity
+    const normalPrice = pricing[orderData.size].normalPrice
+    const specialPrice = pricing[orderData.size].specialPrice
+    const baseSavings = pricing[orderData.size].savings
     
-    let additionalDiscounts = 0
-    if (orderData.emailDiscount && !orderData.bundle) {
-      additionalDiscounts += Math.round((subtotal - healthyGutDiscount) * 0.1)
+    // Base calculation
+    const subtotal = specialPrice * orderData.quantity
+    let totalSavings = baseSavings * orderData.quantity
+    
+    // Irresistible offer calculation
+    let irresistibleOfferPrice = 0
+    let irresistibleOfferSavings = 0
+    if (irresistibleOfferAccepted) {
+      irresistibleOfferPrice = 235 // Special price for extra 50ml bottle
+      irresistibleOfferSavings = 90 // R325 - R235 = R90 savings on the extra bottle
+      totalSavings += irresistibleOfferSavings
     }
-    if (orderData.bundle) {
-      const bundlePercent = orderData.upsellDiscount > 0 ? orderData.upsellDiscount / 100 : 0.15
-      additionalDiscounts += Math.round((subtotal - healthyGutDiscount) * bundlePercent)
+    
+    // Calculate final total
+    const orderTotal = subtotal + irresistibleOfferPrice
+    
+    // Delivery fee calculation
+    let deliveryFee = 0
+    if (orderTotal >= 650) {
+      deliveryFee = 29 // Reduced delivery fee for orders R650+
+    } else {
+      deliveryFee = 59 // Standard delivery fee for orders under R650
     }
-
-    const baseTotal = subtotal - healthyGutDiscount - additionalDiscounts
-    const otoPrice = orderData.oto && orderData.otoPrice ? orderData.otoPrice : 0
-    const irresistibleOfferPrice = irresistibleOfferAccepted ? 235 : 0 // R265 - R30 discount
 
     return {
-      subtotal,
-      healthyGutDiscount,
-      additionalDiscounts,
-      otoPrice,
+      subtotal: normalPrice * orderData.quantity + (irresistibleOfferAccepted ? 325 : 0), // Original prices
+      specialPrice: subtotal,
+      healthyGutDiscount: totalSavings,
       irresistibleOfferPrice,
-      total: baseTotal + otoPrice + irresistibleOfferPrice
+      deliveryFee,
+      total: orderTotal + deliveryFee,
+      totalSavings
     }
   }
 
@@ -128,7 +144,19 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
   }
 
   const completeCheckout = () => {
-    onComplete(orderData, customerData)
+    // Validate that emails match
+    if (customerData.email !== paymentData.email) {
+      alert('Email addresses do not match. Please ensure both email fields contain the same address.')
+      return
+    }
+    
+    // Validate that email is provided
+    if (!customerData.email || !paymentData.email) {
+      alert('Please provide your email address in both fields.')
+      return
+    }
+    
+    onComplete(orderData, { ...customerData, emailConfirmation: paymentData.email })
   }
 
   const totals = calculateTotal()
@@ -183,11 +211,22 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                     <input
                       type="text"
                       placeholder="Name and Surname"
-                      value={customerData.firstName + (customerData.lastName ? ' ' + customerData.lastName : '')}
+                      value={fullName}
                       onChange={(e) => {
-                        const names = e.target.value.split(' ')
-                        handleCustomerDataChange('firstName', names[0] || '')
-                        handleCustomerDataChange('lastName', names.slice(1).join(' ') || '')
+                        const inputValue = e.target.value
+                        setFullName(inputValue)
+                        
+                        // Update firstName and lastName for database storage
+                        const spaceIndex = inputValue.lastIndexOf(' ')
+                        if (spaceIndex === -1) {
+                          handleCustomerDataChange('firstName', inputValue)
+                          handleCustomerDataChange('lastName', '')
+                        } else {
+                          const firstName = inputValue.substring(0, spaceIndex)
+                          const lastName = inputValue.substring(spaceIndex + 1)
+                          handleCustomerDataChange('firstName', firstName)
+                          handleCustomerDataChange('lastName', lastName)
+                        }
                       }}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
                     />
@@ -293,15 +332,44 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                       placeholder="Please confirm your Email..."
                       value={paymentData.email}
                       onChange={(e) => setPaymentData(prev => ({ ...prev, email: e.target.value }))}
-                      className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                      className={`w-full px-4 py-3 pr-12 border rounded-lg focus:outline-none ${
+                        paymentData.email && customerData.email && paymentData.email !== customerData.email
+                          ? 'border-red-500 focus:border-red-500 bg-red-50'
+                          : paymentData.email && customerData.email && paymentData.email === customerData.email
+                          ? 'border-green-500 focus:border-green-500 bg-green-50'
+                          : 'border-gray-300 focus:border-accent'
+                      }`}
                     />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
+                    {/* Email match indicator */}
+                    {paymentData.email && customerData.email && (
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        {paymentData.email === customerData.email ? (
+                          <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                      </div>
+                    )}
                   </div>
+                  
+                  {/* Email validation message */}
+                  {paymentData.email && customerData.email && paymentData.email !== customerData.email && (
+                    <p className="text-red-500 text-sm mt-2">
+                      ⚠️ Email addresses do not match. Please ensure both fields contain the same email address.
+                    </p>
+                  )}
+                  {paymentData.email && customerData.email && paymentData.email === customerData.email && (
+                    <p className="text-green-600 text-sm mt-2">
+                      ✓ Email addresses match
+                    </p>
+                  )}
                 </div>
+
+                {/* Payment Method */}
 
                 {/* Payment Method Selection */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
@@ -392,6 +460,8 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                       </div>
                     </div>
                   )}
+
+
                 </div>
 
                 {/* Order Summary */}
@@ -434,7 +504,26 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                     </div>
                     <div className="text-sm text-text/80">
                       <span className="font-bold text-red-500">IRRESISTIBLE OFFER:</span> Add one more 50ml bottle for only R235 
-                      (normally R265 - save R30!). Perfect for sharing or extending your gut health journey.
+                      (normally R325 - save R90!). Perfect for sharing or extending your gut health journey.
+                    </div>
+                  </div>
+                )}
+
+                {/* Province Selection Card - Only show for EFT payments */}
+                {paymentData.paymentMethod === 'eft' && (
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-6">
+                    <h4 className="text-lg font-medium text-text mb-4">Select your Province</h4>
+                    <div className="space-y-3">
+                      <p className="text-sm text-gray-600">
+                        Please select your province for bank transfer details:
+                      </p>
+                      {/* Province selector component */}
+                      <div className="w-full">
+                        <ProvinceSelector
+                          value={customerData.province}
+                          onChange={(value) => handleCustomerDataChange('province', value)}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -466,12 +555,15 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                     {orderData.size} × {orderData.quantity}
                     {orderData.oto && <span className="text-accent"> + {orderData.oto}</span>}
                   </p>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-sm text-red-500 line-through">R{totals.subtotal + (orderData.otoPrice || 0)}</span>
-                    <div className="text-right">
-                      <div className="font-medium text-accent">R{totals.total}</div>
-                      <div className="text-xs text-green-600">save R{totals.healthyGutDiscount + totals.additionalDiscounts} ✓</div>
-                    </div>
+                  <div className="text-right mt-1 space-y-1">
+                    <div className="text-sm text-red-500 line-through">R{totals.subtotal}</div>
+                    <div className="text-sm text-gray-600">Special Price: R{totals.specialPrice}</div>
+                    {irresistibleOfferAccepted && (
+                      <div className="text-sm text-green-600">+ Extra Bottle: R{totals.irresistibleOfferPrice}</div>
+                    )}
+                    <div className="text-sm text-gray-600">Delivery: R{totals.deliveryFee}</div>
+                    <div className="font-medium text-accent text-lg">Total: R{totals.total}</div>
+                    <div className="text-xs text-green-600 font-medium">You Save: R{totals.totalSavings} ✓</div>
                   </div>
                 </div>
               </div>
