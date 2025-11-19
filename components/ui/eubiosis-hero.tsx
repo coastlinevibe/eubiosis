@@ -308,7 +308,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
             >
               <Image
-                src="/images/bottles/bottle-combo.png"
+                src="https://raw.githubusercontent.com/coastlinevibe/eubiosis/main/public/images/bottles/bottle-combo.png"
                 alt="Eubiosis Bottle Combo"
                 width={300}
                 height={250}
@@ -541,7 +541,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                   transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
                 >
                   <Image
-                    src="/images/bottles/bottle-combo.png"
+                    src="https://raw.githubusercontent.com/coastlinevibe/eubiosis/main/public/images/bottles/bottle-combo.png"
                     alt="Eubiosis Bottle Combo"
                     width={500}
                     height={500}
