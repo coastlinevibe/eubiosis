@@ -8,33 +8,35 @@ import {
   Facebook,
   Twitter,
 } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const data = {
-  facebookLink: 'https://facebook.com/eubiosis-s',
-  instaLink: 'https://instagram.com/eubiosis-s',
-  twitterLink: 'https://twitter.com/eubiosis-s',
+  facebookLink: 'https://www.facebook.com/share/1AEhMdUjsn/',
+  instaLink: '#',
+  twitterLink: '#',
   services: {
-    shop: '/eubiosis-s-bottle/size-s/quantity-1',
-    ingredients: '/eubiosis-s-bottle/size-s/quantity-1#details',
-    usage: '/eubiosis-s-bottle/size-s/quantity-1#details',
-    faqs: '/eubiosis-s-bottle/size-s/quantity-1#details',
+    shop: '/shop',
+    ingredients: 'key-ingredients',
+    usage: '/shop',
+    faqs: '/shop',
   },
   about: {
-    story: '/about',
-    science: '/science',
-    testimonials: '/#testimonials',
-    gallery: '/#gallery',
+    story: 'what-is-eubiosis-s',
+    science: 'key-ingredients',
+    testimonials: 'testimonials',
+    gallery: 'gallery',
   },
   help: {
-    support: '/support',
-    shipping: '/shipping',
-    returns: '/returns',
+    support: 'whatsapp://send?phone=270714329190',
+    shipping: 'shipping-info',
   },
   contact: {
     email: 'hello@eubiosis-s.com',
-    phone: '+27 123 456 789',
+    phone: '0714329190',
     address: 'Mokopane, Limpopo, South Africa',
+  },
+  shipping: {
+    info: 'Same-day delivery in Mokopane area. Nationwide shipping available via courier.',
   },
   company: {
     name: 'Eubiosis-S',
@@ -64,9 +66,8 @@ const serviceLinks = [
 ];
 
 const helpfulLinks = [
-  { text: 'Customer Support', href: data.help.support },
+  { text: 'WhatsApp Support', href: data.help.support },
   { text: 'Shipping Info', href: data.help.shipping },
-  { text: 'Returns & Refunds', href: data.help.returns },
 ];
 
 const contactInfo = [
@@ -76,9 +77,41 @@ const contactInfo = [
 ];
 
 export default function EubiosisSFooter() {
+  const router = useRouter();
+
+  const handleNavigation = (href: string) => {
+    if (href.startsWith('whatsapp://')) {
+      // Open WhatsApp directly
+      window.open(href, '_blank');
+    } else if (href === 'shipping-info') {
+      // Shipping info is already visible in footer, just scroll to it
+      const element = document.querySelector('.text-center.lg\\:text-left');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    } else if (href === '/') {
+      router.push('/');
+    } else if (href.startsWith('/#')) {
+      // For hash links, go to home page first then scroll
+      router.push('/');
+      setTimeout(() => {
+        const element = document.getElementById(href.substring(2));
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (href.startsWith('/')) {
+      // Regular page navigation
+      router.push(href);
+    } else {
+      // Section navigation - go to home page first, then scroll to section
+      router.push('/');
+      setTimeout(() => {
+        const element = document.getElementById(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+  };
+
   return (
     <footer className="bg-white/80 backdrop-blur-sm border-t border-white/30 mt-16 w-full">
-      <div className="mx-auto max-w-screen-xl px-4 pt-16 pb-6 sm:px-6 lg:px-8 lg:pt-24">
+      <div className="mx-auto max-w-screen-xl px-4 pt-16 pb-32 sm:px-6 lg:px-8 lg:pt-24">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="flex justify-center gap-3 sm:justify-start items-center">
@@ -97,13 +130,19 @@ export default function EubiosisSFooter() {
             <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
               {socialLinks.map(({ icon: Icon, label, href }) => (
                 <li key={label}>
-                  <Link
-                    href={href}
+                  <button
                     className="text-[#4AAE9B] hover:text-[#4AAE9B]/80 transition-colors"
+                    onClick={() => {
+                      if (href === '#') {
+                        alert(`${label} coming soon!`);
+                      } else {
+                        window.open(href, '_blank');
+                      }
+                    }}
                   >
                     <span className="sr-only">{label}</span>
                     <Icon className="size-6" />
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -115,12 +154,12 @@ export default function EubiosisSFooter() {
               <ul className="mt-8 space-y-4 text-sm">
                 {aboutLinks.map(({ text, href }) => (
                   <li key={text}>
-                    <Link
-                      className="text-gray-600 hover:text-[#4AAE9B] transition-colors"
-                      href={href}
+                    <button
+                      className="text-gray-600 hover:text-[#4AAE9B] transition-colors text-left"
+                      onClick={() => handleNavigation(href)}
                     >
                       {text}
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -131,12 +170,12 @@ export default function EubiosisSFooter() {
               <ul className="mt-8 space-y-4 text-sm">
                 {serviceLinks.map(({ text, href }) => (
                   <li key={text}>
-                    <Link
-                      className="text-gray-600 hover:text-[#4AAE9B] transition-colors"
-                      href={href}
+                    <button
+                      className="text-gray-600 hover:text-[#4AAE9B] transition-colors text-left"
+                      onClick={() => handleNavigation(href)}
                     >
                       {text}
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -147,12 +186,12 @@ export default function EubiosisSFooter() {
               <ul className="mt-8 space-y-4 text-sm">
                 {helpfulLinks.map(({ text, href }) => (
                   <li key={text}>
-                    <Link
-                      href={href}
-                      className="text-gray-600 hover:text-[#4AAE9B] transition-colors"
+                    <button
+                      className="text-gray-600 hover:text-[#4AAE9B] transition-colors text-left"
+                      onClick={() => handleNavigation(href)}
                     >
                       {text}
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -180,6 +219,14 @@ export default function EubiosisSFooter() {
                   </li>
                 ))}
               </ul>
+              
+              {/* Shipping Information */}
+              <div className="mt-6 pt-4 border-t border-gray-200 mb-4">
+                <p className="text-sm font-medium text-gray-800 mb-2">Shipping</p>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  {data.shipping.info}
+                </p>
+              </div>
             </div>
 
             <div className="text-center lg:text-right">

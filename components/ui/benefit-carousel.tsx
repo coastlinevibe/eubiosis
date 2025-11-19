@@ -48,7 +48,7 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
               Natural Gut Health. Real Results.
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text">
-              Key Benefits
+              Key Features
             </h2>
           </motion.div>
 

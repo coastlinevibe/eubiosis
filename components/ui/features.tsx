@@ -542,7 +542,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   return (
     <div
       ref={sectionRef}
-      className="min-h-screen py-8 px-4"
+      className="py-16 px-4"
       style={doodleBackgroundStyle}
     >
       <div className="max-w-7xl mx-auto">
@@ -598,7 +598,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
               {/* Original 3-Column Layout for Default */}
               {/* Left Side - Heading */}
               <motion.div 
-                className="text-left"
+                className="text-left flex flex-col justify-center"
                 initial={{ opacity: 0, x: -50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}

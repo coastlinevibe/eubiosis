@@ -1,9 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Heart, Zap, Shield, Sparkles, Droplet } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { EubiosisFeatures } from '@/components/ui/eubiosis-features'
 import { BenefitGrid } from '@/components/ui/benefit-carousel'
@@ -308,10 +305,11 @@ export default function Home() {
           </motion.div>
         )}
 
-        {/* Key Benefits - Only in browsing mode */}
+        {/* Key Features - Only in browsing mode */}
         {viewMode === 'browsing' && (
           <motion.div
             key="benefits"
+            id="key-features"
             initial={{ opacity: 0, y: 100, scale: 0.9, rotateX: 20 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={{ opacity: 0, y: -50, transition: { duration: 0.5 } }}
@@ -331,6 +329,7 @@ export default function Home() {
         {viewMode === 'browsing' && (
           <motion.div
             key="ingredients"
+            id="key-ingredients"
             initial={{ opacity: 0, y: 100, scale: 0.9, rotateX: 20 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={{ opacity: 0, y: -50, transition: { duration: 0.5 } }}
@@ -350,6 +349,7 @@ export default function Home() {
         {viewMode === 'browsing' && (
           <motion.section
             key="testimonials"
+            id="testimonials"
             initial={{ opacity: 0, y: 100, scale: 0.9, rotateX: 20 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
             exit={{ opacity: 0, y: -50, transition: { duration: 0.5 } }}
@@ -423,10 +423,38 @@ export default function Home() {
           </motion.section>
         )}
 
-        {/* Gallery Section - Temporarily disabled for build fix */}
-        {false && viewMode === 'browsing' && (
+        {/* Divider between Testimonials and Gallery */}
+        {viewMode === 'browsing' && (
+          <motion.div
+            key="divider"
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            exit={{ opacity: 0, scaleX: 0, transition: { duration: 0.5 } }}
+            transition={{ duration: 1.2, delay: 0.85, ease: "easeOut" }}
+            className="w-full py-8"
+          >
+            <div className="max-w-4xl mx-auto px-4">
+              <div className="relative flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gradient-to-r from-transparent via-[#8bccc2]/30 to-transparent"></div>
+                </div>
+                <div className="relative bg-white px-6">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 rounded-full bg-[#8bccc2]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#8bccc2]/60"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#8bccc2]"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Gallery Section */}
+        {viewMode === 'browsing' && (
           <motion.section
             key="gallery"
+            id="gallery"
             initial={{ opacity: 0, scale: 0.7, rotateY: 30 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.5 } }}
