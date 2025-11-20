@@ -542,13 +542,13 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   return (
     <div
       ref={sectionRef}
-      className="pt-0 pb-16 px-4 -mt-16"
+      className={`${illness ? 'pt-14 pb-16 px-4' : 'pt-0 pb-16 px-4 -mt-16'}`}
       style={doodleBackgroundStyle}
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
-          className={`${illness ? 'flex flex-col items-center text-center space-y-2' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center'} -mb-28`}
+          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center -mb-12'}`}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -631,7 +631,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
               >
-                <div className="relative bg-gradient-to-br from-[#8bccc2]/10 to-[#78b4aa]/10 rounded-2xl p-3 border border-[#8bccc2]/20" style={{ transform: 'translate(-160px, 170px) scale(1.5)' }}>
+                <div className="relative bg-gradient-to-br from-[#8bccc2]/10 to-[#78b4aa]/10 rounded-2xl p-3 border border-[#8bccc2]/20" style={{ transform: 'translate(-160px, 270px) scale(1.5)' }}>
                   {/* Image Container */}
                   <div className="relative aspect-video bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-xl overflow-hidden mb-4">
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -668,7 +668,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
           )}
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 lg:gap-16 gap-8 items-start">
+        <div className={`grid lg:grid-cols-2 lg:gap-16 gap-8 items-start ${illness ? 'mt-24' : ''}`}>
           {/* Left Side - Scrollable Content */}
           <motion.div 
             className="space-y-2"

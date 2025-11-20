@@ -197,11 +197,11 @@ export function FramerCarousel() {
         >
           <motion.div className='flex' style={{ x }}>
             {items.map((item) => (
-              <div key={item.id} className='shrink-0 w-1/2 h-[70vh] min-h-[600px] px-2'>
+              <div key={item.id} className='shrink-0 w-1/2 h-[90vh] min-h-[800px] px-2 flex items-center justify-center'>
                 <img
                   src={item.url}
                   alt={item.title}
-                  className='w-full h-full object-cover rounded-xl select-none pointer-events-none'
+                  className='max-w-full max-h-full object-contain rounded-xl select-none pointer-events-none'
                   draggable={false}
                 />
               </div>
