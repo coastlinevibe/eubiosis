@@ -65,13 +65,6 @@ export const defaultMetadata: Metadata = {
       }
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.title,
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
-    creator: "@eubiosis-s",
-  },
   robots: {
     index: true,
     follow: true,
@@ -137,9 +130,7 @@ export const organizationSchema = {
   },
   "sameAs": [
     // Add your social media URLs here
-    // "https://www.facebook.com/eubiosis",
-    // "https://www.instagram.com/eubiosis",
-    // "https://twitter.com/eubiosis"
+    // "https://www.facebook.com/eubiosis"
   ]
 }
 

@@ -251,17 +251,17 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
           <circle cx="50%" cy="50%" r="1.5" className="detail-dot" style={{ animationDelay: '4s' }} />
         </svg>
 
-        {/* Responsive Corner Elements */}
-        <div className="corner-element-animate top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8" style={{ animationDelay: '4s' }}>
+        {/* Responsive Corner Elements - Hidden */}
+        <div className="corner-element-animate top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 hidden" style={{ animationDelay: '4s' }}>
           <div className="absolute top-0 left-0 w-2 h-2 bg-accent opacity-30 rounded-full"></div>
         </div>
-        <div className="corner-element-animate top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8" style={{ animationDelay: '4.2s' }}>
+        <div className="corner-element-animate top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 hidden" style={{ animationDelay: '4.2s' }}>
           <div className="absolute top-0 right-0 w-2 h-2 bg-accent opacity-30 rounded-full"></div>
         </div>
-        <div className="corner-element-animate bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-8 md:left-8" style={{ animationDelay: '4.4s' }}>
+        <div className="corner-element-animate bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-8 md:left-8 hidden" style={{ animationDelay: '4.4s' }}>
           <div className="absolute bottom-0 left-0 w-2 h-2 bg-accent opacity-30 rounded-full"></div>
         </div>
-        <div className="corner-element-animate bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8" style={{ animationDelay: '4.6s' }}>
+        <div className="corner-element-animate bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 hidden" style={{ animationDelay: '4.6s' }}>
           <div className="absolute bottom-0 right-0 w-2 h-2 bg-accent opacity-30 rounded-full"></div>
         </div>
 

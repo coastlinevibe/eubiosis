@@ -188,20 +188,20 @@ const illnessContent = {
   Diabetes: {
     tagline: "Blood Sugar Balance. Natural Support.",
     heading: "Diabetes Support Through Gut Health",
-    description: "Support your metabolic wellness journey with balanced gut bacteria that may complement healthy lifestyle choices",
+    description: "Support your metabolic wellness journey with balanced gut bacteria that complement healthy lifestyle choices",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Metabolic Harmony Support",
-        description: "Eubiosis-S may support healthy metabolic function through balanced gut bacteria as part of a healthy lifestyle.",
+        description: "Eubiosis-S supports healthy metabolic function through balanced gut bacteria as part of a healthy lifestyle.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Metabolic Support Strains",
-        description: "Our beneficial strains may help support healthy glucose metabolism when combined with proper diet and exercise.",
+        description: "Our beneficial strains help support healthy glucose metabolism when combined with proper diet and exercise.",
         image: "/images/bottles/bottle-s.png",
       },
       {
@@ -216,21 +216,21 @@ const illnessContent = {
   IBS: {
     tagline: "Digestive Support. Gentle Comfort.",
     heading: "IBS Support with Eubiosis-S",
-    description: "Support digestive comfort and balance with beneficial bacteria that may help promote gut harmony",
+    description: "Support digestive comfort and balance with beneficial bacteria that help promote gut harmony",
     features: [
       {
         id: 0,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Understanding IBS",
         description:
-          "IBS often involves gut bacteria imbalance that may affect digestion. Stress, antibiotics, infections, and dietary changes can influence symptoms. Supporting microbial balance may help promote digestive comfort and overall gut wellness.",
+          "IBS often involves gut bacteria imbalance that affects digestion. Stress, antibiotics, infections, and dietary changes can influence symptoms. Supporting microbial balance helps promote digestive comfort and overall gut wellness.",
         image: "/images/hands.png",
       },
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Digestive Comfort Support",
-        description: "Our beneficial strains may help support digestive comfort and promote balanced gut function as part of a healthy lifestyle.",
+        description: "Our beneficial strains help support digestive comfort and promote balanced gut function as part of a healthy lifestyle.",
         image: "/images/hands.png",
       },
     ]
@@ -244,14 +244,14 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Skin-Gut Connection",
-        description: "Eubiosis-S may support the gut-skin axis, helping promote skin health from the inside out through balanced gut bacteria.",
+        description: "Eubiosis-S supports the gut-skin axis, helping promote skin health from the inside out through balanced gut bacteria.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Skin-Supporting Strains",
-        description: "Our beneficial strains may help support healthy inflammatory response and skin barrier function.",
+        description: "Our beneficial strains help support healthy inflammatory response and skin barrier function.",
         image: "/images/bottles/bottle-s.png",
       },
       {
@@ -272,14 +272,14 @@ const illnessContent = {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Lifestyle Balance Support",
-        description: "Eubiosis-S may help support your body's natural resilience against the stresses of modern living through gut balance.",
+        description: "Eubiosis-S helps support your body's natural resilience against the stresses of modern living through gut balance.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Energy & Vitality Strains",
-        description: "Our beneficial bacteria may support natural energy levels and overall vitality for busy lifestyles.",
+        description: "Our beneficial bacteria support natural energy levels and overall vitality for busy lifestyles.",
         image: "/images/bottles/bottle-s.png",
       },
       {
@@ -294,20 +294,20 @@ const illnessContent = {
   Autoimmune: {
     tagline: "Immune Balance. Natural Support.",
     heading: "Autoimmune Support with Eubiosis-S",
-    description: "Support your immune system naturally with beneficial bacteria that may help promote immune balance",
+    description: "Support your immune system naturally with beneficial bacteria that help promote immune balance",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Immune System Support",
-        description: "Eubiosis-S may support healthy immune function through balanced gut bacteria as part of overall wellness.",
+        description: "Eubiosis-S supports healthy immune function through balanced gut bacteria as part of overall wellness.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Balance-Supporting Strains",
-        description: "Our beneficial strains may help support healthy inflammatory response and immune system balance.",
+        description: "Our beneficial strains help support healthy inflammatory response and immune system balance.",
         image: "/images/bottles/bottle-s.png",
       },
       {
@@ -322,20 +322,20 @@ const illnessContent = {
   "Digestive Issues": {
     tagline: "Complete Digestive Support. Natural Wellness.",
     heading: "Comprehensive Digestive Support",
-    description: "Support digestive wellness with beneficial bacteria that may help promote overall gut comfort and balance",
+    description: "Support digestive wellness with beneficial bacteria that help promote overall gut comfort and balance",
     features: [
       {
         id: 1,
         icon: "/images/Gut_Harmony_Restored.png?v=2",
         title: "Digestive Comfort Support",
-        description: "Eubiosis-S may help support digestive comfort and promote balanced gut function as part of healthy living.",
+        description: "Eubiosis-S helps support digestive comfort and promote balanced gut function as part of healthy living.",
         image: "/images/hands.png",
       },
       {
         id: 2,
         icon: "/images/42_Beneficial_Strains.png?v=2",
         title: "Full-Spectrum Support",
-        description: "Comprehensive blend of beneficial bacteria that may support various aspects of digestive wellness.",
+        description: "Comprehensive blend of beneficial bacteria that support various aspects of digestive wellness.",
         image: "/images/bottles/bottle-s.png",
       },
       {
@@ -535,20 +535,20 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
 
     if (score >= 10) return { match: "Excellent", message: "Eubiosis-S appears to be an excellent fit for your needs!" };
     if (score >= 7) return { match: "Good", message: "Eubiosis-S could be very beneficial for your situation." };
-    if (score >= 5) return { match: "Moderate", message: "Eubiosis-S may help, though results may vary." };
+    if (score >= 5) return { match: "Moderate", message: "Eubiosis-S helps, though results vary." };
     return { match: "Limited", message: "Eubiosis-S might provide some benefits, but consider consulting with a healthcare provider." };
   };
 
   return (
     <div
       ref={sectionRef}
-      className="py-16 px-4"
+      className="pt-0 pb-16 px-4 -mt-16"
       style={doodleBackgroundStyle}
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
-          className={`${illness ? 'flex flex-col items-center text-center space-y-2' : 'grid lg:grid-cols-3 grid-cols-1 gap-8 items-center'} mb-16`}
+          className={`${illness ? 'flex flex-col items-center text-center space-y-2' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center'} -mb-28`}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -606,7 +606,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 <span className={`text-[#8bccc2] font-semibold text-sm uppercase tracking-wider block mb-4`}>
                   {currentContent.tagline}
                 </span>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text">
+                <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-text leading-tight">
                   {currentContent.heading}
                 </h2>
               </motion.div>
@@ -624,16 +624,45 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 </div>
               </motion.div>
 
-              {/* Right Side - Description */}
+              {/* Right Side - Image Box with Voice Recording */}
               <motion.div 
-                className="text-left lg:text-right"
+                className="text-left lg:text-right mt-[100px]"
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
               >
-                <p className="text-base lg:text-lg text-text/70 leading-relaxed">
-                  {currentContent.description}
-                </p>
+                <div className="relative bg-gradient-to-br from-[#8bccc2]/10 to-[#78b4aa]/10 rounded-2xl p-3 border border-[#8bccc2]/20" style={{ transform: 'translate(-160px, 170px) scale(1.5)' }}>
+                  {/* Image Container */}
+                  <div className="relative aspect-video bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-xl overflow-hidden mb-4">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <img 
+                        src="/images/bottles/bottle-combo.png" 
+                        alt="Eubiosis-S Bottles" 
+                        className="w-32 h-auto drop-shadow-lg"
+                      />
+                    </div>
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </div>
+                  
+                  {/* Voice Recording Button */}
+                  <div className="flex items-center justify-center">
+                    <button className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-full border-2 border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl">
+                      <div className="relative">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <div className="absolute -inset-1 bg-current opacity-20 rounded-full animate-pulse group-hover:animate-none"></div>
+                      </div>
+                      <span className="font-medium text-sm">Listen: What is Eubiosis-S?</span>
+                    </button>
+                  </div>
+                  
+                  {/* Description below */}
+                  <p className="text-xs text-center text-gray-600 mt-3 leading-relaxed">
+                    {currentContent.description}
+                  </p>
+                </div>
               </motion.div>
             </>
           )}
@@ -642,13 +671,13 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
         <div className="grid lg:grid-cols-2 lg:gap-16 gap-8 items-start">
           {/* Left Side - Scrollable Content */}
           <motion.div 
-            className="space-y-6"
+            className="space-y-2"
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
             {/* Scrollable Content Container */}
-            <div className="h-[390px] overflow-y-auto pr-4 space-y-6 scrollbar-thin scrollbar-thumb-[#8bccc2] scrollbar-track-gray-100 scrollbar-w-2">
+            <div className="h-[390px] overflow-y-auto pr-4 space-y-2 scrollbar-thin scrollbar-thumb-[#8bccc2] scrollbar-track-gray-100 scrollbar-w-2">
               
               {/* Feature Text List */}
               {features.map((feature, index) => {
@@ -744,7 +773,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.6, delay: 1.1, ease: "easeOut" }}
                       >
-                        Discover how gut balance may support your {illness} wellness journey.
+                        Discover how gut balance supports your {illness} wellness journey.
 
                       </motion.p>
                       <motion.div

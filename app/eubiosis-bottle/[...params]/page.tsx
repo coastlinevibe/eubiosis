@@ -784,7 +784,7 @@ export default function EubiosisBottle({ params }: PageProps) {
                   </div>
                   <div>
                     <h4 className="text-base font-medium text-accent mb-1">Are there any side effects?</h4>
-                    <p className="text-sm text-text/80">Eubiosis-S is generally well-tolerated. Some users may experience mild digestive changes in the first few days as gut flora adjusts.</p>
+                    <p className="text-sm text-text/80">Eubiosis-S is generally well-tolerated. Some users experience mild digestive changes in the first few days as gut flora adjusts.</p>
                   </div>
                   <div>
                     <h4 className="text-base font-medium text-accent mb-1">Can I take it with other supplements?</h4>

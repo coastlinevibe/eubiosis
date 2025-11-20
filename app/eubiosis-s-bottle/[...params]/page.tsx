@@ -789,7 +789,7 @@ export default function EubiosisBottle({ params }: PageProps) {
                   <div>
                     <h4 className="text-base font-medium text-accent mb-2">Storage</h4>
                     <p className="text-sm text-text/80 mb-2">STORE AT ROOM TEMPERATURE PROTECTED FROM DIRECT SUNLIGHT</p>
-                    <p className="text-sm text-text/80 mb-2"><strong>NOTE:</strong> In certain weather conditions this natural syrup may become sticky. This is not a sign of deterioration. If this happens, submerge the entire tightly closed bottle in warm tap water for one minute and shake well before use.</p>
+                    <p className="text-sm text-text/80 mb-2"><strong>NOTE:</strong> In certain weather conditions this natural syrup becomes sticky. This is not a sign of deterioration. If this happens, submerge the entire tightly closed bottle in warm tap water for one minute and shake well before use.</p>
                   </div>
 
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -813,7 +813,7 @@ export default function EubiosisBottle({ params }: PageProps) {
                   </div>
                   <div>
                     <h4 className="text-base font-medium text-accent mb-1">Are there any side effects?</h4>
-                    <p className="text-sm text-text/80">Eubiosis-S is generally well-tolerated. Some users may experience mild digestive changes in the first few days as gut flora adjusts.</p>
+                    <p className="text-sm text-text/80">Eubiosis-S is generally well-tolerated. Some users experience mild digestive changes in the first few days as gut flora adjusts.</p>
                   </div>
                   <div>
                     <h4 className="text-base font-medium text-accent mb-1">Can I take it with other supplements?</h4>

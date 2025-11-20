@@ -4,16 +4,12 @@ import {
   Mail,
   MapPin,
   Phone,
-  Instagram,
   Facebook,
-  Twitter,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const data = {
   facebookLink: 'https://www.facebook.com/share/1AEhMdUjsn/',
-  instaLink: '#',
-  twitterLink: '#',
   services: {
     shop: '/shop',
     ingredients: 'key-ingredients',
@@ -31,12 +27,12 @@ const data = {
     shipping: 'shipping-info',
   },
   contact: {
-    email: 'hello@eubiosis-s.com',
+    email: 'eubiosis@outlook.com',
     phone: '0714329190',
     address: 'Mokopane, Limpopo, South Africa',
   },
   shipping: {
-    info: 'Same-day delivery in Mokopane area. Nationwide shipping available via courier.',
+    info: 'Same-day delivery in Mokopane area. Nationwide shipping available via Courier Guy.',
   },
   company: {
     name: 'Eubiosis-S',
@@ -47,8 +43,6 @@ const data = {
 
 const socialLinks = [
   { icon: Facebook, label: 'Facebook', href: data.facebookLink },
-  { icon: Instagram, label: 'Instagram', href: data.instaLink },
-  { icon: Twitter, label: 'Twitter', href: data.twitterLink },
 ];
 
 const aboutLinks = [

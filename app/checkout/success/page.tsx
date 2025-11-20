@@ -135,7 +135,7 @@ function CheckoutSuccessContent() {
             </Link>
             
             <p className="text-sm text-text/50">
-              Need help? Contact us at support@eubiosis.co.za
+              Need help? Contact us at eubiosis@outlook.com
             </p>
           </div>
         </div>

@@ -11,7 +11,6 @@ interface ExitIntentPopupProps {
 }
 
 export function ExitIntentPopup({ isOpen, onClose }: ExitIntentPopupProps) {
-  const [email, setEmail] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -35,12 +34,7 @@ export function ExitIntentPopup({ isOpen, onClose }: ExitIntentPopupProps) {
     }
   }, [isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle email submission here
-    console.log('Email submitted:', email);
-    onClose();
-  };
+
 
   return (
     <AnimatePresence>
@@ -119,8 +113,8 @@ export function ExitIntentPopup({ isOpen, onClose }: ExitIntentPopupProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.5 }}
                   >
-                    Transform Your Gut Health with 
-                    <span className="text-[#4AAE9B]"> 15% OFF</span>
+                    "Healthy Gut" Special
+                    <span className="text-[#4AAE9B]"> R60 OFF</span>
                   </motion.h2>
                   <motion.p 
                     className="text-base sm:text-lg text-gray-600 leading-relaxed"
@@ -128,42 +122,36 @@ export function ExitIntentPopup({ isOpen, onClose }: ExitIntentPopupProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.5 }}
                   >
-                    Join thousands who've discovered the power of our honey-based probiotic formula. Get exclusive access to gut health tips and your discount code!
+                    Transform your gut health with our honey-based probiotic formula. Limited time offer - save R60 on your order today!
                   </motion.p>
                 </motion.div>
 
-                {/* Email Form */}
-                <motion.form 
-                  onSubmit={handleSubmit} 
+                {/* Buy Now Button */}
+                <motion.div 
                   className="space-y-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7, duration: 0.5 }}
                 >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.8, duration: 0.3 }}
-                  >
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email address"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4AAE9B] focus:border-transparent outline-none transition-all"
-                      required
-                    />
-                  </motion.div>
-                  <motion.button
-                    type="submit"
-                    className="btn w-full text-white font-semibold py-3 px-6 rounded-lg"
+                  <motion.a
+                    href="/eubiosis-s-bottle/size-s/quantity-1"
+                    className="btn w-full text-white font-semibold py-4 px-6 rounded-lg text-center block bg-[#4AAE9B] hover:bg-[#3d9585] transition-colors"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.9, duration: 0.3 }}
+                    onClick={onClose}
                   >
-                    GET 15% OFF NOW
-                  </motion.button>
-                </motion.form>
+                    BUY NOW - SAVE R60
+                  </motion.a>
+                  <motion.p 
+                    className="text-xs text-gray-500 text-center"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.1, duration: 0.3 }}
+                  >
+                    Discount applied automatically at checkout
+                  </motion.p>
+                </motion.div>
               </motion.div>
 
               {/* Right Side - Product Image */}
