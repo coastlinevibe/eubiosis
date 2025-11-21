@@ -573,7 +573,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
-          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center -mb-12'}`}
+          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center -mb-24'}`}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -705,7 +705,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
           )}
         </motion.div>
 
-        <div className={`grid lg:grid-cols-2 lg:gap-16 gap-8 items-start ${illness ? 'mt-24' : ''}`}>
+        <div className={`grid lg:grid-cols-2 lg:gap-8 gap-4 items-start ${illness ? 'mt-12' : 'mt-8'}`}>
           {/* Left Side - Scrollable Content */}
           <motion.div 
             className="space-y-2"

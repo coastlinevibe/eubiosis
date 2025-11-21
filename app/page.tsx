@@ -473,8 +473,8 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Footer - Always visible */}
-      <EubiosisSFooter />
+      {/* Footer - Only visible in browsing mode (after "Learn More") */}
+      {viewMode === 'browsing' && <EubiosisSFooter />}
 
       {/* SVG Filter for Gooey Buttons - Exact CodePen */}
       <svg width="0" height="0" style={{ position: 'absolute' }}>
