@@ -126,7 +126,9 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
 
   const isStepValid = (step: number) => {
     if (step === 2) {
-      return Object.values(customerData).every(value => value.trim() !== '')
+      // Validate all fields except province (which will be collected on step 3)
+      const { province, ...requiredFields } = customerData
+      return Object.values(requiredFields).every(value => value.trim() !== '')
     }
     return true
   }
@@ -208,9 +210,10 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                 
                 <div className="space-y-4">
                   <div>
+                    <label className="block text-sm font-medium text-text mb-2">Name and Surname</label>
                     <input
                       type="text"
-                      placeholder="Name and Surname"
+                      placeholder="Enter your full name..."
                       value={fullName}
                       onChange={(e) => {
                         const inputValue = e.target.value
@@ -233,6 +236,7 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   </div>
 
                   <div>
+                    <label className="block text-sm font-medium text-text mb-2">Email Address</label>
                     <input
                       type="email"
                       placeholder="healthy@me.co.za"
@@ -243,9 +247,10 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   </div>
 
                   <div>
+                    <label className="block text-sm font-medium text-text mb-2">Phone Number</label>
                     <input
                       type="tel"
-                      placeholder="Phone Number..."
+                      placeholder="Enter your phone number..."
                       value={customerData.phone}
                       onChange={(e) => handleCustomerDataChange('phone', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
@@ -257,9 +262,10 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   </div>
 
                   <div>
+                    <label className="block text-sm font-medium text-text mb-2">Street Address</label>
                     <input
                       type="text"
-                      placeholder="Exact Address..."
+                      placeholder="Enter your exact address..."
                       value={customerData.address}
                       onChange={(e) => handleCustomerDataChange('address', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
@@ -267,36 +273,25 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   </div>
 
                   <div>
+                    <label className="block text-sm font-medium text-text mb-2">City/Town</label>
                     <input
                       type="text"
-                      placeholder="City/Town Name..."
+                      placeholder="Enter your city or town..."
                       value={customerData.city}
                       onChange={(e) => handleCustomerDataChange('city', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-text mb-2">State / Province</label>
-                      <input
-                        type="text"
-                        placeholder="State / Province..."
-                        value={customerData.province}
-                        onChange={(e) => handleCustomerDataChange('province', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-text mb-2">Postal Code</label>
-                      <input
-                        type="text"
-                        placeholder="Postal Code..."
-                        value={customerData.postalCode}
-                        onChange={(e) => handleCustomerDataChange('postalCode', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-text mb-2">Postal Code</label>
+                    <input
+                      type="text"
+                      placeholder="Postal Code..."
+                      value={customerData.postalCode}
+                      onChange={(e) => handleCustomerDataChange('postalCode', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                    />
                   </div>
 
                   <div>
@@ -369,10 +364,26 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   )}
                 </div>
 
-                {/* Payment Method */}
+                {/* Province Selection Card */}
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                  <h4 className="text-lg font-medium text-text mb-4">Select your Province</h4>
+                  <div className="space-y-3">
+                    <p className="text-sm text-gray-600">
+                      Please select your province for bank transfer details:
+                    </p>
+                    {/* Province selector component */}
+                    <div className="w-full">
+                      <ProvinceSelector
+                        value={customerData.province}
+                        onChange={(value) => handleCustomerDataChange('province', value)}
+                      />
+                    </div>
+                  </div>
+                </div>
 
-                {/* Payment Method Selection */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                {/* Payment Method - Only show if province is selected */}
+                {customerData.province && (
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                   <h3 className="text-lg font-medium text-text mb-4">Payment Method</h3>
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <button
@@ -460,12 +471,12 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                       </div>
                     </div>
                   )}
-
-
                 </div>
+                )}
 
-                {/* Order Summary */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                {/* Order Summary - Only show if province is selected */}
+                {customerData.province && (
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-text">Item</span>
@@ -486,9 +497,10 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                     </div>
                   </div>
                 </div>
+                )}
 
-                {/* Irresistible Offer - Only show if user didn't take big offer */}
-                {!orderData.tookBigOffer && !irresistibleOfferAccepted && (
+                {/* Irresistible Offer - Only show if user didn't take big offer and province is selected */}
+                {customerData.province && !orderData.tookBigOffer && !irresistibleOfferAccepted && (
                   <div className="border-2 border-dashed border-gray-400 rounded-lg p-4 bg-yellow-50">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-red-500 text-xl">➤</span>
@@ -509,24 +521,7 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   </div>
                 )}
 
-                {/* Province Selection Card - Only show for EFT payments */}
-                {paymentData.paymentMethod === 'eft' && (
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-6">
-                    <h4 className="text-lg font-medium text-text mb-4">Select your Province</h4>
-                    <div className="space-y-3">
-                      <p className="text-sm text-gray-600">
-                        Please select your province for bank transfer details:
-                      </p>
-                      {/* Province selector component */}
-                      <div className="w-full">
-                        <ProvinceSelector
-                          value={customerData.province}
-                          onChange={(value) => handleCustomerDataChange('province', value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
+
               </div>
             )}
           </div>
@@ -534,39 +529,51 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 sticky top-8">
-              <h3 className="text-lg font-medium text-text mb-4">Order Summary</h3>
-              
-              <div className="flex gap-3 mb-4">
-                <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/Website Product Image.png"
-                    alt="Eubiosis"
-                    width={64}
-                    height={64}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-text">
-                    {orderData.bundle ? `${orderData.quantity}-Bottle Bundle` : 'Eubiosis — Nature in a Bottle'}
-                    {orderData.oto && <span className="text-accent"> + OTO Deal</span>}
-                  </h4>
-                  <p className="text-sm text-text/70">
-                    {orderData.size} × {orderData.quantity}
-                    {orderData.oto && <span className="text-accent"> + {orderData.oto}</span>}
-                  </p>
-                  <div className="text-right mt-1 space-y-1">
-                    <div className="text-sm text-red-500 line-through">R{totals.subtotal}</div>
-                    <div className="text-sm text-gray-600">Special Price: R{totals.specialPrice}</div>
-                    {irresistibleOfferAccepted && (
-                      <div className="text-sm text-green-600">+ Extra Bottle: R{totals.irresistibleOfferPrice}</div>
-                    )}
-                    <div className="text-sm text-gray-600">Delivery: R{totals.deliveryFee}</div>
-                    <div className="font-medium text-accent text-lg">Total: R{totals.total}</div>
-                    <div className="text-xs text-green-600 font-medium">You Save: R{totals.totalSavings} ✓</div>
+              {/* Show order summary on step 2 or step 3 with province selected */}
+              {(currentStep === 2 || (currentStep === 3 && customerData.province)) ? (
+                <>
+                  <h3 className="text-lg font-medium text-text mb-4">Order Summary</h3>
+                  
+                  <div className="flex gap-3 mb-4">
+                    <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+                      <Image
+                        src="/images/Website Product Image.png"
+                        alt="Eubiosis"
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-text">
+                        {orderData.bundle ? `${orderData.quantity}-Bottle Bundle` : 'Eubiosis — Nature in a Bottle'}
+                        {orderData.oto && <span className="text-accent"> + OTO Deal</span>}
+                      </h4>
+                      <p className="text-sm text-text/70">
+                        {orderData.size} × {orderData.quantity}
+                        {orderData.oto && <span className="text-accent"> + {orderData.oto}</span>}
+                      </p>
+                      <div className="text-right mt-1 space-y-1">
+                        <div className="text-sm text-red-500 line-through">R{totals.subtotal}</div>
+                        <div className="text-sm text-gray-600">Special Price: R{totals.specialPrice}</div>
+                        {irresistibleOfferAccepted && (
+                          <div className="text-sm text-green-600">+ Extra Bottle: R{totals.irresistibleOfferPrice}</div>
+                        )}
+                        <div className="text-sm text-gray-600">Delivery: R{totals.deliveryFee}</div>
+                        <div className="font-medium text-accent text-lg">Total: R{totals.total}</div>
+                        <div className="text-xs text-green-600 font-medium">You Save: R{totals.totalSavings} ✓</div>
+                      </div>
+                    </div>
                   </div>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <h3 className="text-lg font-medium text-text mb-4">Select Your Province</h3>
+                  <p className="text-sm text-gray-600">
+                    Please select your province above to see your order summary and continue with payment.
+                  </p>
                 </div>
-              </div>
+              )}
 
               {/* Navigation Buttons */}
               <div className="space-y-3 pt-4 border-t">

@@ -184,6 +184,17 @@ export const ProvinceSelector = ({ value, onChange }: ProvinceSelectorProps) => 
                     </div>
                   </div>
                   <p className="text-sm text-gray-600">{province.bio}</p>
+                  
+                  {/* Payment Options Prompt */}
+                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800 font-medium mb-2">💡 Payment Options:</p>
+                    <p className="text-xs text-blue-700">
+                      <strong>Option 1:</strong> Connect via WhatsApp above to discuss EFT payment and cheaper delivery options with your representative.
+                    </p>
+                    <p className="text-xs text-blue-700 mt-1">
+                      <strong>Option 2:</strong> Continue below to pay instantly with FastPay (card payment).
+                    </p>
+                  </div>
                 </div>
               </CollapsibleContent>
             </li>

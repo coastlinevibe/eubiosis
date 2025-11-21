@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Play, X, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, RotateCcw, Home } from 'lucide-react';
+import { Play, Pause, X, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, RotateCcw, Home } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -380,6 +380,8 @@ const illnessContent = {
 export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPrevIllness, onNextIllness, onLearnMoreClick, cycling }: { illness?: string | null; onBrowsingClick?: () => void; onResetToHero?: () => void; onPrevIllness?: () => void; onNextIllness?: () => void; onLearnMoreClick?: () => void; cycling?: boolean }) {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(null);
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -393,6 +395,29 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   const illnesses = ['IBS', 'Diabetes', 'Skin Health', 'Western Lifestyle', 'Autoimmune', 'Digestive Issues'];
+
+  // Audio toggle function
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  // Handle audio ended
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      const handleEnded = () => setIsPlaying(false);
+      audio.addEventListener('ended', handleEnded);
+      return () => audio.removeEventListener('ended', handleEnded);
+    }
+  }, []);
 
   const doodleBackgroundStyle = {
     backgroundImage:
@@ -636,8 +661,8 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   <div className="relative aspect-video bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-xl overflow-hidden mb-4">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <img 
-                        src="/images/bottles/bottle-combo.png" 
-                        alt="Eubiosis-S Bottles" 
+                        src="/images/scatman.jpg" 
+                        alt="Scatman" 
                         className="w-32 h-auto drop-shadow-lg"
                       />
                     </div>
@@ -647,15 +672,27 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   
                   {/* Voice Recording Button */}
                   <div className="flex items-center justify-center">
-                    <button className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-full border-2 border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <button 
+                      onClick={toggleAudio}
+                      className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-full border-2 border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
                       <div className="relative">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <div className="absolute -inset-1 bg-current opacity-20 rounded-full animate-pulse group-hover:animate-none"></div>
+                        {isPlaying ? (
+                          <Pause className="w-5 h-5" />
+                        ) : (
+                          <Play className="w-5 h-5" />
+                        )}
+                        <div className={`absolute -inset-1 bg-current opacity-20 rounded-full ${isPlaying ? 'animate-pulse' : 'animate-pulse group-hover:animate-none'}`}></div>
                       </div>
-                      <span className="font-medium text-sm">Listen: What is Eubiosis-S?</span>
+                      <span className="font-medium text-sm">
+                        {isPlaying ? 'Pause: What is Eubiosis-S?' : 'Listen: What is Eubiosis-S?'}
+                      </span>
                     </button>
+                    {/* Hidden audio element */}
+                    <audio ref={audioRef} preload="metadata">
+                      <source src="/audio/eub.mp3" type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
                   </div>
                   
                   {/* Description below */}

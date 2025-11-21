@@ -124,11 +124,7 @@ export const items = [
     url: '/images/gallery/19.jpg',
     title: 'Eubiosis-S Gallery Image 19',
   },
-  {
-    id: 25,
-    url: '/images/gallery/22.jpg',
-    title: 'Eubiosis-S Gallery Image 22',
-  },
+
   {
     id: 26,
     url: '/images/gallery/24.jpg',
