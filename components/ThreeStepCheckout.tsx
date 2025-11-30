@@ -196,15 +196,7 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
           <div className="lg:col-span-2">
             {currentStep === 2 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-medium text-text">Customer Information</h2>
-                  <button
-                    onClick={() => setCurrentStep(3)}
-                    className="px-4 py-2 text-sm text-accent border border-accent rounded-lg hover:bg-accent hover:text-white transition-colors"
-                  >
-                    Skip to Payment
-                  </button>
-                </div>
+                <h2 className="text-xl font-medium text-text mb-6">Customer Information</h2>
                 
                 <div className="space-y-4">
                   <div>
