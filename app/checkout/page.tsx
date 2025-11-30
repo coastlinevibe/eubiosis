@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import ThreeStepCheckout from '@/components/ThreeStepCheckout'
+import { saveOrder } from '@/lib/supabase'
 
 function CheckoutContent() {
   const searchParams = useSearchParams()
@@ -38,6 +39,15 @@ function CheckoutContent() {
       const subtotal = pricing[orderData.size as '50ml' | '100ml'].specialPrice * orderData.quantity
       const deliveryFee = subtotal >= 650 ? 29 : 59
       const total = subtotal + deliveryFee
+      
+      // Save order to Supabase before redirecting to PayFast
+      try {
+        await saveOrder(orderData, customerData)
+        console.log('Order saved to Supabase successfully')
+      } catch (error) {
+        console.error('Failed to save order to Supabase:', error)
+        // Continue with payment even if Supabase save fails
+      }
       
       // Create PayFast payment form
       const form = document.createElement('form')
