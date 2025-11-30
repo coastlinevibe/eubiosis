@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Check, Truck, Shield, Home } from 'lucide-react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
@@ -24,6 +24,7 @@ function CheckoutSuccessContent() {
 
   const fetchCustomerEmail = async (orderId: string) => {
     try {
+      const supabase = getSupabase()
       const { data, error } = await supabase
         .from('orders')
         .select('email, id')
@@ -31,9 +32,9 @@ function CheckoutSuccessContent() {
         .single()
 
       if (data && !error) {
-        setCustomerEmail(data.email)
+        setCustomerEmail((data as any).email || '')
         // Create a readable order number from the UUID
-        setOrderNumber('EB' + data.id.substring(0, 8).toUpperCase())
+        setOrderNumber('EB' + ((data as any).id || '').substring(0, 8).toUpperCase())
       }
     } catch (error) {
       console.error('Error fetching order details:', error)

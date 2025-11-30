@@ -1,13 +1,26 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+let supabase: any = null
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables!')
+function getSupabaseClient() {
+  if (supabase) {
+    return supabase
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing Supabase environment variables: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY')
+  }
+
+  supabase = createClient(supabaseUrl, supabaseAnonKey)
+  return supabase
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export function getSupabase() {
+  return getSupabaseClient()
+}
 
 // Database types
 export interface Order {
@@ -48,6 +61,8 @@ export interface Order {
 // Function to save order to database
 export async function saveOrder(orderData: any, customerData: any) {
   try {
+    const supabaseClient = getSupabase()
+    
     const order: Omit<Order, 'id' | 'created_at'> = {
       // Customer info
       first_name: customerData.firstName || '',
@@ -79,7 +94,7 @@ export async function saveOrder(orderData: any, customerData: any) {
       status: 'pending'
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('orders')
       .insert([order])
       .select()
