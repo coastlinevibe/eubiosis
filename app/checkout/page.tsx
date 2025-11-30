@@ -30,12 +30,12 @@ function CheckoutContent() {
       console.log('Customer data:', customerData)
       
       // Calculate total amount
-      const pricing = {
+      const pricing: Record<'50ml' | '100ml', { specialPrice: number }> = {
         '50ml': { specialPrice: 265 },
         '100ml': { specialPrice: 530 }
       }
       
-      const subtotal = pricing[orderData.size].specialPrice * orderData.quantity
+      const subtotal = pricing[orderData.size as '50ml' | '100ml'].specialPrice * orderData.quantity
       const deliveryFee = subtotal >= 650 ? 29 : 59
       const total = subtotal + deliveryFee
       
