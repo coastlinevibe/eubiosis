@@ -29,6 +29,9 @@ interface CustomerData {
   lastName: string
   email: string
   phone: string
+  address: string
+  city: string
+  postalCode: string
   province: string
 }
 
@@ -45,6 +48,9 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
     lastName: '',
     email: '',
     phone: '',
+    address: '',
+    city: '',
+    postalCode: '',
     province: ''
   })
 
@@ -109,10 +115,13 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
 
   const isStepValid = (step: number) => {
     if (step === 2) {
-      // Validate name, email, and phone
+      // Validate name, email, phone, and address
       return customerData.firstName.trim() !== '' && 
              customerData.email.trim() !== '' && 
-             customerData.phone.trim() !== ''
+             customerData.phone.trim() !== '' &&
+             customerData.address.trim() !== '' &&
+             customerData.city.trim() !== '' &&
+             customerData.postalCode.trim() !== ''
     }
     return true
   }
@@ -131,8 +140,8 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
 
   const completeCheckout = () => {
     // Validate required fields
-    if (!customerData.firstName || !customerData.email || !customerData.phone) {
-      alert('Please provide your name, email, and phone number.')
+    if (!customerData.firstName || !customerData.email || !customerData.phone || !customerData.address || !customerData.city || !customerData.postalCode) {
+      alert('Please provide all required information including your delivery address.')
       return
     }
     
@@ -245,6 +254,41 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                       onChange={(e) => handleCustomerDataChange('phone', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-text mb-2">Street Address</label>
+                    <input
+                      type="text"
+                      placeholder="123 Main Street, Apartment 4B"
+                      value={customerData.address}
+                      onChange={(e) => handleCustomerDataChange('address', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-text mb-2">City</label>
+                      <input
+                        type="text"
+                        placeholder="Johannesburg"
+                        value={customerData.city}
+                        onChange={(e) => handleCustomerDataChange('city', e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-text mb-2">Postal Code</label>
+                      <input
+                        type="text"
+                        placeholder="2000"
+                        value={customerData.postalCode}
+                        onChange={(e) => handleCustomerDataChange('postalCode', e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

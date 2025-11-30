@@ -1,116 +1,69 @@
-# Supabase Setup Guide
-
-## Overview
-This project uses Supabase to store customer orders when users complete a purchase. The order data is automatically saved before redirecting to PayFast for payment.
+# Supabase Order Tracking Setup
 
 ## Setup Steps
 
-### 1. Create a Supabase Project
-1. Go to [https://app.supabase.com](https://app.supabase.com)
-2. Sign up or log in
-3. Click "New Project"
-4. Fill in the project details and create it
+### 1. Apply Database Schema
 
-### 2. Run the Database Schema
-1. In your Supabase project, go to the **SQL Editor**
-2. Click "New Query"
-3. Copy the entire contents of `supabase-schema.sql` from this project
-4. Paste it into the SQL editor
-5. Click "Run" to create the tables and indexes
+1. Go to your Supabase dashboard: https://app.supabase.com
+2. Select your project (keqaosmbblccidztklaj)
+3. Navigate to **SQL Editor** in the left sidebar
+4. Click **New Query**
+5. Copy and paste the entire contents of `supabase-schema.sql`
+6. Click **Run** to execute the SQL
 
-### 3. Get Your API Keys
-1. Go to **Project Settings** > **API**
-2. Copy the following values:
-   - **Project URL** (under "Project URL")
-   - **Anon Key** (under "Project API keys")
+This will create:
+- `orders` table with all required fields
+- Indexes for better performance
+- Row Level Security policies
+- Auto-update trigger for `updated_at` field
 
-### 4. Add Environment Variables
+### 2. Verify Table Creation
 
-#### For Local Development
-Create a `.env.local` file in the project root:
-```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-```
+After running the SQL, go to **Table Editor** in the left sidebar and verify that the `orders` table exists with these columns:
+- id, created_at, updated_at
+- first_name, last_name, email, phone, address, city, postal_code, province, country
+- product_size, quantity, is_bundle, email_discount, upsell_discount, took_big_offer, oto_offer, oto_price
+- subtotal, discount_amount, total_amount
+- status
 
-#### For Vercel Production
-1. Go to your Vercel project settings
-2. Navigate to **Environment Variables**
-3. Add the same two variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-4. Deploy your project
+### 3. Test Order Submission
 
-### 5. Test the Integration
-1. Run the development server: `npm run dev`
+1. Run your development server: `npm run dev`
 2. Go through the checkout flow
-3. Check your Supabase project's **orders** table to verify the order was saved
-4. You should see the customer information and order details
+3. Fill in customer details on step 2
+4. Select a province on step 3
+5. Click "Pay with PayFast"
+6. Check the browser console for logs:
+   - `🚀 About to save order to Supabase...`
+   - `=== saveOrder called ===`
+   - `✅ Order saved successfully`
 
-## What Gets Saved
+### 4. Verify in Supabase
 
-When a user completes checkout, the following information is saved to the `orders` table:
+1. Go to **Table Editor** > **orders**
+2. You should see your test order with all the details
+3. Pricing values are stored in cents (e.g., R324 = 32400)
 
-**Customer Information:**
-- First name & last name
-- Email address
-- Phone number
-- Province
-- Address (to be confirmed)
-- City (to be confirmed)
-- Postal code (to be confirmed)
+## How It Works
 
-**Order Details:**
-- Product size (50ml or 100ml)
-- Quantity
-- Bundle status
-- Email discount applied
-- Upsell discount amount
-- Big offer status
-- OTO offer details
-- Pricing (subtotal, discount, total)
-- Order status (pending)
+When a user clicks "Pay with PayFast" on step 3:
 
-## Database Schema
-
-The `orders` table includes:
-- **id**: Unique order identifier (UUID)
-- **created_at**: Timestamp when order was created
-- **updated_at**: Timestamp when order was last updated
-- **status**: Order status (pending, processing, completed, cancelled)
-- All customer and order fields listed above
-
-Indexes are created on:
-- `email` - for quick customer lookups
-- `created_at` - for sorting orders by date
-- `status` - for filtering orders by status
-
-## Row Level Security (RLS)
-
-The table has RLS enabled with policies that allow:
-- Anyone to insert new orders (for checkout)
-- Anyone to read orders (you may want to restrict this later)
+1. **Order is saved to Supabase** with all customer and order details
+2. **User is redirected to PayFast** for payment
+3. Order status starts as 'pending'
+4. After payment, PayFast sends a notification to update the order status
 
 ## Troubleshooting
 
-### "Missing Supabase environment variables" error
-- Make sure `.env.local` is created with the correct values
-- Restart your development server after adding environment variables
+### Orders not saving?
 
-### Orders not saving
-- Check the browser console for error messages
-- Verify your Supabase URL and Anon Key are correct
-- Make sure the `orders` table was created by running the SQL schema
+Check browser console for error messages. Common issues:
+- Table doesn't exist (run the SQL schema)
+- RLS policies blocking inserts (schema includes policies)
+- Network issues (check Supabase URL in .env.local)
 
-### Connection issues
-- Verify your Supabase project is active
-- Check that your API keys haven't been revoked
-- Ensure your project's network settings allow connections from your domain
+### Can't see orders in Supabase?
 
-## Next Steps
-
-After setup, you may want to:
-1. Add authentication to restrict order viewing
-2. Create an admin dashboard to view orders
-3. Set up webhooks to handle order status updates
-4. Add email notifications when orders are received
+- Make sure you're looking at the correct project
+- Check the Table Editor, not the SQL Editor
+- Verify RLS policies allow SELECT (included in schema)

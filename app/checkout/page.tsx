@@ -49,11 +49,12 @@ function CheckoutContent() {
       const total = orderSubtotal + deliveryFee
       
       // Save order to Supabase before redirecting to PayFast
+      console.log('🚀 About to save order to Supabase...')
       try {
-        await saveOrder(orderData, customerData)
-        console.log('Order saved to Supabase successfully')
+        const savedOrder = await saveOrder(orderData, customerData)
+        console.log('✅ Order saved to Supabase successfully:', savedOrder)
       } catch (error) {
-        console.error('Failed to save order to Supabase:', error)
+        console.error('❌ Failed to save order to Supabase:', error)
         // Continue with payment even if Supabase save fails
       }
       

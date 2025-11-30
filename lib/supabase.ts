@@ -56,12 +56,43 @@ export interface Order {
   
   // Status
   status: 'pending' | 'processing' | 'completed' | 'cancelled'
+  
+  // Email tracking
+  mail_sent: boolean
 }
 
 // Function to save order to database
 export async function saveOrder(orderData: any, customerData: any) {
+  console.log('=== saveOrder called ===')
+  console.log('orderData:', JSON.stringify(orderData, null, 2))
+  console.log('customerData:', JSON.stringify(customerData, null, 2))
+  
   try {
     const supabaseClient = getSupabase()
+    console.log('Supabase client initialized')
+    
+    // Calculate pricing
+    const pricing: Record<'50ml' | '100ml', { basePrice: number; specialPrice: number; savings: number }> = {
+      '50ml': { basePrice: 325, specialPrice: 265, savings: 60 },
+      '100ml': { basePrice: 650, specialPrice: 530, savings: 120 }
+    }
+    
+    const priceInfo = pricing[orderData.size as '50ml' | '100ml']
+    const baseSubtotal = priceInfo.specialPrice * orderData.quantity
+    let totalSavings = priceInfo.savings * orderData.quantity
+    
+    // Add irresistible offer if accepted
+    let irresistibleOfferPrice = 0
+    if (orderData.irresistibleOfferAccepted) {
+      irresistibleOfferPrice = 235
+      totalSavings += 90 // R325 - R235 = R90 savings
+    }
+    
+    const orderSubtotal = baseSubtotal + irresistibleOfferPrice
+    const deliveryFee = orderSubtotal >= 650 ? 29 : 59
+    const totalAmount = orderSubtotal + deliveryFee
+    
+    console.log('Calculated totals:', { orderSubtotal, deliveryFee, totalAmount, totalSavings })
     
     const order: Omit<Order, 'id' | 'created_at'> = {
       // Customer info
@@ -78,7 +109,7 @@ export async function saveOrder(orderData: any, customerData: any) {
       
       // Order details
       product_size: orderData.size,
-      quantity: orderData.quantity,
+      quantity: orderData.irresistibleOfferAccepted ? orderData.quantity + 1 : orderData.quantity, // Add extra bottle if accepted
       is_bundle: orderData.bundle || false,
       email_discount: orderData.emailDiscount || false,
       upsell_discount: orderData.upsellDiscount || 0,
@@ -86,46 +117,38 @@ export async function saveOrder(orderData: any, customerData: any) {
       oto_offer: orderData.oto || undefined,
       oto_price: orderData.otoPrice || 0,
       
-      // Calculate totals (you'll need to pass these or calculate them)
-      subtotal: calculateSubtotal(orderData),
-      discount_amount: calculateDiscounts(orderData),
-      total_amount: calculateTotal(orderData),
+      // Pricing (stored in cents as per schema)
+      subtotal: Math.round(orderSubtotal * 100),
+      discount_amount: Math.round(totalSavings * 100),
+      total_amount: Math.round(totalAmount * 100),
       
-      status: 'pending'
+      status: 'pending',
+      
+      // Email tracking
+      mail_sent: false
     }
 
+    console.log('Order object to insert:', JSON.stringify(order, null, 2))
+    
     const { data, error } = await supabaseClient
       .from('orders')
       .insert([order])
       .select()
 
     if (error) {
-      console.error('Error saving order:', error)
+      console.error('❌ Supabase error saving order:', error)
+      console.error('Error details:', JSON.stringify(error, null, 2))
       throw error
     }
 
-    console.log('Order saved successfully:', data)
+    console.log('✅ Order saved successfully to Supabase:', data)
     return data[0]
   } catch (error) {
-    console.error('Failed to save order:', error)
+    console.error('❌ Failed to save order - caught exception:', error)
+    if (error instanceof Error) {
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+    }
     throw error
   }
-}
-
-// Helper functions for calculations
-function calculateSubtotal(orderData: any): number {
-  const basePrice = orderData.size === '50ml' ? 265 : 530
-  return basePrice * orderData.quantity + (orderData.otoPrice || 0)
-}
-
-function calculateDiscounts(orderData: any): number {
-  let discount = 0
-  if (orderData.emailDiscount) discount += 30
-  if (orderData.bundle) discount += 50
-  discount += orderData.upsellDiscount || 0
-  return discount
-}
-
-function calculateTotal(orderData: any): number {
-  return calculateSubtotal(orderData) - calculateDiscounts(orderData)
 }

@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS orders (
   -- Status
   status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'cancelled')),
   
-  -- Indexes for common queries
-  CONSTRAINT orders_email_check CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+  -- Email tracking
+  mail_sent BOOLEAN DEFAULT FALSE
 );
 
 -- Create indexes for better query performance
