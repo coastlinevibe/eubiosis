@@ -27,13 +27,8 @@ interface CustomerData {
   firstName: string
   lastName: string
   email: string
-  emailConfirmation?: string
   phone: string
-  address: string
-  city: string
-  postalCode: string
   province: string
-  country: string
 }
 
 interface ThreeStepCheckoutProps {
@@ -49,23 +44,10 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
     lastName: '',
     email: '',
     phone: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    province: '',
-    country: 'South Africa'
+    province: ''
   })
 
   const [fullName, setFullName] = useState('')
-
-  const [paymentData, setPaymentData] = useState({
-    email: '',
-    cardNumber: '',
-    cvc: '',
-    expiryMonth: '',
-    expiryYear: '',
-    paymentMethod: 'card' as 'card' | 'eft'
-  })
 
   const [irresistibleOfferAccepted, setIrresistibleOfferAccepted] = useState(false)
 
@@ -126,9 +108,10 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
 
   const isStepValid = (step: number) => {
     if (step === 2) {
-      // Validate all fields except province (which will be collected on step 3)
-      const { province, ...requiredFields } = customerData
-      return Object.values(requiredFields).every(value => value.trim() !== '')
+      // Validate name, email, and phone
+      return customerData.firstName.trim() !== '' && 
+             customerData.email.trim() !== '' && 
+             customerData.phone.trim() !== ''
     }
     return true
   }
@@ -146,19 +129,25 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
   }
 
   const completeCheckout = () => {
-    // Validate that emails match
-    if (customerData.email !== paymentData.email) {
-      alert('Email addresses do not match. Please ensure both email fields contain the same address.')
+    // Validate required fields
+    if (!customerData.firstName || !customerData.email || !customerData.phone) {
+      alert('Please provide your name, email, and phone number.')
       return
     }
     
-    // Validate that email is provided
-    if (!customerData.email || !paymentData.email) {
-      alert('Please provide your email address in both fields.')
+    if (!customerData.province) {
+      alert('Please select your province.')
       return
     }
     
-    onComplete(orderData, { ...customerData, emailConfirmation: paymentData.email })
+    // Check if this is a Harry Trisos province (no PayFast)
+    if (['Eastern Cape', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'].includes(customerData.province)) {
+      alert('Please contact your representative via WhatsApp to complete your order.')
+      return
+    }
+    
+    // Redirect to PayFast
+    onComplete(orderData, customerData)
   }
 
   const totals = calculateTotal()
@@ -206,7 +195,15 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
           <div className="lg:col-span-2">
             {currentStep === 2 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                <h2 className="text-xl font-medium text-text mb-6">Customer Information</h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-medium text-text">Customer Information</h2>
+                  <button
+                    onClick={() => setCurrentStep(3)}
+                    className="px-4 py-2 text-sm text-accent border border-accent rounded-lg hover:bg-accent hover:text-white transition-colors"
+                  >
+                    Skip to Payment
+                  </button>
+                </div>
                 
                 <div className="space-y-4">
                   <div>
@@ -256,114 +253,12 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
                     />
                   </div>
-
-                  <div className="mt-6">
-                    <h3 className="text-lg font-medium text-gray-600 mb-4">SHIPPING</h3>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-text mb-2">Street Address</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your exact address..."
-                      value={customerData.address}
-                      onChange={(e) => handleCustomerDataChange('address', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-text mb-2">City/Town</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your city or town..."
-                      value={customerData.city}
-                      onChange={(e) => handleCustomerDataChange('city', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-text mb-2">Postal Code</label>
-                    <input
-                      type="text"
-                      placeholder="Postal Code..."
-                      value={customerData.postalCode}
-                      onChange={(e) => handleCustomerDataChange('postalCode', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-text mb-2">Country</label>
-                    <select
-                      value={customerData.country}
-                      onChange={(e) => handleCustomerDataChange('country', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                    >
-                      <option value="South Africa">South Africa</option>
-                      <option value="Botswana">Botswana</option>
-                      <option value="Namibia">Namibia</option>
-                      <option value="Zimbabwe">Zimbabwe</option>
-                      <option value="Zambia">Zambia</option>
-                      <option value="Mozambique">Mozambique</option>
-                      <option value="Swaziland">Swaziland</option>
-                      <option value="Lesotho">Lesotho</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
                 </div>
               </div>
             )}
 
             {currentStep === 3 && (
               <div className="space-y-6">
-                {/* Email Confirmation */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                  <h3 className="text-lg font-medium text-text mb-4">Your Email Address:</h3>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      placeholder="Please confirm your Email..."
-                      value={paymentData.email}
-                      onChange={(e) => setPaymentData(prev => ({ ...prev, email: e.target.value }))}
-                      className={`w-full px-4 py-3 pr-12 border rounded-lg focus:outline-none ${
-                        paymentData.email && customerData.email && paymentData.email !== customerData.email
-                          ? 'border-red-500 focus:border-red-500 bg-red-50'
-                          : paymentData.email && customerData.email && paymentData.email === customerData.email
-                          ? 'border-green-500 focus:border-green-500 bg-green-50'
-                          : 'border-gray-300 focus:border-accent'
-                      }`}
-                    />
-                    {/* Email match indicator */}
-                    {paymentData.email && customerData.email && (
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        {paymentData.email === customerData.email ? (
-                          <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        ) : (
-                          <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Email validation message */}
-                  {paymentData.email && customerData.email && paymentData.email !== customerData.email && (
-                    <p className="text-red-500 text-sm mt-2">
-                      ⚠️ Email addresses do not match. Please ensure both fields contain the same email address.
-                    </p>
-                  )}
-                  {paymentData.email && customerData.email && paymentData.email === customerData.email && (
-                    <p className="text-green-600 text-sm mt-2">
-                      ✓ Email addresses match
-                    </p>
-                  )}
-                </div>
-
                 {/* Province Selection Card */}
                 <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
                   <h4 className="text-lg font-medium text-text mb-4">Select your Province</h4>
@@ -381,97 +276,33 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                   </div>
                 </div>
 
-                {/* Payment Method - Only show if province is selected */}
+                {/* Payment Information - Only show if province is selected */}
                 {customerData.province && (
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                  <h3 className="text-lg font-medium text-text mb-4">Payment Method</h3>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <button
-                      onClick={() => setPaymentData(prev => ({ ...prev, paymentMethod: 'card' }))}
-                      className={`p-4 border rounded-lg text-center transition-colors ${
-                        paymentData.paymentMethod === 'card' 
-                          ? 'border-accent bg-accent/5 text-accent' 
-                          : 'border-gray-300 hover:border-accent/50'
-                      }`}
-                    >
-                      <CreditCard className="w-6 h-6 mx-auto mb-2" />
-                      <span className="text-sm font-medium">Bank Card</span>
-                    </button>
-                    <button
-                      onClick={() => setPaymentData(prev => ({ ...prev, paymentMethod: 'eft' }))}
-                      className={`p-4 border rounded-lg text-center transition-colors ${
-                        paymentData.paymentMethod === 'eft' 
-                          ? 'border-accent bg-accent/5 text-accent' 
-                          : 'border-gray-300 hover:border-accent/50'
-                      }`}
-                    >
-                      <div className="w-6 h-6 mx-auto mb-2 bg-accent rounded flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">EFT</span>
+                  <>
+                    {/* Check if province has Harry Trisos as representative (no payment method) */}
+                    {['Eastern Cape', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'].includes(customerData.province) ? (
+                      <div className="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-6 shadow-sm">
+                        <h3 className="text-lg font-medium text-text mb-4">Payment Information</h3>
+                        <p className="text-sm text-gray-700 mb-3">
+                          For your province, please contact your representative via WhatsApp to arrange payment and delivery.
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Online card payment is not available for this region at the moment.
+                        </p>
                       </div>
-                      <span className="text-sm font-medium">Bank Transfer</span>
-                    </button>
-                  </div>
-
-                  {paymentData.paymentMethod === 'card' && (
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="col-span-2">
-                          <label className="block text-sm font-medium text-text mb-2">Bank Card Number:</label>
-                          <input
-                            type="text"
-                            placeholder="Card number"
-                            value={paymentData.cardNumber}
-                            onChange={(e) => setPaymentData(prev => ({ ...prev, cardNumber: e.target.value }))}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-text mb-2">CVC Code:</label>
-                          <input
-                            type="text"
-                            placeholder="CVC"
-                            value={paymentData.cvc}
-                            onChange={(e) => setPaymentData(prev => ({ ...prev, cvc: e.target.value }))}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                          />
+                    ) : (
+                      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                        <h3 className="text-lg font-medium text-text mb-4">Ready to Pay</h3>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Click the button below to proceed to PayFast's secure payment page where you can pay with your card or EFT.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <Lock className="w-4 h-4" />
+                          <span>Secure payment powered by PayFast</span>
                         </div>
                       </div>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-text mb-2">Expiry Month:</label>
-                          <select
-                            value={paymentData.expiryMonth}
-                            onChange={(e) => setPaymentData(prev => ({ ...prev, expiryMonth: e.target.value }))}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                          >
-                            <option value="">01</option>
-                            {Array.from({ length: 12 }, (_, i) => (
-                              <option key={i + 1} value={String(i + 1).padStart(2, '0')}>
-                                {String(i + 1).padStart(2, '0')}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-text mb-2">Expiry Year:</label>
-                          <select
-                            value={paymentData.expiryYear}
-                            onChange={(e) => setPaymentData(prev => ({ ...prev, expiryYear: e.target.value }))}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
-                          >
-                            <option value="">2016</option>
-                            {Array.from({ length: 15 }, (_, i) => (
-                              <option key={2024 + i} value={2024 + i}>
-                                {2024 + i}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </>
                 )}
 
                 {/* Order Summary - Only show if province is selected */}
@@ -597,13 +428,25 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
-                  <button
-                    onClick={completeCheckout}
-                    className="w-full py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Lock className="w-4 h-4" />
-                    Complete Order - R{totals.total}
-                  </button>
+                  <>
+                    {['Eastern Cape', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'].includes(customerData.province) ? (
+                      <button
+                        disabled
+                        className="w-full py-3 bg-gray-400 text-white rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        Contact Representative
+                      </button>
+                    ) : (
+                      <button
+                        onClick={completeCheckout}
+                        disabled={!customerData.province}
+                        className="w-full py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        <Lock className="w-4 h-4" />
+                        Pay with PayFast - R{totals.total}
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             </div>

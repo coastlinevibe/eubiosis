@@ -23,7 +23,7 @@ const ingredients: Ingredient[] = [
     id: 1,
     title: "Fulvic Acid",
     description: "Boosts nutrient transport and cellular absorption for maximum effectiveness.",
-    image: "https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=150&h=150&fit=crop",
+    image: "/images/Fulvic Acid.avif",
     position: { top: "5%", left: "8%" },
     delay: 0.5
   },
@@ -31,7 +31,7 @@ const ingredients: Ingredient[] = [
     id: 2,
     title: "42 Probiotic Strains",
     description: "Diverse beneficial bacteria that restore and maintain optimal gut microbiome balance.",
-    image: "https://images.unsplash.com/photo-1576671081837-49000212a370?w=150&h=150&fit=crop",
+    image: "/images/42 Probiotic Strains.webp",
     position: { top: "8%", right: "5%" },
     delay: 1.0
   },
@@ -39,15 +39,15 @@ const ingredients: Ingredient[] = [
     id: 3,
     title: "Raw Honey",
     description: "Natural prebiotic delivery system that protects and nourishes beneficial bacteria.",
-    image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=150&h=150&fit=crop",
+    image: "/images/Raw Honey.jpg",
     position: { top: "60%", left: "2%" },
     delay: 1.5
   },
   {
     id: 4,
-    title: "Organic Herbs",
-    description: "Carefully selected botanical extracts that support digestive wellness and vitality.",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=150&h=150&fit=crop",
+    title: "Untouched African Soil",
+    description: "Pristine soil microorganisms that provide essential minerals and beneficial bacteria.",
+    image: "/images/Untouched African Soil.jpg",
     position: { top: "65%", right: "2%" },
     delay: 2.0
   }

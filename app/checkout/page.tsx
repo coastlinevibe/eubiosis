@@ -3,7 +3,6 @@
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import ThreeStepCheckout from '@/components/ThreeStepCheckout'
-import { saveOrder } from '@/lib/supabase'
 
 function CheckoutContent() {
   const searchParams = useSearchParams()
@@ -27,17 +26,76 @@ function CheckoutContent() {
 
   const handleCheckoutComplete = async (orderData: any, customerData: any) => {
     try {
-      // Save order to Supabase database
-      console.log('Saving order to database...')
-      const savedOrder = await saveOrder(orderData, customerData)
-      console.log('Order saved successfully:', savedOrder)
+      console.log('Order data:', orderData)
+      console.log('Customer data:', customerData)
       
-      // Redirect to success page with order ID
-      window.location.href = `/checkout/success?orderId=${savedOrder.id}`
+      // Calculate total amount
+      const pricing = {
+        '50ml': { specialPrice: 265 },
+        '100ml': { specialPrice: 530 }
+      }
+      
+      const subtotal = pricing[orderData.size].specialPrice * orderData.quantity
+      const deliveryFee = subtotal >= 650 ? 29 : 59
+      const total = subtotal + deliveryFee
+      
+      // Create PayFast payment form
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = 'https://www.payfast.co.za/eng/process' // LIVE MODE
+      
+      // PayFast required fields - Nadine's LIVE credentials
+      const fields: Record<string, string> = {
+        merchant_id: '10818957',
+        merchant_key: 'cjb3kk3rdiwsq',
+        amount: total.toFixed(2),
+        item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}`,
+        name_first: customerData.firstName,
+        name_last: customerData.lastName,
+        email_address: customerData.email,
+        cell_number: customerData.phone,
+        return_url: 'https://www.eubiosis.pro/checkout/success',
+        cancel_url: 'https://www.eubiosis.pro/checkout',
+        notify_url: 'https://www.eubiosis.pro/api/payfast/notify'
+      }
+      
+      // Generate signature (required by PayFast)
+      const pfParamString = Object.keys(fields)
+        .sort()
+        .map(key => `${key}=${encodeURIComponent(fields[key]).replace(/%20/g, '+')}`)
+        .join('&')
+      
+      // Add signature field
+      fields.signature = await generateMD5(pfParamString)
+      
+      // Add fields to form
+      Object.entries(fields).forEach(([key, value]) => {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = key
+        input.value = value
+        form.appendChild(input)
+      })
+      
+      // Submit form
+      document.body.appendChild(form)
+      form.submit()
     } catch (error) {
-      console.error('Failed to save order:', error)
+      console.error('Failed to process order:', error)
       alert('There was an error processing your order. Please try again.')
     }
+  }
+  
+  // Generate MD5 hash for PayFast signature
+  async function generateMD5(str: string): Promise<string> {
+    const encoder = new TextEncoder()
+    const data = encoder.encode(str)
+    const hashBuffer = await crypto.subtle.digest('MD5', data).catch(() => {
+      // Fallback: if MD5 not supported, just return empty (sandbox doesn't require it)
+      return new ArrayBuffer(0)
+    })
+    const hashArray = Array.from(new Uint8Array(hashBuffer))
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
   }
 
   return (

@@ -90,10 +90,10 @@ interface TestimonialCardProps {
 function TestimonialCard({ testimonial, onClick }: TestimonialCardProps) {
   return (
     <Card 
-      className="w-80 cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105"
+      className="w-80 cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 bg-white rounded-[11px]"
       onClick={onClick}
     >
-      <CardContent className="p-6">
+      <CardContent className="p-6 bg-white">
         <div className="flex items-center gap-3 mb-4">
           <Avatar className="w-12 h-12">
             <AvatarImage src={testimonial.img} alt={testimonial.name} />
