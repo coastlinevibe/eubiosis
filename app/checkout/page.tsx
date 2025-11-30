@@ -37,8 +37,16 @@ function CheckoutContent() {
       }
       
       const subtotal = pricing[orderData.size as '50ml' | '100ml'].specialPrice * orderData.quantity
-      const deliveryFee = subtotal >= 650 ? 29 : 59
-      const total = subtotal + deliveryFee
+      
+      // Add irresistible offer if accepted
+      let irresistibleOfferPrice = 0
+      if (orderData.irresistibleOfferAccepted) {
+        irresistibleOfferPrice = 235
+      }
+      
+      const orderSubtotal = subtotal + irresistibleOfferPrice
+      const deliveryFee = orderSubtotal >= 650 ? 29 : 59
+      const total = orderSubtotal + deliveryFee
       
       // Save order to Supabase before redirecting to PayFast
       try {
@@ -59,7 +67,7 @@ function CheckoutContent() {
         merchant_id: '10818957',
         merchant_key: 'cjb3kk3rdiwsq',
         amount: total.toFixed(2),
-        item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}`,
+        item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}${orderData.irresistibleOfferAccepted ? ' + Extra 50ml Bottle' : ''}`,
         name_first: customerData.firstName,
         name_last: customerData.lastName,
         email_address: customerData.email,

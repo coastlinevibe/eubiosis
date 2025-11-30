@@ -21,6 +21,7 @@ interface OrderData {
   tookBigOffer: boolean // Track if user took the big upsell offer
   oto?: string // OTO offer selected (offer1, offer2, or undefined)
   otoPrice?: number // OTO price to add to total
+  irresistibleOfferAccepted?: boolean // Track if user accepted the irresistible offer
 }
 
 interface CustomerData {
@@ -58,17 +59,17 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
   ]
 
   const pricing = {
-    '50ml': { normalPrice: 325, specialPrice: 265, savings: 60 },
-    '100ml': { normalPrice: 650, specialPrice: 530, savings: 120 }
+    '50ml': { basePrice: 325, discountedPrice: 265, savings: 60 },
+    '100ml': { basePrice: 650, discountedPrice: 530, savings: 120 }
   }
 
   const calculateTotal = () => {
-    const normalPrice = pricing[orderData.size].normalPrice
-    const specialPrice = pricing[orderData.size].specialPrice
+    const basePrice = pricing[orderData.size].basePrice
+    const discountedPrice = pricing[orderData.size].discountedPrice
     const baseSavings = pricing[orderData.size].savings
     
-    // Base calculation
-    const subtotal = specialPrice * orderData.quantity
+    // Base calculation with Healthy Gut Special discount
+    const baseSubtotal = discountedPrice * orderData.quantity
     let totalSavings = baseSavings * orderData.quantity
     
     // Irresistible offer calculation
@@ -80,24 +81,24 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
       totalSavings += irresistibleOfferSavings
     }
     
-    // Calculate final total
-    const orderTotal = subtotal + irresistibleOfferPrice
+    // Calculate order subtotal (before delivery)
+    const orderSubtotal = baseSubtotal + irresistibleOfferPrice
     
     // Delivery fee calculation
     let deliveryFee = 0
-    if (orderTotal >= 650) {
+    if (orderSubtotal >= 650) {
       deliveryFee = 29 // Reduced delivery fee for orders R650+
     } else {
       deliveryFee = 59 // Standard delivery fee for orders under R650
     }
 
     return {
-      subtotal: normalPrice * orderData.quantity + (irresistibleOfferAccepted ? 325 : 0), // Original prices
-      specialPrice: subtotal,
+      basePrice: basePrice * orderData.quantity + (irresistibleOfferAccepted ? 325 : 0), // Original prices
+      discountedPrice: baseSubtotal,
       healthyGutDiscount: totalSavings,
       irresistibleOfferPrice,
       deliveryFee,
-      total: orderTotal + deliveryFee,
+      total: orderSubtotal + deliveryFee,
       totalSavings
     }
   }
@@ -146,8 +147,8 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
       return
     }
     
-    // Redirect to PayFast
-    onComplete(orderData, customerData)
+    // Redirect to PayFast with irresistible offer included
+    onComplete({ ...orderData, irresistibleOfferAccepted }, customerData)
   }
 
   const totals = calculateTotal()
@@ -385,13 +386,15 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                         {orderData.oto && <span className="text-accent"> + {orderData.oto}</span>}
                       </p>
                       <div className="text-right mt-1 space-y-1">
-                        <div className="text-sm text-red-500 line-through">R{totals.subtotal}</div>
-                        <div className="text-sm text-gray-600">Special Price: R{totals.specialPrice}</div>
+                        <div className="text-sm text-red-500 line-through">R{totals.basePrice}</div>
+                        <div className="text-sm text-gray-600">Special Price: R{totals.discountedPrice}</div>
                         {irresistibleOfferAccepted && (
                           <div className="text-sm text-green-600">+ Extra Bottle: R{totals.irresistibleOfferPrice}</div>
                         )}
-                        <div className="text-sm text-gray-600">Delivery: R{totals.deliveryFee}</div>
-                        <div className="font-medium text-accent text-lg">Total: R{totals.total}</div>
+                        {currentStep === 3 && (
+                          <div className="text-sm text-gray-600">Delivery: R{totals.deliveryFee}</div>
+                        )}
+                        <div className="font-medium text-accent text-lg">Total: R{currentStep === 3 ? totals.total : totals.discountedPrice + (irresistibleOfferAccepted ? totals.irresistibleOfferPrice : 0)}</div>
                         <div className="text-xs text-green-600 font-medium">You Save: R{totals.totalSavings} ✓</div>
                       </div>
                     </div>
