@@ -37,10 +37,11 @@ interface CustomerData {
 
 interface ThreeStepCheckoutProps {
   initialOrder: OrderData
+  initialProvince?: string
   onComplete: (orderData: OrderData, customerData: CustomerData) => void
 }
 
-export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeStepCheckoutProps) {
+export default function ThreeStepCheckout({ initialOrder, initialProvince = '', onComplete }: ThreeStepCheckoutProps) {
   const [currentStep, setCurrentStep] = useState(2) // Start at step 2 (customer info)
   const [orderData, setOrderData] = useState<OrderData>(initialOrder)
   const [customerData, setCustomerData] = useState<CustomerData>({
@@ -51,12 +52,17 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
     address: '',
     city: '',
     postalCode: '',
-    province: ''
+    province: initialProvince
   })
 
   const [fullName, setFullName] = useState('')
 
   const [irresistibleOfferAccepted, setIrresistibleOfferAccepted] = useState(false)
+
+  // Debug: Log province changes
+  useEffect(() => {
+    console.log('🔍 Province state updated:', customerData.province)
+  }, [customerData.province])
 
   const steps: CheckoutStep[] = [
     { id: 1, title: 'Product', completed: true },
@@ -150,11 +156,9 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
       return
     }
     
-    // Check if this is a Harry Trisos province (no PayFast)
-    if (['Eastern Cape', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'].includes(customerData.province)) {
-      alert('Please contact your representative via WhatsApp to complete your order.')
-      return
-    }
+    // Debug log to verify province is correct
+    console.log('🔍 Province being sent to PayFast:', customerData.province)
+    console.log('🔍 Full customer data:', customerData)
     
     // Redirect to PayFast with irresistible offer included
     onComplete({ ...orderData, irresistibleOfferAccepted }, customerData)
@@ -315,31 +319,16 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
 
                 {/* Payment Information - Only show if province is selected */}
                 {customerData.province && (
-                  <>
-                    {/* Check if province has Harry Trisos as representative (no payment method) */}
-                    {['Eastern Cape', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'].includes(customerData.province) ? (
-                      <div className="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-6 shadow-sm">
-                        <h3 className="text-lg font-medium text-text mb-4">Payment Information</h3>
-                        <p className="text-sm text-gray-700 mb-3">
-                          For your province, please contact your representative via WhatsApp to arrange payment and delivery.
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          Online card payment is not available for this region at the moment.
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                        <h3 className="text-lg font-medium text-text mb-4">Ready to Pay</h3>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Click the button below to proceed to PayFast's secure payment page where you can pay with your card or EFT.
-                        </p>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <Lock className="w-4 h-4" />
-                          <span>Secure payment powered by PayFast</span>
-                        </div>
-                      </div>
-                    )}
-                  </>
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <h3 className="text-lg font-medium text-text mb-4">Ready to Pay</h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Click the button below to proceed to PayFast's secure payment page where you can pay with your card or EFT.
+                    </p>
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <Lock className="w-4 h-4" />
+                      <span>Secure payment powered by PayFast</span>
+                    </div>
+                  </div>
                 )}
 
                 {/* Order Summary - Only show if province is selected */}
@@ -467,25 +456,14 @@ export default function ThreeStepCheckout({ initialOrder, onComplete }: ThreeSte
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
-                  <>
-                    {['Eastern Cape', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'].includes(customerData.province) ? (
-                      <button
-                        disabled
-                        className="w-full py-3 bg-gray-400 text-white rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
-                      >
-                        Contact Representative
-                      </button>
-                    ) : (
-                      <button
-                        onClick={completeCheckout}
-                        disabled={!customerData.province}
-                        className="w-full py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                      >
-                        <Lock className="w-4 h-4" />
-                        Pay with PayFast - R{totals.total}
-                      </button>
-                    )}
-                  </>
+                  <button
+                    onClick={completeCheckout}
+                    disabled={!customerData.province}
+                    className="w-full py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    <Lock className="w-4 h-4" />
+                    Pay with PayFast - R{totals.total}
+                  </button>
                 )}
               </div>
             </div>

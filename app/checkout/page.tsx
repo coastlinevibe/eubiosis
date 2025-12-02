@@ -15,6 +15,7 @@ function CheckoutContent() {
   const quantity = parseInt(searchParams.get('quantity') || '1')
   const upsellDiscount = parseInt(searchParams.get('upsellDiscount') || '0')
   const tookBigOffer = searchParams.get('tookBigOffer') === 'true' // Track if user took big offer
+  const provinceParam = searchParams.get('province') // Check if province is in URL
 
   const initialOrder = {
     size,
@@ -68,7 +69,7 @@ function CheckoutContent() {
         merchant_id: '10818957',
         merchant_key: 'cjb3kk3rdiwsq',
         amount: total.toFixed(2),
-        item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}${orderData.irresistibleOfferAccepted ? ' + Extra 50ml Bottle' : ''}`,
+        item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}${orderData.irresistibleOfferAccepted ? ' + Extra 50ml Bottle' : ''} - ${customerData.province}`,
         name_first: customerData.firstName,
         name_last: customerData.lastName,
         email_address: customerData.email,
@@ -120,6 +121,7 @@ function CheckoutContent() {
   return (
     <ThreeStepCheckout 
       initialOrder={initialOrder}
+      initialProvince={provinceParam || ''}
       onComplete={handleCheckoutComplete}
     />
   )
