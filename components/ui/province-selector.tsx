@@ -12,7 +12,8 @@ const provinces = [
     icon: '🌊',
     representative: 'Harry Trisos',
     phone: '073 185 2130',
-    whatsapp: '27731852130',
+    whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'Regional distributor for Eastern Cape, Western Cape, Northern Cape and KwaZulu-Natal with extensive experience in health supplements.'
   },
   { 
@@ -22,6 +23,7 @@ const provinces = [
     representative: 'Riegal Du Toit',
     phone: '071 432 9190',
     whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'Experienced health product specialist serving Free State, Gauteng, North West and Limpopo communities.'
   },
   { 
@@ -31,6 +33,7 @@ const provinces = [
     representative: 'Riegal Du Toit',
     phone: '071 432 9190',
     whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'Leading wellness consultant in Gauteng, Free State, North West and Limpopo with expertise in gut health and natural supplements.'
   },
   { 
@@ -39,7 +42,8 @@ const provinces = [
     icon: '🏖️',
     representative: 'Harry Trisos',
     phone: '073 185 2130',
-    whatsapp: '27731852130',
+    whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'KZN regional manager also covering Western Cape, Eastern Cape and Northern Cape, specializing in natural health products.'
   },
   { 
@@ -49,6 +53,7 @@ const provinces = [
     representative: 'Riegal Du Toit',
     phone: '071 432 9190',
     whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'Local health advocate in Limpopo, Gauteng, Free State and North West with deep knowledge of wellness approaches.'
   },
   { 
@@ -58,6 +63,7 @@ const provinces = [
     representative: 'Nadine Marshall',
     phone: '081 890 9814',
     whatsapp: '27818909814',
+    payfastUser: 'Nadine Marshall',
     bio: 'Mpumalanga distributor with years of experience in health supplements and customer care excellence.'
   },
   { 
@@ -66,7 +72,8 @@ const provinces = [
     icon: '🏜️',
     representative: 'Harry Trisos',
     phone: '073 185 2130',
-    whatsapp: '27731852130',
+    whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'Northern Cape wellness specialist also covering Western Cape, Eastern Cape and KwaZulu-Natal regions.'
   },
   { 
@@ -76,6 +83,7 @@ const provinces = [
     representative: 'Riegal Du Toit',
     phone: '071 432 9190',
     whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'North West regional coordinator also serving Gauteng, Free State and Limpopo with expertise in natural health solutions.'
   },
   { 
@@ -84,7 +92,8 @@ const provinces = [
     icon: '🍷',
     representative: 'Harry Trisos',
     phone: '073 185 2130',
-    whatsapp: '27731852130',
+    whatsapp: '27714329190',
+    payfastUser: 'Nadine Marshall',
     bio: 'Western Cape health consultant also covering Eastern Cape, Northern Cape and KwaZulu-Natal with extensive gut health experience.'
   }
 ]
