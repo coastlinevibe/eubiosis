@@ -573,7 +573,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
-          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center -mb-24'}`}
+          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-8 md:mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-4 md:gap-8 items-center -mb-24'}`}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -651,12 +651,12 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
 
               {/* Right Side - Image Box with Voice Recording */}
               <motion.div 
-                className="text-left lg:text-right mt-[100px]"
+                className="text-left lg:text-right mt-0 lg:mt-[100px] pb-16 md:pb-24 lg:pb-0"
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
               >
-                <div className="relative bg-gradient-to-br from-[#8bccc2]/10 to-[#78b4aa]/10 rounded-2xl p-3 border border-[#8bccc2]/20" style={{ transform: 'translate(-160px, 270px) scale(1.5)' }}>
+                <div className="relative bg-white rounded-2xl p-3 border border-gray-200 lg:scale-150 lg:-translate-x-40 lg:translate-y-64">
                   {/* Image Container */}
                   <div className="relative aspect-video bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-xl overflow-hidden mb-4">
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -674,7 +674,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   <div className="flex items-center justify-center">
                     <button 
                       onClick={toggleAudio}
-                      className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-full border-2 border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl"
+                      className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-[11px] border border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
                       <div className="relative">
                         {isPlaying ? (
@@ -705,7 +705,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
           )}
         </motion.div>
 
-        <div className={`grid lg:grid-cols-2 lg:gap-8 gap-4 items-start ${illness ? 'mt-12' : 'mt-8'}`}>
+        <div className={`grid grid-cols-1 lg:grid-cols-2 lg:gap-8 gap-6 items-start ${illness ? 'mt-12' : 'mt-8'}`}>
           {/* Left Side - Scrollable Content */}
           <motion.div 
             className="space-y-2"
@@ -714,7 +714,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
             {/* Scrollable Content Container */}
-            <div className="h-[390px] overflow-y-auto pr-4 space-y-2 scrollbar-thin scrollbar-thumb-[#8bccc2] scrollbar-track-gray-100 scrollbar-w-2">
+            <div className="h-auto md:h-[390px] overflow-y-auto pr-4 space-y-2 scrollbar-thin scrollbar-thumb-[#8bccc2] scrollbar-track-gray-100 scrollbar-w-2">
               
               {/* Feature Text List */}
               {features.map((feature, index) => {
@@ -789,7 +789,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
             <div className="relative order-1 w-full max-w-full mx-auto lg:order-2">
               <div className="flex flex-col lg:flex-row gap-6">
                 {/* Quiz Section - Left Side */}
-                <div className="flex-1 bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 p-6 text-center h-[280px] relative">
+                <div className="flex-1 bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 p-6 text-center h-auto md:h-[280px] relative">
                   {!showQuiz ? (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -1072,7 +1072,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                     className="relative w-full"
                   >
                     {/* Video Placeholder Container */}
-                    <div className="w-full h-[280px] bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-center relative overflow-hidden cursor-pointer group"
+                    <div className="w-full h-auto md:h-[280px] bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-center relative overflow-hidden cursor-pointer group"
                          onClick={() => setSelectedVideoIndex(currentFeature)}>
                       
                       {/* Video background - YouTube thumbnail only */}

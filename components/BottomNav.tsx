@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import Dock from '@/components/ui/dock'
+import MobileNav from '@/components/ui/mobile-nav'
 import { Home, ShoppingCart, ShoppingBag } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/context/CartContext'
@@ -17,7 +18,18 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
   const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const { getItemCount, openCart } = useCart()
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Determine active item based on pathname and scroll position
   const getActiveItem = (): string | undefined => {
@@ -122,13 +134,47 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
     },
   ]
 
+  const mobileNavItems = [
+    {
+      id: 'home',
+      label: 'Home',
+      onClick: scrollToHero,
+    },
+    {
+      id: 'shop',
+      label: 'Shop',
+      onClick: () => router.push('/eubiosis-bottle/size-s/quantity-1'),
+    },
+    {
+      id: 'cart',
+      label: 'Cart',
+      badge: getItemCount() > 0 ? getItemCount().toString() : undefined,
+      onClick: openCart,
+    },
+  ]
+
+  const getMobileActiveItem = (): string => {
+    if (pathname === '/' && viewMode === 'hero-only' && scrollY < 100) {
+      return 'home'
+    }
+    if (pathname.startsWith('/shop') || pathname.startsWith('/eubiosis-bottle')) return 'shop'
+    return 'home'
+  }
+
   if (!isVisible) {
     return null
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-4">
-      <Dock items={dockItems} activeItem={getActiveItem()} showHomeText="Home Page" />
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-0 md:pb-4">
+      {/* Desktop: Dock */}
+      <div className="hidden md:block">
+        <Dock items={dockItems} activeItem={getActiveItem()} showHomeText="Home Page" />
+      </div>
+      {/* Mobile: MobileNav - Full width, no padding */}
+      <div className="block md:hidden w-full pb-0">
+        <MobileNav items={mobileNavItems} activeItem={getMobileActiveItem()} />
+      </div>
     </nav>
   )
 }

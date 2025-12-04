@@ -71,7 +71,7 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                       className={cn(
                         "rounded-2xl relative",
                         "transition-all duration-200",
-                        isHovered && "bg-accent shadow-lg shadow-accent/20",
+                        (isHovered || isActive) && "bg-accent shadow-lg shadow-accent/20",
                         isActive && "text-accent"
                       )}
                       onClick={() => {
@@ -82,8 +82,8 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                       <item.icon
                         className={cn(
                           "h-6 w-6 transition-colors",
-                          isHovered ? "text-white" :
-                          isActive ? "text-accent" : "text-text"
+                          isHovered ? "text-[#8bccc2]" :
+                          isActive ? "text-[#8bccc2]" : "text-text"
                         )}
                       />
                       

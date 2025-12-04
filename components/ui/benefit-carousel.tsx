@@ -32,7 +32,7 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div 
-          className="grid lg:grid-cols-3 grid-cols-1 gap-8 items-center mb-8"
+          className="grid lg:grid-cols-3 grid-cols-1 gap-4 md:gap-8 items-center mb-6 md:mb-8"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -79,7 +79,7 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
         </motion.div>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-4 max-w-4xl mx-auto"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -95,36 +95,35 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
                 ease: "easeOut" 
               }}
               className={`
-                relative p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 
+                relative rounded-xl sm:rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 
                 cursor-pointer transition-all duration-500 hover:scale-110 hover:bg-white/90 hover:-translate-y-6 hover:shadow-2xl hover:rotate-1
-                transform-gpu animate-float-${index % 4}
+                transform-gpu animate-float-${index % 4} aspect-square flex items-center justify-center
                 ${effectiveHoveredIndex === index ? 'scale-110 bg-white/90 -translate-y-6 shadow-2xl rotate-1 animate-paused' : ''}
               `}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Real Image Background */}
-              <div className="absolute inset-0 opacity-10 pointer-events-none">
+              <div className="absolute inset-0 opacity-10 pointer-events-none rounded-2xl overflow-hidden">
                 <Image 
                   src={`/images/${benefit.title.replace(/%/g, '%25').replace(/\s+/g, '%20')}.png`}
                   alt={benefit.title}
                   fill
-                  sizes="200px"
-                  className="object-cover"
-                  priority={index < 4} // Prioritize first 4 images
-                  loading={index < 4 ? "eager" : "lazy"} // Eager load first 4, lazy load rest
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-contain"
+                  priority={index < 4}
+                  loading={index < 4 ? "eager" : "lazy"}
                   placeholder="blur"
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
                   onError={(e) => {
-                    // Fallback to SVG if image fails to load
                     e.currentTarget.style.display = 'none';
                   }}
                 />
               </div>
-              <div className="text-center h-full flex flex-col justify-center">
+              <div className="text-center w-full h-full flex flex-col justify-center items-center p-3 sm:p-4 md:p-6">
                 {/* Title - Hidden by default, appears on hover */}
                 <h3 className={`
-                  text-xl font-bold text-[#8bccc2] mb-3 transition-all duration-500 ease-out
+                  text-lg md:text-xl font-bold text-[#8bccc2] mb-2 md:mb-3 transition-all duration-500 ease-out
                   ${effectiveHoveredIndex === index ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}
                 `}>
                   {benefit.title}
@@ -132,7 +131,7 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
                 
                 {/* Description - Hidden by default, appears on hover */}
                 <p className={`
-                  text-sm text-text/70 leading-relaxed transition-all duration-700 ease-out delay-100
+                  text-xs md:text-sm text-text/70 leading-relaxed transition-all duration-700 ease-out delay-100
                   ${effectiveHoveredIndex === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
                 `}>
                   {benefit.description}
@@ -140,10 +139,18 @@ export function BenefitGrid({ benefits }: BenefitGridProps) {
                 
                 {/* Progress Bar - Hidden by default, appears on hover */}
                 <div className={`
-                  h-1 bg-gradient-to-r from-[#8bccc2] to-[#78b4aa] mx-auto rounded-full mt-4
+                  h-1 bg-gradient-to-r from-[#8bccc2] to-[#78b4aa] mx-auto rounded-full mt-3 md:mt-4
                   transition-all duration-500 ease-out delay-200
                   ${effectiveHoveredIndex === index ? 'w-full opacity-100' : 'w-0 opacity-0'}
                 `}></div>
+
+                {/* Press to read more - Shows on normal state, hidden on hover */}
+                <div className={`
+                  text-xs md:text-sm text-[#8bccc2] font-semibold transition-all duration-500 ease-out
+                  ${effectiveHoveredIndex === index ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}
+                `}>
+                  Press to read more
+                </div>
               </div>
             </motion.div>
           ))}

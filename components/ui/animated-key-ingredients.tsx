@@ -53,6 +53,14 @@ const ingredients: Ingredient[] = [
   }
 ];
 
+// Mobile positions for cards around bottle - 2 column layout
+const mobilePositions = [
+  { top: "5%", left: "2%" },      // Left top
+  { top: "5%", right: "2%", left: "auto" },  // Right top
+  { top: "auto", bottom: "5%", left: "2%" }, // Left bottom
+  { top: "auto", bottom: "5%", right: "2%", left: "auto" }  // Right bottom
+];
+
 export function AnimatedKeyIngredients() {
   const [isVisible, setIsVisible] = useState(false);
   const [particlePositions, setParticlePositions] = useState<{left: string, top: string}[]>([]);
@@ -122,7 +130,7 @@ export function AnimatedKeyIngredients() {
         </div>
 
         {/* Ingredients Layout */}
-        <div className="relative min-h-[500px] flex items-center justify-center">
+        <div className="relative min-h-[600px] md:min-h-[700px] flex items-center justify-center px-2 md:px-0">
           {/* Central Bottle */}
           <div 
             className={cn(
@@ -137,10 +145,10 @@ export function AnimatedKeyIngredients() {
               <Image
                 src="/images/bottles/bottle-combo.png"
                 alt="Eubiosis Bottles"
-                width={350}
-                height={400}
-                className="drop-shadow-2xl"
-                sizes="350px"
+                width={280}
+                height={320}
+                className="drop-shadow-2xl md:w-[350px] md:h-[400px]"
+                sizes="(max-width: 768px) 280px, 350px"
               />
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#8bccc2]/20 to-[#8bccc2]/10 rounded-full blur-3xl scale-110 -z-10" />
@@ -148,29 +156,33 @@ export function AnimatedKeyIngredients() {
           </div>
 
           {/* Ingredient Cards */}
-          {ingredients.map((ingredient) => (
+          {ingredients.map((ingredient, index) => {
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const position = isMobile ? mobilePositions[index] : ingredient.position;
+            
+            return (
             <div
               key={ingredient.id}
               className={cn(
-                "absolute w-64 transition-all duration-1000 ease-out",
+                "absolute w-40 md:w-64 transition-all duration-1000 ease-out z-20",
                 isVisible 
                   ? "opacity-100 translate-y-0 scale-100" 
                   : "opacity-0 translate-y-8 scale-90"
               )}
               style={{
-                ...ingredient.position,
+                ...position,
                 transitionDelay: `${ingredient.delay}s`
               }}
             >
-              <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-100">
+              <div className="bg-white rounded-lg md:rounded-2xl p-3 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-100">
                 {/* Ingredient Image */}
-                <div className="flex justify-center mb-4">
-                  <div className="relative w-16 h-16 rounded-[9px] overflow-hidden ring-4 ring-[#8bccc2]/20">
+                <div className="flex justify-center mb-2 md:mb-4">
+                  <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-[9px] overflow-hidden ring-4 ring-[#8bccc2]/20">
                     <Image
                       src={ingredient.image}
                       alt={ingredient.title}
                       fill
-                      sizes="64px"
+                      sizes="(max-width: 768px) 48px, 64px"
                       className="object-cover"
                     />
                   </div>
@@ -178,10 +190,10 @@ export function AnimatedKeyIngredients() {
 
                 {/* Content */}
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-sm md:text-lg font-semibold text-gray-900 mb-1 md:mb-2">
                     {ingredient.title}
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
                     {ingredient.description}
                   </p>
                 </div>
@@ -202,7 +214,8 @@ export function AnimatedKeyIngredients() {
                 />
               </div>
             </div>
-          ))}
+            );
+          })}
 
           {/* Animated Background Elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">

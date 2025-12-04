@@ -228,6 +228,21 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
           animation: pulse-glow 1s ease-out forwards; 
           z-index: 9999; 
         }
+        /* Scrollbar styling for dropdown */
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 6px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: rgba(141, 205, 198, 0.1);
+          border-radius: 10px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: rgba(141, 205, 198, 0.5);
+          border-radius: 10px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: rgba(141, 205, 198, 0.8);
+        }
       `}</style>
       <div className="absolute inset-0 overflow-hidden">
         
@@ -274,87 +289,72 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
         <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-4 sm:px-8 sm:py-6 md:px-16 md:py-20 mt-0 sm:-mt-20">
           
           {/* Mobile Hero Text - Shows above image on mobile */}
-          <div className="lg:hidden w-full text-center mb-6 mt-10">
-            <div className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+          <motion.div 
+            className="lg:hidden w-full text-center mb-6 mt-10"
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
+            <motion.div 
+              className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_10px_30px_rgba(0,0,0,0.35)]"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+            >
               <span className="text-[13px] font-semibold tracking-[0.4em] text-white uppercase">EUBIOSIS-S</span>
               <span className="text-[13px] font-light tracking-[0.3em] text-[#8dcdc6] uppercase">Supplement</span>
-            </div>
-            <p className="mt-3 text-[13px] font-mono font-light text-white/75 uppercase tracking-[0.2em]">
-              Nourish • Heal • Thrive
-            </p>
-          </div>
-
-          {/* Mobile Product Image - Shows after text on mobile */}
-          <motion.div 
-            className="lg:hidden w-full max-w-sm h-[180px] sm:h-[220px] flex items-center justify-center relative -mb-24"
-            animate={{ 
-              opacity: isDropdownOpen ? 0 : 1,
-              scale: isDropdownOpen ? 0.95 : 1,
-              y: isDropdownOpen ? -20 : 0,
-              height: isDropdownOpen ? 0 : 'auto',
-              marginBottom: isDropdownOpen ? 0 : '0'
-            }}
-            transition={{ 
-              duration: 0.5,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              opacity: { duration: 0.3 },
-              height: { duration: 0.4 },
-              marginBottom: { duration: 0.4 }
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            >
-              <Image
-                src="/images/bottles/bottle-combo.png"
-                alt="Eubiosis Bottle Combo"
-                width={300}
-                height={250}
-                className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
-                priority
-              />
-              {/* Mobile shadow and glow */}
-              <motion.div 
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-2/3 h-6 bg-black/15 rounded-full blur-lg"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
-              />
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-[#8bccc2]/8 via-transparent to-transparent rounded-full blur-2xl"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-              />
             </motion.div>
+            <motion.p 
+              className="mt-3 text-[13px] font-mono font-light text-white/75 uppercase tracking-[0.2em]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+            >
+              Nourish • Heal • Thrive
+            </motion.p>
           </motion.div>
           
           {/* Two Column Layout */}
           <motion.div 
             className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-16 items-center"
-            animate={{
-              y: isDropdownOpen ? -120 : 0 // Move up by approximately the image height on mobile
-            }}
-            transition={{ 
-              duration: 0.5,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: isDropdownOpen ? 0.1 : 0 // Small delay when moving up
-            }}
           >
             
-            <div className="text-left relative pt-0 lg:pt-2">
-              <div className="hidden lg:inline-flex items-center gap-3 mb-8 lg:mt-10 px-6 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
+            <div className="text-center lg:text-left relative pt-0 lg:pt-2">
+              <motion.div 
+                className="hidden lg:inline-flex items-center gap-3 mb-2 lg:mt-10 px-6 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 shadow-[0_20px_45px_rgba(0,0,0,0.45)]"
+                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+              >
                 <span className="text-[13px] sm:text-[14px] font-semibold tracking-[0.45em] text-white uppercase">EUBIOSIS-S</span>
                 <span className="text-[13px] sm:text-[14px] font-light tracking-[0.35em] text-[#8dcdc6] uppercase">Supplement</span>
-              </div>
+              </motion.div>
               {/* Main Heading */}
               <h1 className="text-[37px] sm:text-[49px] md:text-[61px] lg:text-[73px] font-extralight leading-tight tracking-tight text-white text-decoration-animate mb-8">
-                <div className="mb-4 md:mb-6">
+                <div className="mb-4 md:mb-6 flex flex-wrap items-center justify-center lg:justify-start gap-2">
                   <span className="word-animate" data-delay="1200">Rebalance</span>{' '}
                   <span className="word-animate" data-delay="1400">Your</span>{' '}
                   <span className="word-animate" data-delay="1600">Gut.</span>
+                  {/* Mobile Product Image - Inline with "Gut" text */}
+                  <motion.div 
+                    className="lg:hidden inline-flex items-center justify-center w-[60px] h-[60px] sm:w-[70px] sm:h-[70px] relative"
+                    initial={{ opacity: 0, y: 30, scale: 0.8, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                    transition={{ 
+                      duration: 0.8,
+                      delay: 1.8,
+                      ease: "easeOut",
+                    }}
+                  >
+                    <Image
+                      src="/images/bottles/bottle-combo.png"
+                      alt="Eubiosis Bottle"
+                      width={70}
+                      height={70}
+                      className="w-full h-full object-contain relative z-10 drop-shadow-xl"
+                      priority
+                    />
+                  </motion.div>
                 </div>
                 <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin text-white/90 leading-relaxed tracking-wide">
                   <span className="word-animate" data-delay="1800">Rediscover</span>{' '}
@@ -367,16 +367,26 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
               {/* Illness Buttons - Desktop: Grid, Mobile: Dropdown */}
               <div className="mt-8 w-full">
                 {/* Desktop: Show all buttons in grid */}
-                <div className="hidden lg:grid lg:grid-cols-3 gap-4 mb-4">
-                  {/* First Line: Irritable Bowel Syndrome, Diabetes, Skin Health */}
+                <div className="hidden lg:grid lg:grid-cols-4 gap-4 mb-4">
+                  {/* First Row: Irritable Bowel Syndrome / Western Lifestyle */}
                   <button
                     key="IBS"
                     onClick={() => onIllnessClick?.('IBS')}
                     className="btn-diabetes"
-                    style={{ fontSize: '12px' }}
+                    style={{ fontSize: '12px', gridColumn: 'span 2' }}
                   >
                     Irritable Bowel Syndrome
                   </button>
+                  <button
+                    key="Western Lifestyle"
+                    onClick={() => onIllnessClick?.('Western Lifestyle')}
+                    className="btn-depression"
+                    style={{ fontSize: '14px', gridColumn: 'span 2' }}
+                  >
+                    Western Lifestyle
+                  </button>
+                  
+                  {/* Second Row: Diabetes / Skin Health / Auto-Immune / Digestive */}
                   <button
                     key="Diabetes"
                     onClick={() => onIllnessClick?.('Diabetes')}
@@ -393,8 +403,6 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                   >
                     Skin Health
                   </button>
-                  
-                  {/* Second Line: Auto-Immune, Western Lifestyle */}
                   <button
                     key="Autoimmune"
                     onClick={() => onIllnessClick?.('Autoimmune')}
@@ -404,35 +412,32 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                     Auto-Immune
                   </button>
                   <button
-                    key="Western Lifestyle"
-                    onClick={() => onIllnessClick?.('Western Lifestyle')}
-                    className="btn-depression"
-                    style={{ fontSize: '14px', gridColumn: 'span 2' }}
-                  >
-                    Western Lifestyle
-                  </button>
-                  
-                  {/* Third Line: Digestive, Just Browsing */}
-                  <button
                     key="Digestive Issues"
                     onClick={() => onIllnessClick?.('Digestive Issues')}
                     className="btn-digestive"
-                    style={{ fontSize: '14px', gridColumn: '1', gridRow: '3' }}
+                    style={{ fontSize: '14px' }}
                   >
                     Digestive
                   </button>
+                  
+                  {/* Third Row: Just Browsing */}
                   <button
                     key="Just Browsing"
                     onClick={() => onBrowsingClick?.()}
                     className="btn-browsing"
-                    style={{ gridColumn: '2', gridRow: '3' }}
+                    style={{ gridColumn: 'span 4' }}
                   >
                     Just Browsing
                   </button>
                 </div>
 
                 {/* Mobile: Dropdown trigger */}
-                <div className="lg:hidden mb-4">
+                <motion.div 
+                  className="lg:hidden mb-4"
+                  initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8, delay: 2.0, ease: "easeOut" }}
+                >
                   <motion.button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="w-full bg-gradient-to-r from-[#4AAE9B]/20 to-[#3d9585]/20 border border-[#4AAE9B]/30 text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-[#4AAE9B]/30 hover:to-[#3d9585]/30 transition-all duration-300"
@@ -459,9 +464,9 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                       ease: [0.25, 0.46, 0.45, 0.94],
                       opacity: { duration: 0.2 }
                     }}
-                    className="overflow-hidden"
+                    className="overflow-y-auto max-h-[300px] sm:max-h-none sm:overflow-hidden"
                   >
-                    <div className="grid grid-cols-2 gap-2 mt-3">
+                    <div className="grid grid-cols-2 gap-2 mt-3 pr-3 pb-12 sm:pr-0 sm:pb-0">
                       {[
                         { name: 'Irritable Bowel Syndrome', key: 'IBS', className: 'btn-diabetes' },
                         { name: 'Diabetes', key: 'Diabetes', className: 'btn-ibs' },
@@ -469,7 +474,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                         { name: 'Auto-Immune', key: 'Autoimmune', className: 'btn-autoimmune' },
                         { name: 'Western Lifestyle', key: 'Western Lifestyle', className: 'btn-depression' },
                         { name: 'Digestive Issues', key: 'Digestive Issues', className: 'btn-digestive' },
-                        { name: 'Just Browsing', key: 'Just Browsing', className: 'btn-browsing' }
+                        { name: 'Just browsing', key: 'Just Browsing', className: 'btn-browsing col-span-2' }
                       ].map((button, index) => (
                         <motion.button
                           key={button.name}
@@ -496,26 +501,37 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
                       ))}
                     </div>
                   </motion.div>
-                </div>
+                </motion.div>
               </div>
 
               {/* Additional Action Buttons */}
-              <div className="mt-6 flex justify-start gap-4 items-center">
-                <button
+              <motion.div 
+                className="mt-6 flex justify-center lg:justify-start gap-3 items-center"
+                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.8, delay: 2.4, ease: "easeOut" }}
+              >
+                <motion.button
                   onClick={onLearnMoreClick}
-                  className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8dcdc6]/30 transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-3 px-4 sm:px-5 py-3 rounded-[9px] border border-[#8dcdc6]/50 bg-gradient-to-r from-black via-black to-[#8dcdc6]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8dcdc6]/30 transition-all duration-300 text-sm sm:text-base"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   LEARN MORE
-                </button>
+                </motion.button>
                 <Link href="/eubiosis-s-bottle/size-s/quantity-1">
-                  <button className="btn p-4 flex items-center justify-center gap-2">
-                    <ShoppingBag className="w-6 h-6" />
-                    <span className="whitespace-nowrap">Shop Now!</span>
+                  <motion.button 
+                    className="btn p-3 sm:p-4 flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <span className="whitespace-nowrap text-sm sm:text-base">Shop Now!</span>
                     {/* Extra trailing span to avoid globals.css rule hiding last span */}
                     <span aria-hidden="true"></span>
-                  </button>
+                  </motion.button>
                 </Link>
-              </div>
+              </motion.div>
 
               {/* Detail Lines for Left Column */}
               <div className="absolute -left-6 sm:-left-8 top-1/2 transform -translate-y-1/2 w-3 sm:w-4 h-px bg-white/30 opacity-0 hidden lg:block" style={{ animation: 'word-appear 1s ease-out forwards', animationDelay: '5.0s' }}></div>
