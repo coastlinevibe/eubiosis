@@ -494,7 +494,7 @@ export default function Home() {
 
       {/* Bottom Navigation - Only show when scrolled, regardless of view mode */}
       {hasScrolled && (
-        <BottomNav viewMode={viewMode} onResetToHero={handleResetToHero} illness={selectedIllness} />
+        <BottomNav viewMode={viewMode} onResetToHero={handleResetToHero} illness={selectedIllness} onLearnMore={handleLearnMoreClick} />
       )}
 
       {/* Product Structured Data for SEO */}

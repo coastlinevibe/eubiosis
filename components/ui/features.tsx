@@ -705,6 +705,59 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
           )}
         </motion.div>
 
+        {/* Mobile: Show carousel navigation at top */}
+        {illness && cycling && (
+          <motion.div 
+            className="lg:hidden mb-6 w-full"
+            initial={{ opacity: 0, y: -30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
+            <div className="relative">
+              <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-[#8bccc2]/20">
+                <motion.button 
+                  className="p-2 rounded-full hover:bg-[#8bccc2]/20 transition-colors"
+                  onClick={onPrevIllness}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <ChevronLeft className="w-5 h-5 text-[#8bccc2]" />
+                </motion.button>
+                
+                <div className="flex flex-col items-center gap-2">
+                  <div className="text-[#8bccc2] font-bold text-base">
+                    {illness}
+                  </div>
+                  <div className="text-gray-700 font-medium text-sm">
+                    Symptoms {illnesses.indexOf(illness || illnesses[0]) + 1} to {illnesses.length}
+                  </div>
+                  <div className="flex items-center gap-2 mt-1">
+                    {illnesses.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                          index === illnesses.indexOf(illness || illnesses[0])
+                            ? 'bg-[#8bccc2] scale-125 shadow-md'
+                            : 'bg-gray-300 hover:bg-[#8bccc2]/50'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                
+                <motion.button 
+                  className="p-2 rounded-full hover:bg-[#8bccc2]/20 transition-colors"
+                  onClick={onNextIllness}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <ChevronRight className="w-5 h-5 text-[#8bccc2]" />
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         <div className={`grid grid-cols-1 lg:grid-cols-2 lg:gap-8 gap-6 items-start ${illness ? 'mt-12' : 'mt-8'}`}>
           {/* Left Side - Scrollable Content */}
           <motion.div 
@@ -1114,12 +1167,12 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
               >
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  {/* Show carousel only when cycling */}
+                <div className="flex flex-row gap-3 justify-center items-center flex-wrap lg:flex-nowrap">
+                  {/* Show carousel only when cycling - Desktop only */}
                   {cycling && (
                     <>
-                      {/* Carousel Navigation */}
-                      <div className="relative">
+                      {/* Carousel Navigation - Hidden on mobile */}
+                      <div className="hidden lg:block relative">
                         {/* Enhanced Navigation Display with integrated arrows */}
                         <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-[#8bccc2]/20 min-w-[280px]">
                           <motion.button 
@@ -1171,7 +1224,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                       
                       {/* Read More Button for Cycling Mode */}
                       <motion.button 
-                        className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300"
+                        className="inline-flex items-center justify-center gap-3 px-4 sm:px-5 py-2 sm:py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300 text-sm sm:text-base whitespace-nowrap"
                         onClick={onLearnMoreClick}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1187,7 +1240,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   {/* Show Learn More button only when NOT cycling (single illness selected) */}
                   {!cycling && (
                     <motion.button 
-                      className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300"
+                      className="inline-flex items-center justify-center gap-3 px-4 sm:px-5 py-2 sm:py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300 text-sm sm:text-base whitespace-nowrap"
                       onClick={onLearnMoreClick}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1201,7 +1254,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   
                   {/* Back Home Button */}
                   <motion.button 
-                    className="btn-secondary p-3 flex items-center gap-2"
+                    className="btn-secondary p-2 sm:p-3 flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
                     onClick={onResetToHero}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1209,7 +1262,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Home className="w-5 h-5" />
+                    <Home className="w-4 sm:w-5 h-4 sm:h-5" />
                     <span>Home Page</span>
                     <span aria-hidden="true"></span>
                   </motion.button>

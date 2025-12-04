@@ -62,7 +62,7 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className={cn(
                       "relative flex items-center",
-                      item.label === 'Home' && showHomeText ? "flex-row gap-2" : "flex-col"
+                      (isActive && item.label === 'Home' && showHomeText) || (isActive && item.label !== 'Home') ? "flex-row gap-2" : "flex-col"
                     )}
                   >
                     <Button
@@ -98,8 +98,12 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                       )}
                     </Button>
 
-                    {item.label === 'Home' && showHomeText && (
+                    {isActive && item.label === 'Home' && showHomeText && (
                       <span className="text-sm text-text whitespace-nowrap">{showHomeText}</span>
+                    )}
+
+                    {isActive && item.label !== 'Home' && (
+                      <span className="text-sm text-text whitespace-nowrap">{item.label}</span>
                     )}
 
                     {isActive && (
