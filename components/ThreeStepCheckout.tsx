@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ArrowLeft, ArrowRight, Check, Lock, CreditCard } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, Lock, CreditCard, X } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ProvinceSelector } from '@/components/ui/province-selector'
@@ -56,8 +56,9 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
   })
 
   const [fullName, setFullName] = useState('')
-
   const [irresistibleOfferAccepted, setIrresistibleOfferAccepted] = useState(false)
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'payfast' | 'eft' | null>(null)
 
   // Debug: Log province changes
   useEffect(() => {
@@ -134,7 +135,25 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
 
   const nextStep = () => {
     if (currentStep < 3 && isStepValid(currentStep)) {
-      setCurrentStep(prev => prev + 1)
+      // Show payment method modal when moving from step 2 to 3
+      if (currentStep === 2) {
+        setShowPaymentModal(true)
+      } else {
+        setCurrentStep(prev => prev + 1)
+      }
+    }
+  }
+
+  const handlePaymentMethodSelect = (method: 'payfast' | 'eft') => {
+    setShowPaymentModal(false)
+    setSelectedPaymentMethod(method)
+    
+    if (method === 'payfast') {
+      // Go straight to PayFast payment
+      setTimeout(() => completeCheckout(), 0)
+    } else {
+      // Go to step 3 for EFT (no province needed)
+      setCurrentStep(3)
     }
   }
 
@@ -151,14 +170,8 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
       return
     }
     
-    if (!customerData.province) {
-      alert('Please select your province.')
-      return
-    }
-    
-    // Debug log to verify province is correct
-    console.log('🔍 Province being sent to PayFast:', customerData.province)
-    console.log('🔍 Full customer data:', customerData)
+    // Debug log to verify data is correct
+    console.log('🔍 Customer data:', customerData)
     
     // Redirect to PayFast with irresistible offer included
     onComplete({ ...orderData, irresistibleOfferAccepted }, customerData)
@@ -300,39 +313,66 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
 
             {currentStep === 3 && (
               <div className="space-y-6">
-                {/* Province Selection Card */}
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                  <h4 className="text-lg font-medium text-text mb-4">Select your Province</h4>
-                  <div className="space-y-3">
-                    <p className="text-sm text-gray-600">
-                      Please select your province for bank transfer details:
-                    </p>
-                    {/* Province selector component */}
-                    <div className="w-full">
-                      <ProvinceSelector
-                        value={customerData.province}
-                        onChange={(value) => handleCustomerDataChange('province', value)}
-                      />
+                {selectedPaymentMethod === 'eft' ? (
+                  <>
+                    {/* EFT Order Confirmation */}
+                    <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6">
+                      <h3 className="text-lg font-medium text-text mb-4">Order Confirmation</h3>
+                      <div className="space-y-4 text-sm text-gray-700">
+                        <p className="font-medium">
+                          I want to buy <span className="text-accent font-bold">{orderData.quantity} bottle{orderData.quantity > 1 ? 's' : ''}</span> of Eubiosis {orderData.size}
+                          {irresistibleOfferAccepted && <span className="text-accent"> + Extra 50ml Bottle</span>}
+                        </p>
+                        <p className="text-lg font-semibold text-accent">
+                          Total Amount: R{totals.total}
+                        </p>
+                        <div className="bg-white rounded-lg p-4 border border-blue-200">
+                          <p className="text-sm text-gray-600 mb-2">Send payment proof to:</p>
+                          <p className="font-semibold text-accent text-lg">WhatsApp: 081 890 9814</p>
+                        </div>
+                        <p className="text-xs text-gray-600">
+                          Include your order details and customer name in the message. We'll confirm receipt and process your order immediately.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Province Selection Card for PayFast */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                      <h4 className="text-lg font-medium text-text mb-4">Select your Province</h4>
+                      <div className="space-y-3">
+                        <p className="text-sm text-gray-600">
+                          Please select your province:
+                        </p>
+                        {/* Province selector component */}
+                        <div className="w-full">
+                          <ProvinceSelector
+                            value={customerData.province}
+                            onChange={(value) => handleCustomerDataChange('province', value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-                {/* Payment Information - Only show if province is selected */}
-                {customerData.province && (
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                    <h3 className="text-lg font-medium text-text mb-4">Ready to Pay</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Click the button below to proceed to PayFast's secure payment page where you can pay with your card or EFT.
-                    </p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Lock className="w-4 h-4" />
-                      <span>Secure payment powered by PayFast</span>
-                    </div>
-                  </div>
+                    {/* Payment Information - Only show if province is selected */}
+                    {customerData.province && (
+                      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                        <h3 className="text-lg font-medium text-text mb-4">Ready to Pay</h3>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Click the button below to proceed to PayFast's secure payment page where you can pay with your card.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <Lock className="w-4 h-4" />
+                          <span>Secure payment powered by PayFast</span>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
 
-                {/* Order Summary - Only show if province is selected */}
-                {customerData.province && (
+                {/* Order Summary - Show for both EFT and PayFast */}
+                {(selectedPaymentMethod === 'eft' || (selectedPaymentMethod === 'payfast' && customerData.province)) && (
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
@@ -386,8 +426,8 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 sticky top-8">
-              {/* Show order summary on step 2 or step 3 with province selected */}
-              {(currentStep === 2 || (currentStep === 3 && customerData.province)) ? (
+              {/* Show order summary on step 2 or step 3 */}
+              {(currentStep === 2 || (currentStep === 3 && (selectedPaymentMethod === 'eft' || customerData.province))) ? (
                 <>
                   <h3 className="text-lg font-medium text-text mb-4">Order Summary</h3>
                   
@@ -456,19 +496,100 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
-                  <button
-                    onClick={completeCheckout}
-                    disabled={!customerData.province}
-                    className="w-full py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    <Lock className="w-4 h-4" />
-                    Pay with PayFast - R{totals.total}
-                  </button>
+                  <>
+                    {selectedPaymentMethod === 'payfast' ? (
+                      <button
+                        onClick={() => {
+                          if (!customerData.province) {
+                            alert('Please select your province first.')
+                            return
+                          }
+                          completeCheckout()
+                        }}
+                        className="w-full py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        <Lock className="w-4 h-4" />
+                        Pay with PayFast - R{totals.total}
+                      </button>
+                    ) : selectedPaymentMethod === 'eft' ? (
+                      <button
+                        onClick={() => {
+                          alert(`Order confirmed! Please send payment proof to WhatsApp: 081 890 9814\n\nAmount: R${totals.total}`)
+                        }}
+                        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                      >
+                        <CreditCard className="w-4 h-4" />
+                        Confirm EFT Payment - R{totals.total}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setShowPaymentModal(true)}
+                        className="w-full py-3 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                      >
+                        Select Payment Method
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             </div>
           </div>
         </div>
+
+        {/* Payment Method Modal */}
+        {showPaymentModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-text">Select Payment Method</h3>
+                <button
+                  onClick={() => setShowPaymentModal(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {/* PayFast Option */}
+                <button
+                  onClick={() => handlePaymentMethodSelect('payfast')}
+                  className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-accent hover:bg-accent/5 transition-all text-left"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full border-2 border-gray-300 mt-1"></div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-text mb-1">PayFast</h4>
+                      <p className="text-sm text-gray-600">
+                        Pay securely with your credit card or debit card. Instant payment processing.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                {/* EFT Option */}
+                <button
+                  onClick={() => handlePaymentMethodSelect('eft')}
+                  className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-accent hover:bg-accent/5 transition-all text-left"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full border-2 border-gray-300 mt-1"></div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-text mb-1">EFT (Bank Transfer)</h4>
+                      <p className="text-sm text-gray-600">
+                        Send payment proof to WhatsApp: <span className="font-semibold">081 890 9814</span>
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-500 mt-6 text-center">
+                Both methods are secure and will complete your order.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
