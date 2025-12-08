@@ -139,18 +139,34 @@ export function FramerCarousel() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Auto-advance functionality
+  const [itemsPerView, setItemsPerView] = useState(2);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerView(1);
+      } else {
+        setItemsPerView(2);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
       setIndex((prevIndex) => {
-        const maxIndex = items.length - 2; // Since we show 2 images at a time
+        const maxIndex = items.length - itemsPerView;
         return prevIndex >= maxIndex ? 0 : prevIndex + 1;
       });
     }, 2700); // 2.7 seconds
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, itemsPerView]);
 
   // Pause auto-play on hover
   const handleMouseEnter = () => setIsAutoPlaying(false);
@@ -159,7 +175,7 @@ export function FramerCarousel() {
   useEffect(() => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth || 1;
-      const slideWidth = containerWidth / 2; // Show 2 images at a time
+      const slideWidth = containerWidth / itemsPerView;
       const targetX = -index * slideWidth;
       animate(x, targetX, {
         type: 'spring',
@@ -167,7 +183,7 @@ export function FramerCarousel() {
         damping: 30,
       });
     }
-  }, [index, x]);
+  }, [index, x, itemsPerView]);
 
   return (
     <div className='w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -193,7 +209,7 @@ export function FramerCarousel() {
         >
           <motion.div className='flex' style={{ x }}>
             {items.map((item) => (
-              <div key={item.id} className='shrink-0 w-1/2 h-[90vh] min-h-[800px] px-2 flex items-center justify-center'>
+              <div key={item.id} className={`shrink-0 h-[50vh] sm:h-[70vh] lg:h-[90vh] min-h-[300px] sm:min-h-[500px] lg:min-h-[800px] px-2 flex items-center justify-center ${itemsPerView === 1 ? 'w-full' : 'w-1/2'}`}>
                 <img
                   src={item.url}
                   alt={item.title}
@@ -208,14 +224,14 @@ export function FramerCarousel() {
           <motion.button
             disabled={index === 0}
             onClick={() => setIndex((i) => Math.max(0, i - 1))}
-            className={`absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 z-10 ${
+            className={`absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 z-10 ${
               index === 0
                 ? 'opacity-40 cursor-not-allowed'
                 : 'bg-white/90 hover:scale-110 hover:bg-white hover:shadow-2xl opacity-80'
             }`}
           >
             <svg
-              className='w-8 h-8'
+              className='w-5 h-5 sm:w-8 sm:h-8'
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -231,16 +247,16 @@ export function FramerCarousel() {
 
           {/* Next Button */}
           <motion.button
-            disabled={index >= items.length - 2}
-            onClick={() => setIndex((i) => Math.min(items.length - 2, i + 1))}
-            className={`absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 z-10 ${
-              index >= items.length - 2
+            disabled={index >= items.length - itemsPerView}
+            onClick={() => setIndex((i) => Math.min(items.length - itemsPerView, i + 1))}
+            className={`absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 z-10 ${
+              index >= items.length - itemsPerView
                 ? 'opacity-40 cursor-not-allowed'
                 : 'bg-white/90 hover:scale-110 hover:bg-white hover:shadow-2xl opacity-80'
             }`}
           >
             <svg
-              className='w-8 h-8'
+              className='w-5 h-5 sm:w-8 sm:h-8'
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -255,13 +271,13 @@ export function FramerCarousel() {
           </motion.button>
 
           {/* Progress Indicator */}
-          <div className='absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 p-3 bg-white/30 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg'>
+          <div className='absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 p-2 sm:p-3 bg-white/30 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg overflow-x-auto max-w-[90%]'>
             {items.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setIndex(i)}
-                className={`h-3 rounded-full transition-all duration-300 hover:scale-110 ${
-                  i === index ? 'w-10 bg-white shadow-md' : 'w-3 bg-white/60 hover:bg-white/80'
+                className={`h-2 sm:h-3 rounded-full transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+                  i === index ? 'w-8 sm:w-10 bg-white shadow-md' : 'w-2 sm:w-3 bg-white/60 hover:bg-white/80'
                 }`}
               />
             ))}

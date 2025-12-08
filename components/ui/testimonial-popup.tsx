@@ -120,7 +120,7 @@ export function TestimonialPopup({ isOpen, onClose, testimonial }: TestimonialPo
               <button
                 onClick={handleAudioToggle}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-full transition-all",
+                  "flex items-center gap-2 px-4 py-2 rounded-[11px] transition-all",
                   isPlaying 
                     ? "bg-red-100 text-red-700 hover:bg-red-200" 
                     : "bg-[#8bccc2]/10 text-[#8bccc2] hover:bg-[#8bccc2]/20"

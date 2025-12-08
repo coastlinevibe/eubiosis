@@ -2,7 +2,8 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import Dock from '@/components/ui/dock'
-import { Home, ShoppingCart, ShoppingBag } from 'lucide-react'
+import MobileNav from '@/components/ui/mobile-nav'
+import { Home, ShoppingCart, ShoppingBag, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/context/CartContext'
 
@@ -10,17 +11,32 @@ interface BottomNavProps {
   viewMode?: 'hero-only' | 'illness-selected' | 'browsing'
   onResetToHero?: () => void
   illness?: string | null
+  onLearnMore?: () => void
 }
 
-export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNavProps) {
+export default function BottomNav({ viewMode, onResetToHero, illness, onLearnMore }: BottomNavProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const { getItemCount, openCart } = useCart()
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Determine active item based on pathname and scroll position
   const getActiveItem = (): string | undefined => {
+    if (pathname === '/' && viewMode === 'browsing') {
+      return 'Read More'
+    }
     // Only mark home as active when on home page AND in hero-only mode AND at the top
     if (pathname === '/' && viewMode === 'hero-only') {
       // Only active when at the very top (within 100px of hero section)
@@ -28,7 +44,7 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
         return 'Home'
       }
     }
-    if (pathname.startsWith('/shop') || pathname.startsWith('/eubiosis-bottle')) return 'Shop'
+    if (pathname.startsWith('/shop') || pathname.startsWith('/eubiosis-bottle') || pathname.startsWith('/eubiosis-s-bottle')) return 'Shop'
     return undefined
   }
 
@@ -72,8 +88,8 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
       
       window.addEventListener('scroll', handleScroll)
       return () => window.removeEventListener('scroll', handleScroll)
-    } else if (pathname === '/shop' || pathname.startsWith('/eubiosis-bottle')) {
-      setIsVisible(false)
+    } else if (pathname === '/shop' || pathname.startsWith('/eubiosis-bottle') || pathname.startsWith('/eubiosis-s-bottle')) {
+      setIsVisible(true)
       
       const handleScroll = () => {
         const scrollTop = window.scrollY
@@ -90,8 +106,8 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
           // Show nav when scrolled down 100px or more (but not at bottom)
           setIsVisible(true)
         } else {
-          // Hide nav when at top
-          setIsVisible(false)
+          // Show nav even at top on shop pages
+          setIsVisible(true)
         }
       }
 
@@ -115,20 +131,85 @@ export default function BottomNav({ viewMode, onResetToHero, illness }: BottomNa
       onClick: () => router.push('/eubiosis-bottle/size-s/quantity-1'),
     },
     {
-      icon: ShoppingBag,
-      label: 'Cart',
-      badge: getItemCount() > 0 ? getItemCount().toString() : undefined,
-      onClick: openCart,
+      icon: ArrowRight,
+      label: 'Read More',
+      onClick: () => {
+        if (pathname === '/') {
+          // Already on home page, scroll to top and call the function
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+          setTimeout(() => {
+            onLearnMore?.()
+          }, 100)
+        } else {
+          // Navigate to home first, then call the function
+          router.push('/')
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            onLearnMore?.()
+          }, 300)
+        }
+      },
     },
   ]
+
+  const mobileNavItems = [
+    {
+      id: 'home',
+      label: 'Home',
+      onClick: scrollToHero,
+    },
+    {
+      id: 'shop',
+      label: 'Shop',
+      onClick: () => router.push('/eubiosis-bottle/size-s/quantity-1'),
+    },
+    {
+      id: 'read-more',
+      label: 'Read More',
+      onClick: () => {
+        if (pathname === '/') {
+          // Already on home page, scroll to top and call the function
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+          setTimeout(() => {
+            onLearnMore?.()
+          }, 100)
+        } else {
+          // Navigate to home first, then call the function
+          router.push('/')
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            onLearnMore?.()
+          }, 300)
+        }
+      },
+    },
+  ]
+
+  const getMobileActiveItem = (): string => {
+    if (pathname === '/' && viewMode === 'browsing') {
+      return 'read-more'
+    }
+    if (pathname === '/' && viewMode === 'hero-only' && scrollY < 100) {
+      return 'home'
+    }
+    if (pathname.startsWith('/shop') || pathname.startsWith('/eubiosis-bottle') || pathname.startsWith('/eubiosis-s-bottle')) return 'shop'
+    return 'home'
+  }
 
   if (!isVisible) {
     return null
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-4">
-      <Dock items={dockItems} activeItem={getActiveItem()} showHomeText="Home Page" />
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-0 md:pb-4">
+      {/* Desktop: Dock */}
+      <div className="hidden md:block">
+        <Dock items={dockItems} activeItem={getActiveItem()} showHomeText="Home Page" />
+      </div>
+      {/* Mobile: MobileNav - Full width, no padding */}
+      <div className="block md:hidden w-full pb-0">
+        <MobileNav items={mobileNavItems} activeItem={getMobileActiveItem()} />
+      </div>
     </nav>
   )
 }

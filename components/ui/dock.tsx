@@ -62,7 +62,7 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className={cn(
                       "relative flex items-center",
-                      item.label === 'Home' && showHomeText ? "flex-row gap-2" : "flex-col"
+                      (isActive && item.label === 'Home' && showHomeText) || (isActive && item.label !== 'Home') ? "flex-row gap-2" : "flex-col"
                     )}
                   >
                     <Button
@@ -71,7 +71,7 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                       className={cn(
                         "rounded-2xl relative",
                         "transition-all duration-200",
-                        isHovered && "bg-accent shadow-lg shadow-accent/20",
+                        (isHovered || isActive) && "bg-accent shadow-lg shadow-accent/20",
                         isActive && "text-accent"
                       )}
                       onClick={() => {
@@ -82,8 +82,8 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                       <item.icon
                         className={cn(
                           "h-6 w-6 transition-colors",
-                          isHovered ? "text-white" :
-                          isActive ? "text-accent" : "text-text"
+                          isHovered ? "text-[#8bccc2]" :
+                          isActive ? "text-[#8bccc2]" : "text-text"
                         )}
                       />
                       
@@ -98,8 +98,12 @@ export default function Dock({ items, className, activeItem, showHomeText }: Doc
                       )}
                     </Button>
 
-                    {item.label === 'Home' && showHomeText && (
+                    {isActive && item.label === 'Home' && showHomeText && (
                       <span className="text-sm text-text whitespace-nowrap">{showHomeText}</span>
+                    )}
+
+                    {isActive && item.label !== 'Home' && (
+                      <span className="text-sm text-text whitespace-nowrap">{item.label}</span>
                     )}
 
                     {isActive && (

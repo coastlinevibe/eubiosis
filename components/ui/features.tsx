@@ -573,7 +573,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
-          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-8 items-center -mb-24'}`}
+          className={`${illness ? 'flex flex-col items-center text-center space-y-2 mb-8 md:mb-16' : 'grid lg:grid-cols-[3fr_auto_1fr] grid-cols-1 gap-4 md:gap-8 items-center -mb-24'}`}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -651,12 +651,12 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
 
               {/* Right Side - Image Box with Voice Recording */}
               <motion.div 
-                className="text-left lg:text-right mt-[100px]"
+                className="text-left lg:text-right mt-0 lg:mt-[100px] pb-16 md:pb-24 lg:pb-0"
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
               >
-                <div className="relative bg-gradient-to-br from-[#8bccc2]/10 to-[#78b4aa]/10 rounded-2xl p-3 border border-[#8bccc2]/20" style={{ transform: 'translate(-160px, 270px) scale(1.5)' }}>
+                <div className="relative bg-white rounded-2xl p-3 border border-gray-200 lg:scale-150 lg:-translate-x-40 lg:translate-y-64">
                   {/* Image Container */}
                   <div className="relative aspect-video bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-xl overflow-hidden mb-4">
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -674,7 +674,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   <div className="flex items-center justify-center">
                     <button 
                       onClick={toggleAudio}
-                      className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-full border-2 border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl"
+                      className="group flex items-center gap-3 bg-white hover:bg-[#8bccc2] text-[#8bccc2] hover:text-white px-6 py-3 rounded-[11px] border border-[#8bccc2] transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
                       <div className="relative">
                         {isPlaying ? (
@@ -705,7 +705,60 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
           )}
         </motion.div>
 
-        <div className={`grid lg:grid-cols-2 lg:gap-8 gap-4 items-start ${illness ? 'mt-12' : 'mt-8'}`}>
+        {/* Mobile: Show carousel navigation at top */}
+        {illness && cycling && (
+          <motion.div 
+            className="lg:hidden mb-6 w-full"
+            initial={{ opacity: 0, y: -30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
+            <div className="relative">
+              <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-[#8bccc2]/20">
+                <motion.button 
+                  className="p-2 rounded-full hover:bg-[#8bccc2]/20 transition-colors"
+                  onClick={onPrevIllness}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <ChevronLeft className="w-5 h-5 text-[#8bccc2]" />
+                </motion.button>
+                
+                <div className="flex flex-col items-center gap-2">
+                  <div className="text-[#8bccc2] font-bold text-base">
+                    {illness}
+                  </div>
+                  <div className="text-gray-700 font-medium text-sm">
+                    Symptoms {illnesses.indexOf(illness || illnesses[0]) + 1} to {illnesses.length}
+                  </div>
+                  <div className="flex items-center gap-2 mt-1">
+                    {illnesses.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                          index === illnesses.indexOf(illness || illnesses[0])
+                            ? 'bg-[#8bccc2] scale-125 shadow-md'
+                            : 'bg-gray-300 hover:bg-[#8bccc2]/50'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                
+                <motion.button 
+                  className="p-2 rounded-full hover:bg-[#8bccc2]/20 transition-colors"
+                  onClick={onNextIllness}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <ChevronRight className="w-5 h-5 text-[#8bccc2]" />
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        <div className={`grid grid-cols-1 lg:grid-cols-2 lg:gap-8 gap-6 items-start ${illness ? 'mt-12' : 'mt-8'}`}>
           {/* Left Side - Scrollable Content */}
           <motion.div 
             className="space-y-2"
@@ -714,7 +767,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
             {/* Scrollable Content Container */}
-            <div className="h-[390px] overflow-y-auto pr-4 space-y-2 scrollbar-thin scrollbar-thumb-[#8bccc2] scrollbar-track-gray-100 scrollbar-w-2">
+            <div className="h-auto md:h-[390px] overflow-y-auto pr-4 space-y-2 scrollbar-thin scrollbar-thumb-[#8bccc2] scrollbar-track-gray-100 scrollbar-w-2">
               
               {/* Feature Text List */}
               {features.map((feature, index) => {
@@ -789,7 +842,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
             <div className="relative order-1 w-full max-w-full mx-auto lg:order-2">
               <div className="flex flex-col lg:flex-row gap-6">
                 {/* Quiz Section - Left Side */}
-                <div className="flex-1 bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 p-6 text-center h-[280px] relative">
+                <div className="flex-1 bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 p-6 text-center h-auto md:h-[280px] relative">
                   {!showQuiz ? (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -1072,7 +1125,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                     className="relative w-full"
                   >
                     {/* Video Placeholder Container */}
-                    <div className="w-full h-[280px] bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-center relative overflow-hidden cursor-pointer group"
+                    <div className="w-full h-auto md:h-[280px] bg-gradient-to-br from-[#8bccc2] to-[#78b4aa] rounded-2xl border border-gray-200 dark:border-gray-700 flex items-center justify-center relative overflow-hidden cursor-pointer group"
                          onClick={() => setSelectedVideoIndex(currentFeature)}>
                       
                       {/* Video background - YouTube thumbnail only */}
@@ -1114,12 +1167,12 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
               >
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  {/* Show carousel only when cycling */}
+                <div className="flex flex-row gap-3 justify-center items-center flex-wrap lg:flex-nowrap">
+                  {/* Show carousel only when cycling - Desktop only */}
                   {cycling && (
                     <>
-                      {/* Carousel Navigation */}
-                      <div className="relative">
+                      {/* Carousel Navigation - Hidden on mobile */}
+                      <div className="hidden lg:block relative">
                         {/* Enhanced Navigation Display with integrated arrows */}
                         <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg border border-[#8bccc2]/20 min-w-[280px]">
                           <motion.button 
@@ -1171,7 +1224,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                       
                       {/* Read More Button for Cycling Mode */}
                       <motion.button 
-                        className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300"
+                        className="inline-flex items-center justify-center gap-3 px-4 sm:px-5 py-2 sm:py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300 text-sm sm:text-base whitespace-nowrap"
                         onClick={onLearnMoreClick}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1187,7 +1240,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   {/* Show Learn More button only when NOT cycling (single illness selected) */}
                   {!cycling && (
                     <motion.button 
-                      className="inline-flex items-center justify-center gap-3 px-5 py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300"
+                      className="inline-flex items-center justify-center gap-3 px-4 sm:px-5 py-2 sm:py-3 rounded-[9px] border border-[#8bccc2]/50 bg-gradient-to-r from-black via-black to-[#8bccc2]/20 text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:from-black/90 hover:via-black/90 hover:to-[#8bccc2]/30 transition-all duration-300 text-sm sm:text-base whitespace-nowrap"
                       onClick={onLearnMoreClick}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1201,7 +1254,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                   
                   {/* Back Home Button */}
                   <motion.button 
-                    className="btn-secondary p-3 flex items-center gap-2"
+                    className="btn-secondary p-2 sm:p-3 flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
                     onClick={onResetToHero}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -1209,7 +1262,7 @@ export function EubiosisFeatures({ illness, onBrowsingClick, onResetToHero, onPr
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Home className="w-5 h-5" />
+                    <Home className="w-4 sm:w-5 h-4 sm:h-5" />
                     <span>Home Page</span>
                     <span aria-hidden="true"></span>
                   </motion.button>
