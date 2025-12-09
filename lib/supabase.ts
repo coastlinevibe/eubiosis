@@ -152,3 +152,78 @@ export async function saveOrder(orderData: any, customerData: any) {
     throw error
   }
 }
+
+
+// Function to compress image
+async function compressImage(file: File): Promise<File> {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (event) => {
+      const img = new Image()
+      img.src = event.target?.result as string
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        let width = img.width
+        let height = img.height
+        
+        // Scale down if too large
+        const maxWidth = 800
+        const maxHeight = 800
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width
+            width = maxWidth
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height
+            height = maxHeight
+          }
+        }
+        
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0, width, height)
+        
+        canvas.toBlob((blob) => {
+          resolve(new File([blob!], file.name, { type: 'image/jpeg' }))
+        }, 'image/jpeg', 0.7)
+      }
+    }
+  })
+}
+
+// Function to upload EFT proof of payment image
+export async function uploadEFTProofImage(file: File, customerEmail: string) {
+  try {
+    const supabaseClient = getSupabase()
+    
+    // Compress image first
+    console.log('Compressing image...')
+    const compressedFile = await compressImage(file)
+    console.log(`Original size: ${(file.size / 1024).toFixed(2)}KB, Compressed size: ${(compressedFile.size / 1024).toFixed(2)}KB`)
+    
+    // Create a unique filename
+    const timestamp = Date.now()
+    const filename = `${customerEmail}-${timestamp}-${file.name}`
+    
+    console.log('Uploading EFT proof to bucket:', filename)
+    
+    const { data, error } = await supabaseClient.storage
+      .from('eft imgs')
+      .upload(filename, compressedFile)
+    
+    if (error) {
+      console.error('❌ Error uploading EFT proof:', error)
+      throw error
+    }
+    
+    console.log('✅ EFT proof uploaded successfully:', data)
+    return data
+  } catch (error) {
+    console.error('❌ Failed to upload EFT proof:', error)
+    throw error
+  }
+}

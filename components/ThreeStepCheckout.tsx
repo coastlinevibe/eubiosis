@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Check, Lock, CreditCard, X } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ProvinceSelector } from '@/components/ui/province-selector'
+import { uploadEFTProofImage } from '@/lib/supabase'
 
 interface CheckoutStep {
   id: number
@@ -59,6 +60,11 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
   const [irresistibleOfferAccepted, setIrresistibleOfferAccepted] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'payfast' | 'eft' | null>(null)
+  const [eftContactedSeller, setEftContactedSeller] = useState(false)
+  const [eftProofUploaded, setEftProofUploaded] = useState(false)
+  const [eftProofFile, setEftProofFile] = useState<File | null>(null)
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false)
+  const [isUploadingProof, setIsUploadingProof] = useState(false)
 
   // Debug: Log province changes
   useEffect(() => {
@@ -333,39 +339,71 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
               <div className="space-y-6">
                 {selectedPaymentMethod === 'eft' ? (
                   <>
-                    {/* EFT Bank Details */}
-                    <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6">
-                      <h3 className="text-lg font-medium text-text mb-4">Bank Transfer Details</h3>
-                      <div className="space-y-3 text-sm">
-                        <div className="bg-white rounded-lg p-3 border border-blue-200">
-                          <p className="text-gray-600 text-xs mb-1">Bank Name</p>
-                          <p className="font-semibold text-text">Standard Bank</p>
+                    {/* WhatsApp Contact Button - Primary CTA */}
+                    <button
+                      onClick={() => {
+                        const whatsappUrl = `https://wa.me/27818909814?text=Hi, I want to buy ${orderData.quantity} bottle${orderData.quantity > 1 ? 's' : ''} of Eubiosis ${orderData.size}${irresistibleOfferAccepted ? ' + Extra 50ml Bottle' : ''}. Total: R${totals.total}`
+                        window.open(whatsappUrl, '_blank')
+                        setEftContactedSeller(true)
+                      }}
+                      className={`w-full py-4 text-white rounded-xl transition-colors font-bold text-lg flex items-center justify-center gap-2 mb-4 ${
+                        eftContactedSeller ? 'bg-green-600 hover:bg-green-700' : 'bg-green-600 hover:bg-green-700'
+                      }`}
+                    >
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.946 1.347l-.355.192-.368-.06a9.879 9.879 0 00-3.464.608l.564 2.173 1.888-.959a9.877 9.877 0 018.368 1.215l.341-.11a9.876 9.876 0 015.52 5.588l.325-.107a9.87 9.87 0 00-6.868-8.737z"/>
+                      </svg>
+                      {eftContactedSeller ? '✓ Contacted Seller' : 'Contact Seller Directly Before Buying'}
+                    </button>
+
+                    {/* Bank Details - Compact */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
+                      <h4 className="text-sm font-semibold text-text mb-3">Bank Transfer Details</h4>
+                      <div className="space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Bank:</span>
+                          <span className="font-medium">Standard Bank</span>
                         </div>
-                        <div className="bg-white rounded-lg p-3 border border-blue-200">
-                          <p className="text-gray-600 text-xs mb-1">Branch Name</p>
-                          <p className="font-semibold text-text">ONLINE BANKING</p>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Branch:</span>
+                          <span className="font-medium">ONLINE BANKING (7654)</span>
                         </div>
-                        <div className="bg-white rounded-lg p-3 border border-blue-200">
-                          <p className="text-gray-600 text-xs mb-1">Branch Code</p>
-                          <p className="font-semibold text-text">7654</p>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Account Holder:</span>
+                          <span className="font-medium">MS NADINE N MARSHALL</span>
                         </div>
-                        <div className="bg-white rounded-lg p-3 border border-blue-200">
-                          <p className="text-gray-600 text-xs mb-1">Account Holder</p>
-                          <p className="font-semibold text-text">MS NADINE N MARSHALL</p>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Account Number:</span>
+                          <span className="font-medium">10 22 861 125 1</span>
                         </div>
-                        <div className="bg-white rounded-lg p-3 border border-blue-200">
-                          <p className="text-gray-600 text-xs mb-1">Account Number</p>
-                          <p className="font-semibold text-text">10 22 861 125 1</p>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Type:</span>
+                          <span className="font-medium">SAVINGS</span>
                         </div>
-                        <div className="bg-white rounded-lg p-3 border border-blue-200">
-                          <p className="text-gray-600 text-xs mb-1">Account Type</p>
-                          <p className="font-semibold text-text">SAVINGS</p>
-                        </div>
-                        <div className="bg-accent/10 rounded-lg p-3 border border-accent">
-                          <p className="text-gray-600 text-xs mb-1">Amount to Transfer</p>
-                          <p className="font-bold text-accent text-lg">R{totals.total}</p>
+                        <div className="border-t pt-2 mt-2 flex justify-between font-semibold">
+                          <span className="text-gray-700">Amount:</span>
+                          <span className="text-accent">R{totals.total}</span>
                         </div>
                       </div>
+                    </div>
+
+                    {/* Proof of Payment Upload */}
+                    <div className={`border rounded-lg p-4 ${eftProofUploaded ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                      <h4 className="text-sm font-semibold text-text mb-3">Upload Proof of Payment</h4>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]
+                          if (file) {
+                            setEftProofFile(file)
+                            setEftProofUploaded(true)
+                          }
+                        }}
+                        className="w-full text-sm border border-gray-300 rounded p-2 cursor-pointer"
+                      />
+                      <p className="text-xs text-gray-500 mt-2">Upload a screenshot of your bank transfer proof</p>
+                      {eftProofUploaded && <p className="text-xs text-green-600 font-semibold mt-2">✓ {eftProofFile?.name}</p>}
                     </div>
                   </>
                 ) : (
@@ -545,11 +583,30 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
                       </button>
                     ) : selectedPaymentMethod === 'eft' ? (
                       <button
-                        onClick={handleEFTWhatsApp}
-                        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                        disabled={!eftProofUploaded || isUploadingProof}
+                        onClick={async () => {
+                          if (!eftProofFile) return
+                          
+                          setIsUploadingProof(true)
+                          try {
+                            await uploadEFTProofImage(eftProofFile, customerData.email)
+                            setShowConfirmationPopup(true)
+                          } catch (error) {
+                            console.error('Upload failed:', error)
+                            alert('Failed to upload proof. Please try again.')
+                          } finally {
+                            setIsUploadingProof(false)
+                          }
+                        }}
+                        className={`w-full py-3 rounded-lg text-sm font-medium transition-colors ${
+                          eftProofUploaded && !isUploadingProof
+                            ? 'bg-green-600 hover:bg-green-700 text-white cursor-pointer'
+                            : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                        }`}
                       >
-                        <CreditCard className="w-4 h-4" />
-                        Already Paid?
+                        {isUploadingProof && 'Uploading...'}
+                        {!eftProofUploaded && 'Upload Proof of Payment to Continue'}
+                        {eftProofUploaded && !isUploadingProof && '✓ Ready to Process'}
                       </button>
                     ) : (
                       <button
@@ -617,6 +674,35 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
               <p className="text-xs text-gray-500 mt-6 text-center">
                 Both methods are secure and will complete your order.
               </p>
+            </div>
+          </div>
+        )}
+
+        {/* EFT Confirmation Popup */}
+        {showConfirmationPopup && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 text-center animate-in fade-in zoom-in">
+              <div className="mb-4 flex justify-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <Check className="w-8 h-8 text-green-600" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-text mb-2">Payment Received!</h3>
+              <p className="text-gray-600 mb-6">
+                Thank you for your payment proof. The seller will get back to you in a few minutes.
+              </p>
+              <p className="text-sm text-gray-500 mb-6">
+                We'll send you a confirmation email at <span className="font-semibold">{customerData.email}</span>
+              </p>
+              <button
+                onClick={() => {
+                  setShowConfirmationPopup(false)
+                  // Optionally redirect or reset
+                }}
+                className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
+              >
+                Got It!
+              </button>
             </div>
           </div>
         )}
