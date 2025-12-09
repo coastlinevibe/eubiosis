@@ -152,9 +152,27 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
       // Go straight to PayFast payment
       setTimeout(() => completeCheckout(), 0)
     } else {
-      // Go to step 3 for EFT (no province needed)
+      // Go to step 3 to show bank details
       setCurrentStep(3)
     }
+  }
+
+  const handleEFTWhatsApp = () => {
+    // Build dynamic WhatsApp message for payment confirmation
+    let message = `Hi, I paid for ${orderData.quantity} bottle${orderData.quantity > 1 ? 's' : ''} of Eubiosis ${orderData.size}`
+    
+    if (irresistibleOfferAccepted) {
+      message += ` + Extra 50ml Bottle`
+    }
+    
+    message += `\n\nAmount: R${totals.total}`
+    
+    // Encode message for WhatsApp URL
+    const encodedMessage = encodeURIComponent(message)
+    const whatsappUrl = `https://wa.me/27818909814?text=${encodedMessage}`
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank')
   }
 
   const prevStep = () => {
@@ -315,24 +333,38 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
               <div className="space-y-6">
                 {selectedPaymentMethod === 'eft' ? (
                   <>
-                    {/* EFT Order Confirmation */}
+                    {/* EFT Bank Details */}
                     <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6">
-                      <h3 className="text-lg font-medium text-text mb-4">Order Confirmation</h3>
-                      <div className="space-y-4 text-sm text-gray-700">
-                        <p className="font-medium">
-                          I want to buy <span className="text-accent font-bold">{orderData.quantity} bottle{orderData.quantity > 1 ? 's' : ''}</span> of Eubiosis {orderData.size}
-                          {irresistibleOfferAccepted && <span className="text-accent"> + Extra 50ml Bottle</span>}
-                        </p>
-                        <p className="text-lg font-semibold text-accent">
-                          Total Amount: R{totals.total}
-                        </p>
-                        <div className="bg-white rounded-lg p-4 border border-blue-200">
-                          <p className="text-sm text-gray-600 mb-2">Send payment proof to:</p>
-                          <p className="font-semibold text-accent text-lg">WhatsApp: 081 890 9814</p>
+                      <h3 className="text-lg font-medium text-text mb-4">Bank Transfer Details</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="bg-white rounded-lg p-3 border border-blue-200">
+                          <p className="text-gray-600 text-xs mb-1">Bank Name</p>
+                          <p className="font-semibold text-text">Standard Bank</p>
                         </div>
-                        <p className="text-xs text-gray-600">
-                          Include your order details and customer name in the message. We'll confirm receipt and process your order immediately.
-                        </p>
+                        <div className="bg-white rounded-lg p-3 border border-blue-200">
+                          <p className="text-gray-600 text-xs mb-1">Branch Name</p>
+                          <p className="font-semibold text-text">ONLINE BANKING</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-3 border border-blue-200">
+                          <p className="text-gray-600 text-xs mb-1">Branch Code</p>
+                          <p className="font-semibold text-text">7654</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-3 border border-blue-200">
+                          <p className="text-gray-600 text-xs mb-1">Account Holder</p>
+                          <p className="font-semibold text-text">MS NADINE N MARSHALL</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-3 border border-blue-200">
+                          <p className="text-gray-600 text-xs mb-1">Account Number</p>
+                          <p className="font-semibold text-text">10 22 861 125 1</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-3 border border-blue-200">
+                          <p className="text-gray-600 text-xs mb-1">Account Type</p>
+                          <p className="font-semibold text-text">SAVINGS</p>
+                        </div>
+                        <div className="bg-accent/10 rounded-lg p-3 border border-accent">
+                          <p className="text-gray-600 text-xs mb-1">Amount to Transfer</p>
+                          <p className="font-bold text-accent text-lg">R{totals.total}</p>
+                        </div>
                       </div>
                     </div>
                   </>
@@ -513,13 +545,11 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
                       </button>
                     ) : selectedPaymentMethod === 'eft' ? (
                       <button
-                        onClick={() => {
-                          alert(`Order confirmed! Please send payment proof to WhatsApp: 081 890 9814\n\nAmount: R${totals.total}`)
-                        }}
+                        onClick={handleEFTWhatsApp}
                         className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                       >
                         <CreditCard className="w-4 h-4" />
-                        Confirm EFT Payment - R{totals.total}
+                        Already Paid?
                       </button>
                     ) : (
                       <button
