@@ -175,29 +175,7 @@ export default function Home() {
       });
     });
 
-    // Add console message when dev tools are opened
-    const checkDevTools = () => {
-      if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
-        console.clear();
-        console.log('%cEUBIOSIS-S', 'font-size: 72px; font-weight: bold; color: #8bccc2; text-align: center; margin: 20px;');
-        console.log('%cWelcome to Eubiosis-S! 🌱', 'font-size: 24px; color: #78b4aa; text-align: center; margin: 10px;');
-        console.log('%cGut Health. Real Results.', 'font-size: 18px; color: #666; text-align: center; margin: 10px;');
-      }
-    };
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.key === 'u')) {
-        e.preventDefault();
-        console.clear();
-        console.log('%cEUBIOSIS-S', 'font-size: 72px; font-weight: bold; color: #8bccc2; text-align: center; margin: 20px;');
-        console.log('%cWelcome to Eubiosis-S! 🌱', 'font-size: 24px; color: #78b4aa; text-align: center; margin: 10px;');
-        console.log('%cGut Health. Real Results.', 'font-size: 18px; color: #666; text-align: center; margin: 10px;');
-        return false;
-      }
-    });
-
-    // Check for dev tools periodically
-    const devToolsInterval = setInterval(checkDevTools, 1000);
 
     // Handle scroll for bottom nav visibility
     const handleScroll = () => {
@@ -216,7 +194,6 @@ export default function Home() {
         button.removeEventListener('pointerover', () => {})
       })
       if (x) clearInterval(x)
-      clearInterval(devToolsInterval);
       window.removeEventListener('scroll', handleScroll);
     }
   }, [])

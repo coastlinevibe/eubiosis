@@ -49,6 +49,33 @@ function CheckoutContent() {
       const deliveryFee = orderSubtotal >= 650 ? 29 : 59
       const total = orderSubtotal + deliveryFee
       
+      // Send notification emails before redirecting to PayFast
+      console.log('📧 Sending notification emails...')
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerEmail: customerData.email,
+            customerName: `${customerData.firstName} ${customerData.lastName}`,
+            quantity: orderData.quantity,
+            size: orderData.size,
+            totalPrice: total,
+            irresistibleOfferAccepted: orderData.irresistibleOfferAccepted || false,
+            irresistibleOfferPrice,
+            phone: customerData.phone,
+            address: customerData.address,
+            city: customerData.city,
+            postalCode: customerData.postalCode,
+            emailType: 'pending'
+          })
+        })
+        console.log('✅ Notification emails sent successfully')
+      } catch (error) {
+        console.error('❌ Failed to send notification emails:', error)
+        // Continue with payment even if email fails
+      }
+      
       // Save order to Supabase before redirecting to PayFast
       console.log('🚀 About to save order to Supabase...')
       try {
@@ -62,12 +89,12 @@ function CheckoutContent() {
       // Create PayFast payment form
       const form = document.createElement('form')
       form.method = 'POST'
-      form.action = 'https://www.payfast.co.za/eng/process' // LIVE MODE
+      form.action = 'https://sandbox.payfast.co.za/eng/process' // SANDBOX MODE FOR TESTING
       
-      // PayFast required fields - Nadine's LIVE credentials
+      // PayFast test credentials (sandbox)
       const fields: Record<string, string> = {
-        merchant_id: '10818957',
-        merchant_key: 'cjb3kk3rdiwsq',
+        merchant_id: '10044504',
+        merchant_key: '6zcc9tnif3kw6',
         amount: total.toFixed(2),
         item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}${orderData.irresistibleOfferAccepted ? ' + Extra 50ml Bottle' : ''} - ${customerData.province}`,
         name_first: customerData.firstName,
@@ -96,6 +123,10 @@ function CheckoutContent() {
         input.value = value
         form.appendChild(input)
       })
+      
+      // Add 5 second delay before redirecting to PayFast
+      console.log('⏳ Waiting 5 seconds before redirecting to PayFast...')
+      await new Promise(resolve => setTimeout(resolve, 5000))
       
       // Submit form
       document.body.appendChild(form)

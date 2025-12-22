@@ -1,127 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { TextSplit } from './split-text';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChevronDown, ShoppingBag } from 'lucide-react';
 
 
-interface Ripple {
-  id: number;
-  x: number;
-  y: number;
-}
-
 const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { onIllnessClick?: (illness: string) => void; onBrowsingClick?: () => void; onLearnMoreClick?: () => void }) => {
-  const [mouseGradientStyle, setMouseGradientStyle] = useState({
-    left: '0px',
-    top: '0px',
-    opacity: 0,
-  });
-  const [ripples, setRipples] = useState<Ripple[]>([]);
-  const [scrolled, setScrolled] = useState(false);
+
   const [mounted, setMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const floatingElementsRef = useRef<HTMLElement[]>([]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const animateWords = () => {
-      const wordElements = document.querySelectorAll('.word-animate');
-      wordElements.forEach(word => {
-        const delay = parseInt(word.getAttribute('data-delay') || '0') || 0;
-        setTimeout(() => {
-          if (word) (word as HTMLElement).style.animation = 'word-appear 0.8s ease-out forwards';
-        }, delay);
-      });
-    };
-    const timeoutId = setTimeout(animateWords, 500);
-    return () => clearTimeout(timeoutId);
-  }, [mounted]);
 
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      setMouseGradientStyle({
-        left: `${e.clientX}px`,
-        top: `${e.clientY}px`,
-        opacity: 1,
-      });
-    };
-    const handleMouseLeave = () => {
-      setMouseGradientStyle(prev => ({ ...prev, opacity: 0 }));
-    };
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [mounted]);
 
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const handleClick = (e: MouseEvent) => {
-      const newRipple: Ripple = { id: Date.now(), x: e.clientX, y: e.clientY };
-      setRipples(prev => [...prev, newRipple]);
-      setTimeout(() => setRipples(prev => prev.filter(r => r.id !== newRipple.id)), 1000);
-    };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, [mounted]);
+
   
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const wordElements = document.querySelectorAll('.word-animate');
-    const handleMouseEnter = (e: Event) => { 
-      if (e.target) (e.target as HTMLElement).style.textShadow = '0 0 20px rgba(74, 174, 155, 0.5)'; 
-    };
-    const handleMouseLeave = (e: Event) => { 
-      if (e.target) (e.target as HTMLElement).style.textShadow = 'none'; 
-    };
-    wordElements.forEach(word => {
-      word.addEventListener('mouseenter', handleMouseEnter);
-      word.addEventListener('mouseleave', handleMouseLeave);
-    });
-    return () => {
-      wordElements.forEach(word => {
-        if (word) {
-          word.removeEventListener('mouseenter', handleMouseEnter);
-          word.removeEventListener('mouseleave', handleMouseLeave);
-        }
-      });
-    };
-  }, [mounted]);
 
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const elements = document.querySelectorAll('.floating-element-animate');
-    floatingElementsRef.current = Array.from(elements) as HTMLElement[];
-    const handleScroll = () => {
-      if (!scrolled) {
-        setScrolled(true);
-        floatingElementsRef.current.forEach((el, index) => {
-          setTimeout(() => {
-            if (el) {
-              el.style.animationPlayState = 'running';
-              el.style.opacity = ''; 
-            }
-          }, (parseFloat(el.style.animationDelay || "0") * 1000) + index * 100);
-        });
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrolled, mounted]);
+
+
 
   if (!mounted) {
     return null;
@@ -155,13 +54,15 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
         }
         .word-animate { 
           display: inline-block; 
-          opacity: 0; 
+          opacity: 1;
           margin: 0 0.1em; 
-          transition: color 0.3s ease, transform 0.3s ease; 
+          transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+          animation: word-appear 0.8s ease-out forwards;
         }
         .word-animate:hover { 
           color: #8dcdc6; 
-          transform: translateY(-2px); 
+          transform: translateY(-2px);
+          text-shadow: 0 0 20px rgba(74, 174, 155, 0.5);
         }
         .grid-line { 
           stroke: rgba(141, 205, 198, 0.2); 
@@ -207,9 +108,8 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
           height: 2px; 
           background: #8dcdc6; 
           border-radius: 50%; 
-          opacity: 0; 
+          opacity: 0.2;
           animation: float 4s ease-in-out infinite; 
-          animation-play-state: paused; 
         }
         @keyframes float { 
           0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; } 
@@ -585,23 +485,7 @@ const EubiosisHero = ({ onIllnessClick, onBrowsingClick, onLearnMoreClick }: { o
           </motion.div>
         </div>
 
-        {/* Responsive Mouse Gradient */}
-        <div 
-          id="mouse-gradient-eubiosis"
-          className="w-60 h-60 blur-xl sm:w-80 sm:h-80 sm:blur-2xl md:w-96 md:h-96 md:blur-3xl opacity-0"
-          style={{
-            left: mouseGradientStyle.left,
-            top: mouseGradientStyle.top,
-          }}
-        ></div>
 
-        {ripples.map(ripple => (
-          <div
-            key={ripple.id}
-            className="ripple-effect"
-            style={{ left: `${ripple.x}px`, top: `${ripple.y}px` }}
-          />
-        ))}
       </div>
     </>
   );

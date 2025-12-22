@@ -31,7 +31,6 @@ export interface Order {
   first_name: string
   last_name: string
   email: string
-  email_confirmation?: string
   phone: string
   address: string
   city: string
@@ -43,10 +42,8 @@ export interface Order {
   product_size: '50ml' | '100ml'
   quantity: number
   is_bundle: boolean
-  email_discount: boolean
   upsell_discount: number
   took_big_offer: boolean
-  oto_offer?: string
   oto_price?: number
   
   // Pricing
@@ -99,7 +96,6 @@ export async function saveOrder(orderData: any, customerData: any) {
       first_name: customerData.firstName || '',
       last_name: customerData.lastName || '',
       email: customerData.email || '',
-      email_confirmation: customerData.emailConfirmation || '',
       phone: customerData.phone || '',
       address: customerData.address || 'To be confirmed',
       city: customerData.city || 'To be confirmed',
@@ -109,12 +105,10 @@ export async function saveOrder(orderData: any, customerData: any) {
       
       // Order details
       product_size: orderData.size,
-      quantity: orderData.irresistibleOfferAccepted ? orderData.quantity + 1 : orderData.quantity, // Add extra bottle if accepted
+      quantity: orderData.irresistibleOfferAccepted ? orderData.quantity + 1 : orderData.quantity,
       is_bundle: orderData.bundle || false,
-      email_discount: orderData.emailDiscount || false,
       upsell_discount: orderData.upsellDiscount || 0,
       took_big_offer: orderData.tookBigOffer || false,
-      oto_offer: orderData.oto || undefined,
       oto_price: orderData.otoPrice || 0,
       
       // Pricing (stored in cents as per schema)
@@ -221,7 +215,12 @@ export async function uploadEFTProofImage(file: File, customerEmail: string) {
     }
     
     console.log('✅ EFT proof uploaded successfully:', data)
-    return data
+    
+    // Construct the public URL
+    const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/eft%20imgs/${filename}`
+    console.log('✅ Public URL:', publicUrl)
+    
+    return { path: data.path, fullPath: data.fullPath, publicUrl }
   } catch (error) {
     console.error('❌ Failed to upload EFT proof:', error)
     throw error
