@@ -89,12 +89,12 @@ function CheckoutContent() {
       // Create PayFast payment form
       const form = document.createElement('form')
       form.method = 'POST'
-      form.action = 'https://sandbox.payfast.co.za/eng/process' // SANDBOX MODE FOR TESTING
+      form.action = 'https://www.payfast.co.za/eng/process' // LIVE MODE
       
-      // PayFast test credentials (sandbox)
+      // PayFast live credentials
       const fields: Record<string, string> = {
-        merchant_id: '10044504',
-        merchant_key: '6zcc9tnif3kw6',
+        merchant_id: '10818957',
+        merchant_key: 'cjb3kk3rdiwsq',
         amount: total.toFixed(2),
         item_name: `Eubiosis ${orderData.size} x ${orderData.quantity}${orderData.irresistibleOfferAccepted ? ' + Extra 50ml Bottle' : ''} - ${customerData.province}`,
         name_first: customerData.firstName,
@@ -124,9 +124,9 @@ function CheckoutContent() {
         form.appendChild(input)
       })
       
-      // Add 5 second delay before redirecting to PayFast
-      console.log('⏳ Waiting 5 seconds before redirecting to PayFast...')
-      await new Promise(resolve => setTimeout(resolve, 5000))
+      // Add 2 second delay before redirecting to PayFast
+      console.log('⏳ Waiting 2 seconds before redirecting to PayFast...')
+      await new Promise(resolve => setTimeout(resolve, 2000))
       
       // Submit form
       document.body.appendChild(form)

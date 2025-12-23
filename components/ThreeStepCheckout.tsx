@@ -246,31 +246,7 @@ export default function ThreeStepCheckout({ initialOrder, initialProvince = '', 
           <div className="lg:col-span-2">
             {currentStep === 2 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-medium text-text">Customer Information</h2>
-                  <button
-                    onClick={() => {
-                      // Autofill with test data
-                      const testData = {
-                        firstName: 'John',
-                        lastName: 'Doe',
-                        email: 'john.doe@example.com',
-                        phone: '0712345678',
-                        address: '123 Main Street, Apartment 4B',
-                        city: 'Johannesburg',
-                        postalCode: '2000'
-                      }
-                      
-                      setFullName(`${testData.firstName} ${testData.lastName}`)
-                      Object.entries(testData).forEach(([key, value]) => {
-                        handleCustomerDataChange(key as keyof CustomerData, value)
-                      })
-                    }}
-                    className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors border border-gray-300"
-                  >
-                    Autofill
-                  </button>
-                </div>
+                <h2 className="text-xl font-medium text-text mb-6">Customer Information</h2>
                 
                 <div className="space-y-4">
                   <div>
