@@ -233,6 +233,9 @@ export default function EubiosisSFooter() {
               <p className="text-xs text-gray-500 mt-2">
                 Made with ❤️ in South Africa
               </p>
+              <p className="text-xs text-gray-500 mt-3">
+                Powered by <a href="https://wabi-sabi.click" target="_blank" rel="noopener noreferrer" className="text-[#4AAE9B] hover:text-[#4AAE9B]/80 transition-colors font-medium">Wabi-sabi Systems</a>
+              </p>
             </div>
           </div>
         </div>
