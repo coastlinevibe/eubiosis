@@ -1,12 +1,16 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /funnel
+Disallow: /*.json$
+Disallow: /*?*sort=
+Disallow: /*?*filter=
 
-# Important pages
-Allow: /shop
-Allow: /funnel
+Sitemap: https://www.eubiosis.pro/sitemap.xml
 
-# Sitemap location
-Sitemap: https://eubiosis-s.vercel.app/sitemap.xml
+User-agent: Googlebot
+Allow: /
 
-# Crawl delay (optional)
-Crawl-delay: 1
+User-agent: Bingbot
+Allow: /

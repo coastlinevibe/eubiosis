@@ -4,9 +4,11 @@ export const siteConfig = {
   name: "Eubiosis-S",
   title: "Eubiosis-S — Nature in a Bottle | Premium Honey-Based Probiotic",
   description: "Discover Eubiosis-S, the revolutionary honey-based probiotic with 42 bacterial strains. Nature's perfect balance for optimal gut health and wellness. Made in South Africa.",
-  url: "https://eubiosis-s.vercel.app",
+  url: "https://www.eubiosis.pro",
   ogImage: "/images/Website Product Image.png",
+  favicon: "/favicon.ico",
   keywords: [
+    "Eubiosis",
     "Eubiosis-S",
     "nature in a bottle",
     "honey-based probiotic",
@@ -21,7 +23,12 @@ export const siteConfig = {
     "probiotic supplement",
     "honey probiotic",
     "gut microbiome",
-    "digestive wellness"
+    "digestive wellness",
+    "IBS relief",
+    "digestive support",
+    "natural probiotics",
+    "gut bacteria",
+    "wellness supplement"
   ]
 }
 
@@ -65,6 +72,12 @@ export const defaultMetadata: Metadata = {
       }
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
   robots: {
     index: true,
     follow: true,
@@ -77,10 +90,12 @@ export const defaultMetadata: Metadata = {
     },
   },
   verification: {
-    google: "your-google-verification-code", // You'll need to add this from Google Search Console
-    // yandex: "your-yandex-verification-code",
-    // bing: "your-bing-verification-code",
+    google: "your-google-verification-code",
   },
+  icons: {
+    icon: siteConfig.favicon,
+    apple: siteConfig.favicon,
+  }
 }
 
 export const shopMetadata: Metadata = {
@@ -93,7 +108,9 @@ export const shopMetadata: Metadata = {
     "honey supplement online",
     "order eubiosis-s",
     "probiotic shop",
-    "natural health store"
+    "natural health store",
+    "eubiosis price",
+    "eubiosis cost"
   ],
   openGraph: {
     title: "Shop Eubiosis-S | Premium Honey-Based Probiotic",
@@ -108,6 +125,24 @@ export const shopMetadata: Metadata = {
       }
     ],
   },
+}
+
+export const checkoutMetadata: Metadata = {
+  title: "Checkout | Eubiosis-S",
+  description: "Complete your purchase of Eubiosis-S premium honey-based probiotic. Secure payment via PayFast or EFT. Fast delivery across South Africa.",
+  robots: {
+    index: false,
+    follow: false,
+  }
+}
+
+export const funnelMetadata: Metadata = {
+  title: "Limited Time Offer | Eubiosis-S",
+  description: "Discover the benefits of Eubiosis-S honey-based probiotic. Limited time offer available now.",
+  robots: {
+    index: true,
+    follow: true,
+  }
 }
 
 // Structured Data for SEO
